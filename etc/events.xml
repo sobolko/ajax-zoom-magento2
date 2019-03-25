@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_product_delete_after">
+        <observer name="axzoom_catalog_product_delete_after" instance="Ax\Zoom\Observer\RemoveProduct"/>
+    </event>
+    <event name="catalog_product_save_after">
+        <observer name="axzoom_catalog_product_save_after" instance="Ax\Zoom\Observer\SaveProduct"/>
+    </event>
+    <event name="layout_generate_blocks_before">
+        <observer name="axzoom_layout_generate_blocks_before" instance="Ax\Zoom\Observer\ReplaceMedia"/>
+    </event>    
+</config>

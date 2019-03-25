@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Ax\Zoom\Block\Adminhtml\Product\Resizefix" name="ajaxzoom.resizefix" />
+        </referenceContainer>
+
+        <referenceBlock name="product_tabs">
+
+
+            <block class="Ax\Zoom\Block\Adminhtml\Product\Edit\Tab" name="product.ajaxzoom" template="tab.phtml">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">AJAX-ZOOM</argument>
+                    <argument name="group_code" xsi:type="string">advanced</argument>
+                </arguments>
+            </block>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">product-ajaxzoom</argument>
+                <argument name="block" xsi:type="string">product.ajaxzoom</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

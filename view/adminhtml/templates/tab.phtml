@@ -1,0 +1,41 @@
+<script type="text/javascript">
+function showSuccessMessage(message)
+{
+	//console.log(message);
+}
+
+function doAdminAjax360(url, data, success_func, error_func)
+{
+	jQuery.ajax(
+	{
+		url : url,
+		data : data,
+		type : 'GET',
+		success : function(data){
+			if (success_func)
+				return success_func(data);
+
+			data = jQuery.parseJSON(data);
+			if (data.confirmations.length != 0)
+				showSuccessMessage(data.confirmations);
+			else
+				showErrorMessage(data.error);
+		},
+		error : function(data){
+			if (error_func)
+				return error_func(data);
+
+			alert("[TECHNICAL ERROR]");
+		}
+	});
+}
+</script>
+
+<?php 
+$productId = $this->getProductId();
+$ax = $this->getAxModel();
+?>
+
+<?php require 'tab360-settings.phtml'; ?>
+<?php require 'tab360-sets.phtml'; ?>
+<?php require 'tab360.phtml'; ?>

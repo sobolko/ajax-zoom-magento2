@@ -1,0 +1,116 @@
+<?php $maxImageSize = ini_get('upload_max_filesize'); ?>
+
+<input type="hidden" name="id_360set" id="id_360set" value="" />
+
+<div id="product-images360" class="entry-edit" style="display:none">
+	<div class="fieldset-wrapper">
+		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title">
+			<strong class="title"><?php echo __('Images') ?></strong>
+		</div>
+	</div>
+	<div class="fieldset fieldset-wide" id="group_fields9">
+		<div class="hor-scroll">
+			<input type="hidden" name="submitted_tabs[]" value="Images360" />
+
+			<div class="row">
+				<div class="form-group">
+					<label class="control-label col-lg-3 file_upload_label">
+						<span class="label-tooltip" data-toggle="tooltip" title="<?php echo __('Format: JPG, GIF, PNG. Filesize: %s MB max', $maxImageSize) ?>">
+							<?php echo __('Add a new image to this image set') ?>
+						</span>
+					</label>
+					<div class="col-lg-9">
+						<?php require "uploader.phtml"; ?>
+					</div>
+				</div>
+			</div>
+			<div class="grid">
+				<table class="data border data-grid" id="imageTable360">
+					<thead>
+						<tr class="headings">
+							<th class="data-grid-th"><?php echo __('Image') ?></th>
+							<th class="data-grid-th"><?php echo __('Actions') ?></th>
+						</tr>
+					</thead>
+					<tbody id="imageList360">
+					</tbody>
+				</table>
+			</div>
+			<table id="lineType360" style="display:none;">
+				<tr id="image_id">
+					<td>
+						<img src="<?php echo $this->rootFolder() ?>axzoom/image_path.gif" alt="legend" title="legend" class="img-thumbnail" />
+					</td>
+					<td style="width:75px;">
+						<a type="button" class="delete_product_image360 scalable delete" href="">
+							<?php echo __('Delete this image') ?>
+						</a>
+					</td>
+				</tr>
+			</table>
+			<div class="panel-footer">
+				<button class="btn_cancel"><?php echo __('Cancel') ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function imageLine360(id, path, position, cover, shops, legend)
+	{
+		line = jQuery("#lineType360").html();
+		line = line.replace(/image_id/g, id);
+		line = line.replace(/"(.*?)path\.gif"/g, path);
+		line = line.replace(/icon-check-empty/g, cover);
+		line = line.replace(/<tbody>/gi, "");
+		line = line.replace(/<\/tbody>/gi, "");
+		
+		jQuery("#imageList360").append(line);
+	}
+
+	require([
+		"jquery", 
+		"<?php echo $this->getBaseUrl() ?>axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js", 
+		"<?php echo $this->getBaseUrl() ?>axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js"
+		], function($){
+		
+		function afterDeleteProductImage360(data)
+		{
+			data = $.parseJSON(data);
+			if (data)
+			{
+				id = data.content.id;
+				if (data.status == 'ok')
+				{
+					$("#" + id).remove();
+				}
+
+				showSuccessMessage(data.confirmations);
+			}
+		}
+
+		$('.btn_cancel').on('click', function(e)
+		{
+			e.preventDefault();
+			$('#product-images360').hide();
+		});
+
+
+		$('body').on('click', '.delete_product_image360', function(e) { 
+			e.preventDefault();
+			id = $(this).parent().parent().attr('id');
+			var id_360set = $('#id_360set').val();
+			var ext = $(this).parent().parent().find('img').attr('src').split('.').pop();
+			if (confirm("<?php echo __('Are you sure?') ?>"))
+			doAdminAjax360('<?php echo $this->getUrlAjax('deleteProductImage360'); ?>', {
+					"id_image":id,
+					'id_360set': id_360set,
+					"ext":ext,
+					"id_product" : <?php echo $productId ?>
+					}, afterDeleteProductImage360
+			);
+		});
+
+		$('.fancybox').fancybox();
+	});
+</script>

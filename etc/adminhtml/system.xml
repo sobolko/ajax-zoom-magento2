@@ -1,0 +1,621 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Config/etc/system_file.xsd">
+	<system>
+		<section id="axzoom_options" translate="label" sortOrder="140" showInDefault="1" showInStore="1" showInWebsite="1">
+			<class>separator-top</class>
+			<label>AJAX-ZOOM</label>
+			<tab>catalog</tab>
+			<resource>Ax_Zoom::config</resource>
+			<group id="license" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>AJAX-ZOOM license(s)</label>
+				<attribute type="expanded">0</attribute>
+                <field id="lic" translate="label" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>License</label>
+					<comment><![CDATA[<a href="http://www.ajax-zoom.com/index.php?cid=contact" target="_blank">Ask for support</a>&nbsp;&nbsp;&nbsp;<a href="http://www.ajax-zoom.com/index.php?cid=download#heading_3" target="_blank">Buy a license</a>]]></comment>
+                    <frontend_model>Ax\Zoom\Block\Adminhtml\Form\Field\License</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>				
+			</group>
+			<group id="mouseOverZoomParam" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Specific options for mouseover zoom</label>
+				<attribute type="expanded">0</attribute>
+				<field id="position" type="select" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">position</div>]]></label>
+					<source_model>Ax\Zoom\Model\Config\Source\Position</source_model>
+					<comment>Position of the flyout zoom window, possible values: 'inside', 'top', 'right', 'bottom', 'left'</comment>
+				</field>
+				<field id="posAutoInside" type="text" sortOrder="20" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>posAutoInside</label>
+					<comment>applies when width (left, right) or height (top, bottom) of zoom window are less than this px value (zoomWidth || zoomHeight are set to auto); if zoomWidth || zoomHeight are fixed, applies when zoom window is out of page border</comment>
+				</field>
+				<field id="posInsideArea" type="text" sortOrder="30" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>posInsideArea</label>
+					<comment>When "posAutoInside" is enabled and inner zoom fires or "position" option is set to 'inside' right away - there is no lens. However you will notice that the reaction to mouse movements occure somewhere in the middle of the image; at the edges mostly nothing happens in simmilar scripts. With this option you can adjust how far from the edge mouse movements should be captured. The range is between 0 and 0.5;</comment>
+				</field>
+				<field id="touchScroll" type="text" sortOrder="40" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">touchScroll</div>]]></label>
+					<comment>If width of the mouseover zoom container is more than 80% (0.8) of the widnow width, than for touch devises the inner zoom will be not triggered and the user can scroll down. Click for open AJAX-ZOOM remains. Set this value to 0 if you want to enable the slider for touch devices only. </comment>
+				</field>
+				<field id="noMouseOverZoom" type="select" sortOrder="50" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">noMouseOverZoom</div>]]></label>
+					<comment>Disable mouseover zoom completly for touch and none touch devices. If you want to disable it only for touch devices, set "touchScroll" option above to 0 </comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="autoFlip" type="text" sortOrder="60" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>autoFlip</label>
+					<comment>Flip right to left and bottom to top if less than int px value or false to disable</comment>
+				</field>
+				<field id="biggestSpace" type="select" sortOrder="70" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>biggestSpace</label>
+					<comment>Overrides position option and instantly chooses the direction, disables autoFlip; playes nicely when zoomWidth and zoomHeight are set to 'auto'</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="zoomFullSpace" type="select" sortOrder="80" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomFullSpace</label>
+					<comment>Uses full screen height (does not align to the map / disables adjustY) if position is right or left || uses full screen width (does not align to the map / disables adjustX) if position is top or bottom</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="zoomWidth" type="text" sortOrder="90" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">zoomWidth</div>]]></label>
+					<comment>Width of the zoom window e.g. 540 or 'auto' or jQuery selector|correction value, e.g. '#refWidthTest|+20'; 
+						so if you want to have a width of the zoom window same as for example a responsive container to the right 
+						(so it is fully covered) and max possible height, then define the id of this container to the right, 
+						e.g. 'myArticleData', set "zoomWidth" to '#myArticleData|+10' and "zoomHeight" to 'auto'. 
+						New in Ver. b4: if you have a three column design and want to cover both containers to the right, 
+						then just define both containers in the jQuery selector, e.g. '.pb-center-column,.pb-right-column|+20'; 
+						the margin between the containers is not taken into account but you can adjust the result with the second value after vertical bar.
+					</comment>
+				</field>
+				<field id="zoomHeight" type="text" sortOrder="100" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">zoomHeight</div>]]></label>
+					<comment>Height of the zoom window e.g. 375, or 'auto' or jQuery selector|correction value, 
+						e.g. '#refWidthTest|+20'; if your selector matches more than one element, e.g. '.pb-center-column,.pb-right-column|+20', 
+						then the highest value will be choosen. This is different from the multiple selector in "zoomWidth", where the values are added.
+					</comment>
+				</field>
+				<field id="autoMargin" type="text" sortOrder="110" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>autoMargin</label>
+					<comment>If zoomWidth or zoomHeight are set to 'auto', the margin to the edge of the screen</comment>
+				</field>
+				<field id="adjustX" type="text" sortOrder="120" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">adjustX</div>]]></label>
+					<comment>Horizontal margin of the zoom window</comment>
+				</field>
+				<field id="adjustY" type="text" sortOrder="130" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">adjustY</div>]]></label>
+					<comment>Vertical margin of the zoom window</comment>
+				</field>
+				<field id="lensOpacity" type="text" sortOrder="140" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">lensOpacity</div>]]></label>
+					<comment>Opacity of the selector lens</comment>
+				</field>
+				<field id="lensStyle" type="textarea" sortOrder="150" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>lensStyle</label>
+					<comment>Quickly override css of the lens</comment>
+				</field>
+				<field id="lensClass" type="text" sortOrder="160" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>lensClass</label>
+					<comment>Set css class for the lens</comment>
+				</field>
+				<field id="zoomAreaBorderWidth" type="text" sortOrder="170" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomAreaBorderWidth</label>
+					<comment>Border thickness of the zoom window</comment>
+				</field>
+				<field id="galleryFade" type="text" sortOrder="180" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>galleryFade</label>
+					<comment>Speed of inner fade or false</comment>
+				</field>
+				<field id="shutterSpeed" type="text" sortOrder="190" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>shutterSpeed</label>
+					<comment>Speed of shutter fadein or false; applies only if image proportions are different from container</comment>
+				</field>
+				<field id="showFade" type="text" sortOrder="200" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>showFade</label>
+					<comment>Speed of fade in for mouse over</comment>
+				</field>
+				<field id="hideFade" type="text" sortOrder="210" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>hideFade</label>
+					<comment>Speed of fade out for mouse over</comment>
+				</field>
+				<field id="flyOutSpeed" type="text" sortOrder="220" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>flyOutSpeed</label>
+					<comment>Speed for flyout or false to disable</comment>
+				</field>
+				<field id="flyOutTransition" type="text" sortOrder="230" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>flyOutTransition</label>
+					<comment>Transition of the flyout</comment>
+				</field>
+				<field id="flyOutOpacity" type="text" sortOrder="240" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>flyOutOpacity</label>
+					<comment>Initial opacity for flyout</comment>
+				</field>
+				<field id="flyBackSpeed" type="text" sortOrder="250" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>flyBackSpeed</label>
+					<comment>Speed for fly back or false to disable</comment>
+				</field>
+				<field id="flyBackTransition" type="text" sortOrder="260" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>flyBackTransition</label>
+					<comment>Transition type of the fly back</comment>
+				</field>
+				<field id="flyBackOpacity" type="text" sortOrder="270" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>flyBackOpacity</label>
+					<comment>Final opacity of fly back</comment>
+				</field>
+				<field id="autoScroll" type="select" sortOrder="280" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>autoScroll</label>
+					<comment>Scroll page when clicked on the thumb and the mouse over preview image is not fully visible</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="smoothMove" type="text" sortOrder="290" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">smoothMove</div>]]></label>
+					<comment>Integer bigger than 1 indicates smoother movements; set 0 to disable</comment>
+				</field>
+				<field id="tint" type="text" sortOrder="300" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>tint</label>
+					<comment>Color value around the lens or false</comment>
+				</field>
+				<field id="tintOpacity" type="text" sortOrder="310" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>tintOpacity</label>
+					<comment>Opacity of the area around the lens when "tint" option is set to some color value</comment>
+				</field>
+				<field id="tintFilter" type="text" sortOrder="320" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>tintFilter</label>
+					<comment>Apply filter to the image, e.g. "blur", "grayscale", "sepia", "invert", "saturate"; see also .axZm_mouseOverEffect>img CSS</comment>
+				</field>
+				<field id="tintLensBack" type="select" sortOrder="330" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>tintLensBack</label>
+					<comment>Show background image in the lens</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="showTitle" type="select" sortOrder="340" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>showTitle</label>
+					<comment>Enable / disable title on zoom window</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="titleOpacity" type="text" sortOrder="350" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>titleOpacity</label>
+					<comment>Opacity of the title container</comment>
+				</field>
+				<field id="titlePosition" type="text" sortOrder="360" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>titlePosition</label>
+					<comment>Position of the title, top or bottom</comment>
+				</field>
+				<field id="cursorPositionX" type="text" sortOrder="370" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>cursorPositionX</label>
+					<comment>Cursor over lens horizontal offset, 0.5 is middle</comment>
+				</field>
+				<field id="cursorPositionY" type="text" sortOrder="380" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>cursorPositionY</label>
+					<comment>Cursor over lens vertical offset, 0.5 is middle</comment>
+				</field>
+				<field id="touchClickAbort" type="text" sortOrder="390" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>touchClickAbort</label>
+					<comment>Time in ms after which click is aborted without touch movement and mousehover is initialized</comment>
+				</field>
+				<field id="loading" type="select" sortOrder="400" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>loading</label>
+					<comment>Display loading information, CSS .mouseOverLoading</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="loadingMessage" type="textarea" sortOrder="410" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>loadingMessage</label>
+					<comment>Loading message, not needed, can be just the spinner - see below</comment>
+				</field>
+				<field id="loadingWidth" type="text" sortOrder="420" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>loadingWidth</label>
+					<comment>Width of loading container</comment>
+				</field>
+				<field id="loadingHeight" type="text" sortOrder="430" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>loadingHeight</label>
+					<comment>Height of loading container</comment>
+				</field>
+				<field id="loadingOpacity" type="text" sortOrder="440" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>loadingOpacity</label>
+					<comment>Opacity of the loading container (the transparent background is set via png image on default, see css class)</comment>
+				</field>
+				<field id="zoomHintEnable" type="select" sortOrder="450" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomHintEnable</label>
+					<comment>Enable zoom icon which disappears on mouse hover; css class: .axZm_mouseOverZoomHint; If you want to change the position or the icon simply change the css class;</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="zoomHintText" type="text" sortOrder="460" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomHintText</label>
+					<comment>Text which will be appended next to the icon enabled by "zoomHintEnable"</comment>
+				</field>
+				<field id="zoomMsgHover" type="textarea" sortOrder="470" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomMsgHover</label>
+					<comment>Message which can appear under the mouse over zoom, css class: .axZm_mouseOverZoomMsg</comment>
+				</field>
+				<field id="zoomMsgClick" type="text" sortOrder="480" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomMsgClick</label>
+					<comment>Message which can appear under the mouse over zoom when the mouse enters it.</comment>
+				</field>
+				<field id="slideInTime" type="text" sortOrder="490" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>slideInTime</label>
+					<comment>Slide in time if "noMouseOverZoom" is enabled or "touchScroll" option enables for touch devices</comment>
+				</field>
+				<field id="slideInEasingCSS3" type="text" sortOrder="500" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>slideInEasingCSS3</label>
+					<comment>jQuery equivalent of easing or own function (string), e.g. "cubic-bezier(0.21,0.51,0.4,2.02)", see also cubic-bezier.com </comment>
+				</field>
+				<field id="slideInEasing" type="text" sortOrder="510" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>slideInEasing</label>
+					<comment>jQuery easing function for sliding in (fallback if CSS3 animation is not supported)</comment>
+				</field>
+				<field id="slideInScale" type="text" sortOrder="520" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>slideInScale</label>
+					<comment>Scale initial size (goes to 1.0 while animation)</comment>
+				</field>
+				<field id="slideOutScale" type="text" sortOrder="530" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>slideOutScale</label>
+					<comment>Scale slideout size</comment>
+				</field>
+				<field id="slideOutOpacity" type="text" sortOrder="540" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>slideOutOpacity</label>
+					<comment>Slideout opacity</comment>
+				</field>
+				<field id="slideOutDest" type="text" sortOrder="550" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>slideOutDest</label>
+					<comment>Target slideout position, possible values: 1, 2 or 3</comment>
+				</field>
+				<field id="onInit" type="textarea" sortOrder="560" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>onInit</label>
+					<comment>Callback function</comment>
+				</field>
+				<field id="onLoad" type="textarea" sortOrder="570" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>onLoad</label>
+					<comment>Callback function</comment>
+				</field>
+				<field id="onImageChange" type="textarea" sortOrder="580" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>onImageChange</label>
+					<comment>Callback function</comment>
+				</field>
+				<field id="onMouseOver" type="textarea" sortOrder="590" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>onMouseOver</label>
+					<comment>Callback function</comment>
+				</field>
+				<field id="onMouseOut" type="textarea" sortOrder="600" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>onMouseOut</label>
+					<comment>Callback function</comment>
+				</field>
+				<field id="spinner" type="select" sortOrder="610" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>spinner</label>
+					<comment>Use ajax loading spinner without gif files etc</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="spinnerParam" type="textarea" sortOrder="620" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>spinnerParam</label>
+					<comment>Spinner options, for more info see: http://fgnass.github.com/spin.js/</comment>
+				</field>
+			</group>
+			<group id="main" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Settings</label>
+				<attribute type="expanded">0</attribute>
+				<field id="disableAllMsg" type="select" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">disableAllMsg</div>]]></label>
+					<comment>AJAX-ZOOM produces some notifications within the player telling that image tiles or other files are generating 
+						and returns the result. This happens only when an image or 360 images are opened for the first time. 
+						This is also the reason why preloading is slow at first. 
+						With this switch you can disable these notifications in the front office. 
+					</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="divID" type="text" sortOrder="20" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>divID</label>
+					<comment>DIV (container) ID for mouseover zoom</comment>
+				</field>
+				<field id="galleryDivID" type="text" sortOrder="30" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>galleryDivID</label>
+					<comment>DIV (container) id of the gallery, set to false to disable gallery</comment>
+				</field>
+				
+				<field id="galleryPosition" type="select" sortOrder="40" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">galleryPosition</div>]]></label>
+					<comment>Position of the gallery in the template, possible values: "top", "right", "bottom", "left"; "left" and "right" will instantly change the gallery to vertical! </comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Galleryposition</source_model>
+				</field>								
+				<field id="hideGalleryOneImage" type="select" sortOrder="50" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">hideGalleryOneImage</div>]]></label>
+					<comment>Instantly hide gallery if there is only one image or one 360/3D</comment>				
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="hideGalleryAddClass" type="text" sortOrder="60" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>hideGalleryAddClass</label>
+					<comment>This option is mainly for the layout with vertical gallery which is located next (left or right) to mouseover area. 
+						The most solid css layout for vertical gallery is when "divID" is wrapped by a div which has a left or right margin. 
+						This margin corresponds to vertical gallery width + some space inbetween. So if "hideGalleryOneImage" 
+						option is activated and there is only one image, only one 360 or no images / 360's at all, 
+						then the container represented by "galleryDivID" option is hidden and there is more space which can be filled. 
+						To do that we simply add a css class with margin 0 to the parent of "divID" 
+						overriding the left or right margin which is not needed for the gallery. 
+						You can change the "hideGalleryAddClass" to your own class name or set it to false to prevent this action.
+					</comment>
+				</field>
+				<field id="galleryHover" type="select" sortOrder="70" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>galleryHover</label>
+					<comment>Use mouseenter (mouseover) for switching between images. 
+						You can specify an integer which will represent the time in ms to wait for switching after the mouse enters the thumb; 
+						true defaults to 200
+					</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="galleryAxZmThumbSlider" type="select" sortOrder="80" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">galleryAxZmThumbSlider</div>]]></label>
+					<comment>Use $.axZmThumbSlider on gallery thumbnails or not</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="galleryAxZmThumbSliderParam" type="textarea" sortOrder="90" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">galleryAxZmThumbSliderParam</div>]]></label>
+					<comment>
+						<![CDATA[<div class="validation-advice">Attention: you are editing JavaScript object! Errors will lead to AJAX-ZOOM not working properly.</div>
+						<p class="preference_description note">$.axZmThumbSlider parametrs if "galleryAxZmThumbSlider" is enabled; for full list of options see under: 
+						<a href="http://www.ajax-zoom.com/axZm/extensions/axZmThumbSlider/" target="_blank">http://www.ajax-zoom.com/axZm/extensions/axZmThumbSlider/</a></p>
+						]]> 
+					</comment>
+				</field>
+				<field id="galleryAxZmThumbSliderParam_vertical" type="textarea" sortOrder="100" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">galleryAxZmThumbSliderParam_vertical</div>]]></label>
+					<comment>
+						<![CDATA[<div class="validation-advice">Attention: you are editing JavaScript object! Errors will lead to AJAX-ZOOM not working properly.</div>
+						<p class="preference_description note">$.axZmThumbSlider parametrs if "galleryAxZmThumbSlider" is enabled; for full list of options see under: 
+						<a href="http://www.ajax-zoom.com/axZm/extensions/axZmThumbSlider/" target="_blank">http://www.ajax-zoom.com/axZm/extensions/axZmThumbSlider/</a></p>
+						]]> 
+					</comment>
+				</field>
+				<field id="thumbW" type="text" sortOrder="110" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">thumbW</div>]]></label>
+					<comment>Gallery thumb width</comment>
+				</field>
+				<field id="thumbH" type="text" sortOrder="120" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">thumbH</div>]]></label>
+					<comment>Gallery thumb height</comment>
+				</field>
+				<field id="thumbRetina" type="select" sortOrder="130" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>thumbRetina</label>
+					<comment>Double resolution of the thumb image</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="qualityThumb" type="text" sortOrder="140" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>qualityThumb</label>
+					<comment>Jpeg quality of the gallery thumbs</comment>
+				</field>
+				<field id="quality" type="text" sortOrder="150" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>quality</label>
+					<comment>Jpeg quality of the preview image</comment>
+				</field>
+				<field id="qualityZoom" type="text" sortOrder="160" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>qualityZoom</label>
+					<comment>Jpeg quality of the zoom image shown in the flyout window</comment>
+				</field>
+				<field id="firstImageToLoad" type="text" sortOrder="170" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>firstImageToLoad</label>
+					<comment>Image from "images" option which should be loaded at first; see also "images360firstToLoad" option below</comment>
+				</field>
+				<field id="images360firstToLoad" type="select" sortOrder="180" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">images360firstToLoad</div>]]></label>
+					<comment>In case present load 360 from "images360" first and not an image from "images"</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>				
+				<field id="images360Thumb" type="select" sortOrder="190" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>images360Thumb</label>
+					<comment>Show first image of the spin as thumb</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="images360Overlay" type="select" sortOrder="200" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>images360Overlay</label>
+					<comment>Add a div with class "spinOverlImg" or "spinOverl" over the gallery thumb. On default it has a 360 icon as background. </comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="images360Preview" type="select" sortOrder="210" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">images360Preview</div>]]></label>
+					<comment>Normally plain images are opened in some kind of lightbox or fullscreen; By setting this option to true the 360's will load into "divID" at first and can be expanded to fullscreen.</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="images360PreviewResponsive" type="select" sortOrder="220" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>images360PreviewResponsive</label>
+					<comment>This option is set to true for convinience reasons; In case your "divID" has fixed width and height, set $zoom['config']['picDim'] option in '/axZm/zoomConfigCustom.inc.php' after elseif ($_GET['example'] == 'mouseOverExtension360')</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="images360examplePreview" type="text" sortOrder="230" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>images360examplePreview</label>
+					<comment>In case "images360Preview" is set to true, the value of this parameter will be sent to AJAX-ZOOM as "options set" (example=mouseOverExtension360)</comment>
+				</field>
+				<field id="zoomMsg360" type="textarea" sortOrder="240" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomMsg360</label>
+					<comment>Message displayed under mouse over zoom when 360 is loaded, e.g. "Drag to spin 360, scroll to zoom"; can be Javascript object e.g. {"en": "text english...", "de": "text german...", "fr":"text french..."}</comment>
+				</field>				
+				<field id="zoomMsg360_touch" type="textarea" sortOrder="250" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>zoomMsg360_touch</label>
+					<comment>Message displayed under mouse over zoom when 360 is loaded on touch devices, default: 'Drag to spin 360°, pinch to zoom in and out'. Can be Javascript object e.g. {"en": "text english...", "de": "text german...", "fr":"text french..."}</comment>
+				</field>
+				<field id="preloadMouseOverImages" type="text" sortOrder="260" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">preloadMouseOverImages</div>]]></label>
+					<comment>Preload all preview and mouseover images, possible values: false, true, 'oneByOne'</comment>
+				</field>												
+				<field id="noImageAvailableClass" type="text" sortOrder="270" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>noImageAvailableClass</label>
+					<comment>In case there are no images in "images", nor there are any in "images360", a div with some image as background can be appended to the container and receive this options value as css class</comment>
+				</field>
+				<field id="width" type="text" sortOrder="280" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>width</label>
+					<comment>Width of the preview image or 'auto' (depending on parent container size - "divID", see above); this is also the value which will be passed to your AJAX-ZOOM imaging server to generate this image on-the-fly.</comment>
+				</field>
+				<field id="height" type="text" sortOrder="290" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>height</label>
+					<comment>Height of the preview image or 'auto' (depending on parent container size - "divID", see above); this is also the value which will be passed to your AJAX-ZOOM imaging server to generate this image on-the-fly.</comment>
+				</field>																							
+				<field id="responsive" type="select" sortOrder="300" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>responsive</label>
+					<comment>Set this to true for responsive layouts</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>	
+				<field id="oneSrcImg" type="select" sortOrder="310" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">oneSrcImg</div>]]></label>
+					<comment>Use single image as "preview image" - the image which is hovered and the big "flyout image".</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="heightRatio" type="text" sortOrder="320" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">heightRatio</div>]]></label>
+					<comment>If "responsive" option is enabled, "heightRatio" with instantly adjust the height of mouseover container depending on width calculated by the browser, e.g. 1.0 will always (only limited by "maxSizePrc" option) make height same as width; a value of 1.5 will make the preview like a portrait. You can also set "heightRatio" to 'auto'. In this case the height will be adjusted to cover available space instantly! Please note that when your images are not always same proportion, then the container will also change the size when the user switches to a different image.</comment>
+				</field>
+				<field id="heightMaxWidthRatio" type="text" sortOrder="330" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">heightMaxWidthRatio</div>]]></label>
+					<comment>Similar as you would set max-width: someValue @media only screen condition you can define "heightRatio" depending on the width of the browser, e.g. ["960|0.8", "700|0.7"]</comment>
+				</field>
+				<field id="widthRatio" type="text" sortOrder="340" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>widthRatio</label>
+					<comment>Oposit of "heightRatio"</comment>
+				</field>
+				<field id="widthMaxHeightRatio" type="text" sortOrder="350" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>widthMaxHeightRatio</label>
+					<comment>Oposit of "heightMaxWidthRatio"</comment>
+				</field>
+				<field id="maxSizePrc" type="text" sortOrder="360" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">maxSizePrc</div>]]></label>
+					<comment>Limit the height if "responsive" and "heightRatio" options are set. Setting "heightRatio" option may result in that the height of the mouseover zoom is bigger than window height and the image is not fully visible. To prevent this you can limit the calculated height with this "maxSizePrc" option. The value of 1.0 would limit the height to 100% of window height; a value of 0.8 to 80% of window height; you can also define two values, e.g. '1.0|-120' which would be window height minus 120px.</comment>
+				</field>	
+				<field id="mouseOverZoomWidth" type="text" sortOrder="370" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">mouseOverZoomWidth</div>]]></label>
+					<comment>Max width of the image that will be shown in the zoom window; this is the value which will be passed to your AJAX-ZOOM imaging server to generate this image on-the-fly. Please note that the size is limited by $zoom['config']['allowDynamicThumbsMaxSize'] which is can be set in '/axZm/zoomConfig.inc.php'. You can also specify a link to the image, see "images" option above. To set the width of the fly out window see "zoomWidth" under "mouseOverZoomParam".</comment>
+				</field>
+				<field id="mouseOverZoomHeight" type="text" sortOrder="380" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">mouseOverZoomHeight</div>]]></label>
+					<comment>Max height of the image that will be shown in the zoom window; this is the value which will be passed to your AJAX-ZOOM imaging server to generate this image on-the-fly. Please note that the size is limited by $zoom['config']['allowDynamicThumbsMaxSize'] which is can be set in '/axZm/zoomConfig.inc.php'. You can also specify a link to the image, see "images" option above. To set the height of the fly out window see "zoomHeight" under "mouseOverZoomParam".</comment>
+				</field>	
+				<field id="ajaxZoomOpenMode" type="text" sortOrder="390" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">ajaxZoomOpenMode</div>]]></label>
+					<comment>Determines how AJAX-ZOOM is opened when the user clicks on preview images / lens, possible values: 'fullscreen' (see also "fullScreenApi" option below), 'fancyboxFullscreen', 'fancybox', 'colorbox'; By editing $.mouseOverZoomInit you can extend the plugin to be used with different types of modal boxes to load AJAX-ZOOM into.</comment>
+				</field>								
+				<field id="fancyBoxParam" type="textarea" sortOrder="400" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>fancyBoxParam</label>
+					<comment>If fancybox is used in "ajaxZoomOpenMode" option, Fancybox options</comment>
+				</field>				
+				<field id="colorBoxParam" type="textarea" sortOrder="410" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>colorBoxParam</label>
+					<comment>If colorbox is used in "ajaxZoomOpenMode" option, Colorbox options</comment>
+				</field>
+				<field id="example" type="text" sortOrder="420" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>example</label>
+					<comment>Configuration set which is passed to ajax-zoom when ajaxZoomOpenMode is 'fullscreen'</comment>
+				</field>
+				<field id="exampleFancyboxFullscreen" type="text" sortOrder="430" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>exampleFancyboxFullscreen</label>
+					<comment>Configuration set which is passed to ajax-zoom when ajaxZoomOpenMode is 'fancyboxFullscreen'</comment>
+				</field>				
+				<field id="exampleFancybox" type="text" sortOrder="440" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>exampleFancybox</label>
+					<comment>Configuration set which is passed to ajax-zoom when ajaxZoomOpenMode is 'fancybox'</comment>
+				</field>
+				<field id="exampleColorbox" type="text" sortOrder="450" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>exampleColorbox</label>
+					<comment>Configuration set which is passed to ajax-zoom when ajaxZoomOpenMode is 'colorbox'</comment>
+				</field>
+				<field id="enforceFullScreenRes" type="text" sortOrder="460" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>enforceFullScreenRes</label>
+					<comment>Enforce "ajaxZoomOpenMode" to be "fullscreen" if screen width is less than this value</comment>
+				</field>
+				<field id="prevNextArrows" type="select" sortOrder="470" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>prevNextArrows</label>
+					<comment>Put prev / next buttons over mouseover zoom. CSS: .axZm_mouseOverPrevNextArrows </comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="disableScrollAnm" type="select" sortOrder="480" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>disableScrollAnm</label>
+					<comment>Disable animation while zooming with AJAX-ZOOM</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="fullScreenApi" type="select" sortOrder="490" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>fullScreenApi</label>
+					<comment>Try to open AJAX-ZOOM at browsers fullscreen mode, possible on modern browsers except IE &lt; 10 and mobile</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="axZmCallBacks" type="textarea" sortOrder="500" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>axZmCallBacks</label>
+					<comment><![CDATA[<div class="validation-advice">Attention: you are editing JavaScript object! Errors will lead to AJAX-ZOOM not working properly.</div><p class="note">AJAX-ZOOM has several callbacks, http://www.ajax-zoom.com/index.php?cid=docs#onBeforeStart</p>]]></comment>
+				</field>
+				<field id="azOptions" type="textarea" sortOrder="510" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">azOptions</div>]]></label>
+					<comment><![CDATA[<div class="validation-advice">Attention: you are editing JavaScript object! Errors will lead to AJAX-ZOOM not working properly.</div><p class="note">AJAX-ZOOM options can be set with JS when AJAX-ZOOM is inited. Normally you would be defining them in /axZm/zoomConfig.inc.php or /axZm/zoomConfigCustom.inc.php; this field is for convinience reasons. Example: {fullScreenCornerButton: false} - this would disable the button for fullscreen</p>]]></comment>
+				</field>
+				<field id="azOptions360" type="textarea" sortOrder="520" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">azOptions360</div>]]></label>
+					<comment><![CDATA[<div class="validation-advice">Attention: you are editing JavaScript object! Errors will lead to AJAX-ZOOM not working properly.</div><p class="note">Same as above but specifically for 360/3D</p>]]></comment>
+				</field>
+				<field id="postMode" type="select" sortOrder="530" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>postMode</label>
+					<comment>Set AJAX-ZOOM to use POST instead of GET</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>				
+			</group>
+			<group id="pinterest" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Settings for pinterest button</label>
+				<attribute type="expanded">0</attribute>
+				<field id="enabled" type="select" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label><![CDATA[<div class="notice-msg importantAZoption">enabled</div>]]></label>
+					<comment>Experimental feature - enable Pinterest button. Pinterest allows to collect visual bookmarks in the form of images collected on the internet.</comment>					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="build" type="text" sortOrder="20" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>build</label>
+					<comment>Since images are changed the button needs to be repainted [...] In order to accomplish this the Pinterest API should be exposed to window object. This is done by setting data-pin-build attribute value in the script tag when pinterest JavaScript is included. &lt;script data-pin-build="parsePinBtns" type="text/javascript" src="//assets.pinterest.com/js/pinit.js"&gt;&lt;/script&gt; So if you do not have the data-pin-build, please add it to the script tag and if it is different from default ('parsePinBtns'), then change this "build" value. Otherwise the pinterest button will not work.</comment>
+				</field>
+				<field id="wrapClass" type="text" sortOrder="30" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>wrapClass</label>
+					<comment>This is the class of the container where the button will be put into. On default it is at bottom right. To place the button somewhere else you can either change the css of the default class or define a different class.</comment>
+				</field>
+				<field id="href" type="text" sortOrder="40" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>href</label>
+					<comment>href attribute before the button is build.</comment>
+				</field>
+				<field id="description" type="text" sortOrder="460" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>description</label>
+					<comment>Page title if null</comment>
+				</field>
+				<field id="url" type="text" sortOrder="50" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>url</label>
+					<comment>Will be set instantly if null</comment>
+				</field>
+				<field id="media" type="text" sortOrder="60" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>media</label>
+					<comment>Will be set to current selected image if null</comment>
+				</field>
+				<field id="btnSrc" type="text" sortOrder="70" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>btnSrc</label>
+					<comment>Source for the button</comment>
+				</field>
+			</group>	
+
+			<group id="magento" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Magento specific settings</label>
+				<attribute type="expanded">0</attribute>
+				<field id="magentoAllImagesStart" type="select" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>magentoAllImages</label>
+					<comment>Load all images independent on label (color), also from "Simple Products" which are bind to Configurable Product on start.</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="magentoNoImage" type="select" sortOrder="20" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>magentoNoImage</label>
+					<comment>Show magento no image available, if no AJAX-ZOOM no image available will be shown</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="magentoAdminThumb" type="select" sortOrder="30" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>magentoAdminThumb</label>
+                    <comment>Replace normal images in admin area with dynamically generated thumbs of these images</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+				<field id="magentoNoScale" type="select" sortOrder="40" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>magentoNoScale</label>
+                    <comment>Do not scale uploaded images by Magento</comment>
+					<source_model>Ax\Zoom\Model\Config\Source\Truefalse</source_model>
+				</field>
+			</group>
+			<group id="products" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Enable only for these products</label>
+				<attribute type="expanded">0</attribute>
+				<field id="displayOnlyForThisProductID" type="text" sortOrder="70" showInDefault="1" showInStore="1" showInWebsite="1">
+					<label>displayOnlyForThisProductID</label>
+					<comment>CSV with product IDs for which AJAX-ZOOM will be only enabled. Leave blank to have it enabled for all products! This option can be usefull e.g. if you want to make A/B tests and enable AJAX-ZOOM only for certain products, e.g. 7,15 would enable AJAX-ZOOM only for products with ID 7 and 15</comment>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>
