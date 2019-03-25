@@ -1,6 +1,7 @@
 <?php
 namespace Ax\Zoom\Model;
 
+
 class Ax360 extends \Magento\Framework\Model\AbstractModel
 {
 	static $axZmH;
