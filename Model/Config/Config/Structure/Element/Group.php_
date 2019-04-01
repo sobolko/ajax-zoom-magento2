@@ -1,0 +1,49 @@
+<?php
+
+namespace Ax\Zoom\Model\Config\Config\Structure\Element;
+
+use \Magento\Config\Model\Config\Structure\Element\Group as OriginalGroup;
+use \Magento\Directory\Api\Data\CountryInformationInterface;
+use \Ax\Zoom\Helper\Config as ConfigHelper;
+use \Magento\Directory\Helper\Data as DirectoryHelper;
+
+/**
+ * Plugin to add dynamically generated store config fields
+ * to General -> General -> State Options group.
+ *
+ * @package Ax\Zoom\Model\Config\Config\Structure\Element
+ */
+class Group
+{
+    public function __construct()
+    {
+
+    }
+
+
+    /**
+     * Add dynamic region config fields for each country configured
+     *
+     * @param OriginalGroup $subject
+     * @param callable $proceed
+     * @param array $data
+     * @param $scope
+     * @return mixed
+     */
+    public function aroundSetData(OriginalGroup $subject, callable $proceed, array $data, $scope) {
+        // This method runs for every group.
+        // Add a condition to check for the one to which we're
+        // interested in adding fields.
+
+        error_log("GROUP: " . $data['id'] . "\n", 3, '_log.txt');
+
+        if($data['id'] == 'check_group') {
+
+            if(!empty($dynamicFields)) {
+                $data['children'] += $dynamicFields;
+            }
+        }
+
+        return $proceed($data, $scope);
+    }
+}
