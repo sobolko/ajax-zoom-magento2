@@ -49,6 +49,7 @@ class License extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\
             $rendered .= '<option value="evaluation" #{option_extra_attr_evaluation}>evaluation</option>';
             $rendered .= '<option value="developer" #{option_extra_attr_developer}>developer</option>';
             $rendered .= '<option value="basic" #{option_extra_attr_basic}>basic</option>';
+            $rendered .= '<option value="simple" #{option_extra_attr_simple}>simple</option>';
             $rendered .= '<option value="standard" #{option_extra_attr_standard}>standard</option>';
             $rendered .= '<option value="business" #{option_extra_attr_business}>business</option>';
             $rendered .= '<option value="corporate" #{option_extra_attr_corporate}>corporate</option>';

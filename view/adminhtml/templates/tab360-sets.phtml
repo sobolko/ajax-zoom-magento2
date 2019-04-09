@@ -30,13 +30,13 @@ $files      = $this->getArcList();
 	}
 </style>
 
-<div id="product-images360sets" class="entry-edit">
+<div id="product-images360sets" class="entry-edit ax-tab">
 	<div class="fieldset-wrapper">
-		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title">
+		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
 			<strong class="title"><?php echo __('360/3D Views') ?></strong>
 		</div>
 	</div>
-	<div class="fieldset fieldset-wide" id="group_fields9">
+	<div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
 		<div class="hor-scroll">
 			<div>
 				<a class="link_add" href="#"> <i class="icon-plus"></i> <?php echo __('Add a new 360/3D view') ?></a>
@@ -159,6 +159,10 @@ $files      = $this->getArcList();
 			</div>
 		</div>
 	</div>
+
+
+	<?php require 'tab360.phtml'; ?>
+
 </div>
 
 

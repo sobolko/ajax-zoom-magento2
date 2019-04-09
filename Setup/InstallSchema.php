@@ -17,6 +17,7 @@ class InstallSchema implements InstallSchemaInterface
 
         $installer = $setup;
         $installer->startSetup();
+        $db_prefix = ''; // !!!
 
         $installer->run("CREATE TABLE IF NOT EXISTS `ajaxzoom360` (
             `id_360` int(11) NOT NULL AUTO_INCREMENT,  
@@ -36,6 +37,44 @@ class InstallSchema implements InstallSchemaInterface
         $installer->run("CREATE TABLE IF NOT EXISTS `ajaxzoomproducts` (
             `id_product` int(11) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
          
+        $installer->run("CREATE TABLE IF NOT EXISTS `{$db_prefix}ajaxzoomvideo` 
+            (`id_video` int(11) NOT NULL AUTO_INCREMENT,
+            `uid` varchar(255) NOT NULL,
+            `id_product` int(11) NOT NULL,
+            `name` varchar(255) NOT NULL,
+            `type` varchar(64) NOT NULL DEFAULT '',
+            `thumb` varchar(255) NOT NULL,
+            `settings` text NOT NULL,
+            `status` tinyint(1) NOT NULL DEFAULT '1',
+            `combinations` text NOT NULL,
+            `auto` tinyint(1) NOT NULL DEFAULT '1',
+            `data` text CHARACTER SET utf16 NOT NULL,
+            PRIMARY KEY (`id_video`),
+            KEY `id_product` (`id_product`),
+            KEY `uid` (`uid`)) 
+            ENGINE=InnoDB 
+            DEFAULT CHARSET=utf8;");
+
+        $installer->run("CREATE TABLE IF NOT EXISTS `{$db_prefix}ajaxzoomimagehotspots` 
+            (`id` int(11) NOT NULL AUTO_INCREMENT, 
+            `id_media` int(11) NOT NULL,
+            `id_product` int(11) NOT NULL,
+            `image_name` varchar(255) NOT NULL,
+            `hotspots_active` int(1) NOT NULL DEFAULT 1,
+            `hotspots` text NOT NULL,
+            PRIMARY KEY (`id`)) 
+            ENGINE=InnoDB 
+            DEFAULT CHARSET=utf8;";
+
+        $installer->run("CREATE TABLE IF NOT EXISTS `{$db_prefix}ajaxzoomproductsettings` 
+            (`id_product` int(11) NOT NULL, 
+            `psettings` text NOT NULL, 
+            `psettings_embed` text NOT NULL, 
+            PRIMARY KEY (`id_product`)) 
+            ENGINE=InnoDB 
+            DEFAULT CHARSET=utf8;";
+
+
         $installer->endSetup();
 
 

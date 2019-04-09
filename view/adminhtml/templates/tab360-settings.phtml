@@ -23,15 +23,15 @@ foreach($usedProducts as $p) {
 }
 </style>
 
-<div class="entry-edit">
+<div class="entry-edit ax-tab">
 	<div class="fieldset-wrapper">
-		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title">
-			<strong class="title"><?php echo __('Settings') ?></strong>
+		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
+			<strong class="title"><?php echo __('Enable / Disable AJAX-ZOOM for this product') ?></strong>
 		</div>
 	</div>
-	<div class="fieldset fieldset-wide" id="group_fields9">
+	<div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
 		<div class="hor-scroll">
-			<?php echo __('AJAX ZOOM enabled for this product\'s detail view') ?></label>
+			<?php echo __('AJAX ZOOM enabled for detail view of this product') ?></label>
 			<br>
 			<input type="radio" name="az_active" id="az_active_on" value="1" <?php if($active == 1):?>checked="checked"<?php endif ?>/>
 			<label class="t" for="az_active_on"><?php echo __('Yes') ?></label>
@@ -40,13 +40,15 @@ foreach($usedProducts as $p) {
 		</div>
 	</div>
 </div>
-<br>
-<br>
 
-<div class="entry-edit">
-	<?php echo __('Settings for existing 360/3D') ?>
-	
-	<div class="fieldset fieldset-wide" id="group_fields9">
+<div class="entry-edit ax-tab">
+	<div class="fieldset-wrapper">
+		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
+			<strong class="title"><?php echo __('Settings for existing 360/3D') ?></strong>
+		</div>
+	</div>
+
+	<div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
 		<div class="hor-scroll">
 			<table cellspacing="0" class="form-list">
 				<tbody>
@@ -262,3 +264,4 @@ require(["jquery"], function($){
     } );
 });
 </script>
+	

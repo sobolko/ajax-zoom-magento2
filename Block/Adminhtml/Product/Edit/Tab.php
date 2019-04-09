@@ -12,6 +12,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     protected $_configurableType;
     protected $_coreRegistry;
     protected $_template = 'tab.phtml';
+    protected $_scopeConfig;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
@@ -22,12 +23,14 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         \Magento\ConfigurableProduct\Model\Product\Type\Configurable $configurableType,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = []
     ) {
     	$this->_objectManager = $objectManager;
         parent::__construct($context, $data);
         $this->_configurableType = $configurableType;
         $this->_coreRegistry = $coreRegistry;
+        $this->_scopeConfig = $scopeConfig;
 
         $this->_loadMedia();
     }
@@ -154,4 +157,29 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         $formKey = $this->_objectManager->get('Magento\Framework\Data\Form\FormKey');
         return $formKey->getFormKey();
     }
+
+    public function getVideos()
+    {
+        $productId = $this->getProductId();
+
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Axvideo');
+        
+        return $model->getVideos($productId);
+    }
+
+
+    public function getStoreLanguages()
+    {
+        $langugaes_array = array('en' => 'en');
+
+        $storeManager = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface');
+        $stores = $storeManager->getStores($withDefault = false);
+        foreach ($stores as $store) {
+            $data = $store->getData();
+            $storelang =  $this->_scopeConfig->getValue('general/locale/code', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $data['store_id']);
+            $langugaes_array[substr($storelang, 0, 2)] = substr($storelang, 0, 2);
+        }
+
+        return $langugaes_array;
+    }    
 }

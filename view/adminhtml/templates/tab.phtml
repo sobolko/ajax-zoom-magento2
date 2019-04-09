@@ -1,4 +1,49 @@
 <script type="text/javascript">
+jQuery(function ($) {
+	$('.ajax-zoom .ax-tab-title').click(function (e) {
+		$(this).closest('.ax-tab').find('.ax-tab-content').toggle();
+	})
+});
+
+function az_addBodyMessageContainer()
+{
+    if (!jQuery('body>#az_body_message_container').length) {
+        jQuery('<div />').attr('id', 'az_body_message_container').appendTo('body');
+    }
+}
+
+// !!! message does not shows
+// !!! remove original function showSuccessMessage
+function az_showSuccessMessage(message, to)
+{
+    if (jQuery.isArray(message) && message[0]) {
+        message = message[0];
+    }
+
+    if (typeof message == 'string') {
+        az_addBodyMessageContainer();
+
+        var msgDiv = jQuery('<div />')
+        .addClass('az_success_message')
+        .html(message)
+        .appendTo('#az_body_message_container');
+
+        setTimeout(function() {
+            msgDiv
+            .fadeOut(200, function() {
+                jQuery(this).remove();
+            } );
+        }, (to ? parseInt(to) : 2500));
+    }
+}
+
+function az_showErrorMessage(message)
+{
+    console.log(message);
+}
+
+
+
 function showSuccessMessage(message)
 {
 	//console.log(message);
@@ -31,11 +76,54 @@ function doAdminAjax360(url, data, success_func, error_func)
 }
 </script>
 
+<style type="text/css">
+	.ajax-zoom .fieldset-wrapper-title {
+	    border-bottom: 1px solid #f0f0f0 !important;
+	    padding: 10px !important;
+	    background: #fbfbfb;
+	    cursor: pointer;		
+	}
+
+	.ajax-zoom .fieldset-wrapper {
+		padding-bottom: 10px !important;
+    	padding-top: 0px !important;
+	}
+
+	.ajax-zoom .entry-edit .fieldset {
+		padding: 10px !important;
+	}
+
+	.ax-tab-content {
+		display: none;
+	}
+
+	#az_body_message_container {
+		position: fixed;
+	    top: 77px;
+	    right: 0px;
+	}
+	.az_success_message {
+	    background: green;
+	    padding: 10px;
+	    color: #fff;
+	    border: 1px solid green;
+	    border-radius: 5px; 
+
+	}
+</style>
+
 <?php 
 $productId = $this->getProductId();
 $ax = $this->getAxModel();
 ?>
 
-<?php require 'tab360-settings.phtml'; ?>
-<?php require 'tab360-sets.phtml'; ?>
-<?php require 'tab360.phtml'; ?>
+<div class="ajax-zoom">
+	<?php require 'tab360-settings.phtml'; ?>
+	<?php require 'tab360-sets.phtml'; ?>
+	<?php require 'tab-video.phtml'; ?>
+	<?php require 'tab-hotspot.phtml'; ?>
+</div>
+
+
+
+

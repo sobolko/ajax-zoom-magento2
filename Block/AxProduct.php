@@ -17,8 +17,11 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 	protected $Ax360;
 	protected $Ax360set;
     protected $Axproducts;
+    protected $Axvideo;
     protected $swatchHelper;
     protected $productModelFactory;
+    public $_store;
+    public $product_has_video_html5 = false;
 
 
 	public function __construct(
@@ -31,6 +34,9 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 		\Ax\Zoom\Model\Ax360 $Ax360,
 		\Ax\Zoom\Model\Ax360set $Ax360set,
         \Ax\Zoom\Model\Axproducts $Axproducts,
+        \Ax\Zoom\Model\Axvideo $Axvideo,
+        \Magento\Framework\Locale\Resolver $store,
+
 		array $data = []
 	)
 	{
@@ -39,9 +45,11 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 		$this->Ax360 = $Ax360;
 		$this->Ax360set = $Ax360set;
         $this->Axproducts = $Axproducts;
+        $this->Axvideo = $Axvideo;
 		$this->_imageHelper = $context2->getImageHelper();
 		$this->productRepository = $productRepository;
 		$this->_coreRegistry = $registry;
+        $this->_store = $store;
 
 		parent::__construct(
             $context,
@@ -148,6 +156,8 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         }
         
         array_push($scripts, $baseUrl . "axzoom/axZm/plugins/JSON/jquery.json-2.3.min.js");
+
+        array_push($scripts, $baseUrl . "axzoom/axzoom.js");
 
         return $scripts;
     }
@@ -440,5 +450,96 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         }        
         $data = $product->getData();
         return $data['entity_id'];
+    }
+
+
+    public function normalizeConfig($conf, $prefix = '')
+    {
+        $ret = array();
+        foreach ($conf as $cat => $items) {
+            foreach ($items as $k => $v) {
+                $ret[strtoupper($prefix).'_'.strtoupper($k)] = $v;
+            }
+        }
+
+        return $ret;
+    }
+
+    public function prepareInitParamFront($conf = array())
+    {
+        require_once dirname(dirname(__FILE__)).'/AzMouseoverSettings.php';
+        require dirname(dirname(__FILE__)).'/AzMouseoverConfig.php';
+        $mouseover_settings = new \AzMouseoverSettings($az_mouseover_config_magento);
+        //if (empty($conf)) {
+        //    $conf = Mage::getStoreConfig('axzoom_options');
+        //}
+
+        return $mouseover_settings->getInitJs(
+            array(
+            'cfg' => $this->normalizeConfig($conf, 'AJAXZOOM'),
+            'window' => 'window.',
+            'holder_object' => 'jQuery.axZm_psh',
+            'exclude_opt' => array(),
+            'exclude_cat' => array('video_settings'),
+            'ovrprefix' => 'AJAXZOOM',
+            'differ' => true,
+            'min' => true
+            )
+        );
     }    
+
+
+    public function __($str) {
+        return __($str);
+    }
+
+    public function videosJson($id_product, $tojson = true)
+    {
+        $r = array();
+        $videos = $this->Axvideo->getVideos($id_product);
+        foreach ($videos as $video) {
+            $r[$video['id_video']] = $video;
+        }
+
+        $ret = array();
+        $i = 0;
+
+        $lang = 'en'; // !!!
+        /*
+        $lang = substr(Mage::app()->getLocale()->getLocaleCode(), 0, 2);
+        if ($lang) {
+            $lang = strtolower($lang);
+        }*/
+
+        foreach ($videos as $k => $v) {
+            $i++;
+            $uid = $videos[$k]['uid'];
+            $data = (array)json_decode($videos[$k]['data']);
+
+            if ($lang && !empty($data) && is_array($data) && isset($data['uid']) && is_object($data['uid'])) {
+                if (!empty($data['uid']->{$lang}) && trim($data['uid']->{$lang}) != '') {
+                    $uid = trim($data['uid']->{$lang});
+                }
+            }
+
+            if ($videos[$k]['type'] == 'videojs') {
+                $this->product_has_video_html5 = true;
+            }
+
+            $ret[$i] = array(
+                'key' => $uid,
+                'settings' => (array)json_decode($videos[$k]['settings']),
+                'combinations' => (!$videos[$k]['combinations'] || $videos[$k]['combinations'] == '[]') ? array() : explode(',', $videos[$k]['combinations']),
+                'type' => $videos[$k]['type']
+            );
+        }
+
+        if ($tojson == true) {
+            $ret = json_encode($ret, true);
+        }
+
+        return $ret;
+    }
+
+
 }
