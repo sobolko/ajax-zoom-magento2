@@ -44,6 +44,7 @@ class SaveProduct implements \Magento\Framework\Event\ObserverInterface
 		$productId = $object->getId();
 		
     	$postData = $this->request->getPost();
+
     	
     	/*
         // remove images from Ax cache if image checked as remove
@@ -55,7 +56,8 @@ class SaveProduct implements \Magento\Framework\Event\ObserverInterface
         }
 		*/
 
-    	// save status 
+        /* AZ: this part moved to the ajax action as post variables does not passed
+        // save status 
         if (isset($postData['az_active'])) {
         	if ($postData['az_active'] == 1) {
         		$this->activateAx($productId);
@@ -63,6 +65,7 @@ class SaveProduct implements \Magento\Framework\Event\ObserverInterface
         		$this->Axproducts->setData(array('id_product' => $productId))->save();
         	}
         }
+        */
 
     	// save settings
     	if(isset($postData['settings'])) foreach ($postData['settings'] as $id_360 => $string) {

@@ -1,8 +1,32 @@
+<?php 
+$productId = $this->getProductId();
+$ax = $this->getAxModel();
+?>
+
 <script type="text/javascript">
 jQuery(function ($) {
 	$('.ajax-zoom .ax-tab-title').click(function (e) {
 		$(this).closest('.ax-tab').find('.ax-tab-content').toggle();
-	})
+	});
+
+
+	$('body').on('change', 'input[name=az_active]', function(e) { 
+		e.preventDefault();
+		var az_active = $(this).val();
+
+		doAdminAjax360('<?php echo $this->getUrlAjax('setProductStatus'); ?>', {
+				"id_product" : <?php echo $productId ?>,
+				"az_active" : az_active}, afterUpdateProductStatus
+		);
+		
+	});	
+
+
+	function afterUpdateProductStatus(data) { 
+		var data = $.parseJSON(data);
+
+		az_showSuccessMessage(data.confirmations);
+	} 	
 });
 
 function az_addBodyMessageContainer()
@@ -112,10 +136,6 @@ function doAdminAjax360(url, data, success_func, error_func)
 	}
 </style>
 
-<?php 
-$productId = $this->getProductId();
-$ax = $this->getAxModel();
-?>
 
 <div class="ajax-zoom">
 	<?php require 'tab360-settings.phtml'; ?>
