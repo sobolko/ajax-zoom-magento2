@@ -332,6 +332,11 @@ return;
     public function getImagesJsonComb()
     {
         $product = $this->getProduct();
+        $for_js = array();
+
+        if(!$product->canConfigure()) {
+            return $for_js;
+        }
 
         // !!! AZ: does not work for simple products
         $attributes = $product->getTypeInstance()->getConfigurableAttributesAsArray($product);
@@ -365,7 +370,7 @@ return;
 
         $combinations = $this->arrayCombinations($result_idx);
 
-        $for_js = array();
+        
         foreach($combinations as $combination) {
             $attributes = array();
             $ids = array();
