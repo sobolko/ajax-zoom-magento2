@@ -182,4 +182,97 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
         return $langugaes_array;
     }    
+
+
+    public function getImagesBackendHotspots($id_product, $sub = false)
+    {
+        $id_product = (int)$id_product;
+        $az_pictures_lst = array();
+        $az_az_load = $this->getBaseUrl() . 'axzoom/axZm/zoomLoad.php?azImg=';
+        
+        $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($id_product);
+        $images = $product->getMediaGalleryImages();
+        foreach ($images as $image) {
+            $data = $image->getData();
+
+            if ($data['id'] && !stristr($data['label'], '-swatch')) {
+                $urli = parse_url($data['url']);
+                $pathi = pathinfo($urli['path']);
+                $az_pictures_lst[$data['id']] = array(
+                    'id_media' => (int)$data['id'],
+                    'id_product' => (int)$id_product,
+                    'image_name' => $pathi['basename'],
+                    'path' => $urli['path'],
+                    'label' => $data['label'],
+                    'thumb' => $az_az_load.$urli['path'].'&width=100&height=128&qual=128'
+                );   
+            }
+        }
+
+
+        /*
+        $product = Mage::getModel('catalog/product')->load($id_product);
+        
+        $az_images_collection = $this->getMediaGalleryImagesAll($id_product);
+        $az_az_load = Mage::getBaseUrl('js') . 'axzoom/axZm/zoomLoad.php?azImg=';
+        $product_id = $id_product;
+
+        if (count($az_images_collection) > 0) {
+            foreach ($az_images_collection as $image) {
+                $id = $image->getId();
+                $label = $image->getLabel();
+
+                if ($id && !stristr($label, '-swatch')) {
+                    $urli = parse_url($image->getUrl());
+                    $pathi = pathinfo($urli['path']);
+                    $az_pictures_lst[$id] = array(
+                        'id_media' => (int)$id,
+                        'id_product' => (int)$product_id,
+                        'image_name' => $pathi['basename'],
+                        'path' => $urli['path'],
+                        'label' => $label,
+                        'thumb' => $az_az_load.$urli['path'].'&width=100&height=128&qual=128'
+                    );
+                }
+            }
+
+            if ($product->isConfigurable()) {
+                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
+
+                foreach ($childProducts as $child) {
+                    $additional_images = $this->getImagesBackendHotspots($child->getId(), true);
+                    if (!empty($additional_images)) {
+                        $az_pictures_lst = array_merge($az_pictures_lst, $additional_images);
+                    }
+                }
+            }
+
+            if ($sub === false && !empty($az_pictures_lst)) {
+                $new_arr = array();
+                $ids = array();
+                foreach ($az_pictures_lst as $k => $v) {
+                    if (isset($v['id_media']) && $v['id_media']) {
+                        array_push($ids, $v['id_media']);
+                        $new_arr[$v['id_media']] = $v;
+                    }
+                }
+
+                $az_pictures_lst = $new_arr;
+
+                if (!empty($ids)) {
+                    $about_hs = $this->getImagesHotspots($ids, true);
+                    if (!empty($about_hs)) {
+                        foreach ($about_hs as $k => $v) {
+                            $az_pictures_lst[$k]['hotspots'] = $v['hotspots'];
+                            $az_pictures_lst[$k]['active'] = $v['active'];
+                        }
+                    }
+                }
+            }
+        }
+        */
+
+        return $az_pictures_lst;
+    }
+
 }

@@ -153,6 +153,8 @@ $files      = $this->getArcList();
 							<a class="delete_set scalable delete" href=""><?php echo __('Delete') ?></a>
 							<a class="images_set scalable" href=""><?php echo __('Images') ?></a>
 							<a class="scalable preview_set hide_class" href=""><?php echo __('Preview') ?></a>
+							<a class="az_hotspot_set scalable hide_class" href=""><?php echo __('Hotspots'); ?></a>
+                            <a class="az_crop_set scalable hide_class" href=""><?php echo __('360° Product Tour'); ?></a>
 						</td>
 					</tr>
 				</table>
@@ -322,6 +324,48 @@ $files      = $this->getArcList();
 			$('#id_360set').val(id);
 			$('#product-images360').show();
 		});
+
+
+	    $('body').on('click','.az_crop_set', function(e) {
+	        e.preventDefault();
+
+	        var id360 = $(this).parent().parent().data('group');
+	        var id360set = $(this).parent().parent().attr('id');
+	        var qty = $('tr[data-group=' + id360 + ']').length;
+
+	        var cropHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/cropeditor.php?';
+	            cropHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
+	            if (qty < 2) {
+	                cropHref += '/' + id360set;
+	            }
+	            cropHref += '&group='+id360+'&id='+id360set;
+	            cropHref += '&url_get=<?php echo $this->getUrlAjax('GetCropJson'); ?>';
+	            cropHref += '&url_set=<?php echo $this->getUrlAjax('SetCropJson'); ?>';
+	            cropHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+	            cropHref += '&hs_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
+
+	        $.openAjaxZoomInFancyBox({href: cropHref, iframe: true, scrolling: 1});
+	    });
+
+	    $('body').on('click','.az_hotspot_set', function(e) {
+	        e.preventDefault();
+
+	        var id360 = $(this).closest('tr').data('group');
+	        var id360set = $(this).closest('tr').attr('id');
+	        var qty = $('tr[data-group=' + id360 + ']').length;
+
+	        var hotspotHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/hotspoteditor.php?';
+	            hotspotHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
+	            if (qty < 2) {
+	                hotspotHref += '/' + id360set;
+	            }
+	            hotspotHref += '&group='+id360+'&id='+id360set;
+	            hotspotHref += '&url_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
+	            hotspotHref += '&url_set=<?php echo $this->getUrlAjax('SetHotspotJson'); ?>';
+	            hotspotHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+
+	        $.openAjaxZoomInFancyBox({href: hotspotHref, iframe: true, scrolling: 1});
+	    });
 
 
 		$('.save_set').click(function (e) {

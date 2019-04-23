@@ -18,6 +18,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 	protected $Ax360set;
     protected $Axproducts;
     protected $Axvideo;
+    protected $Axhotspot;
     protected $swatchHelper;
     protected $productModelFactory;
     public $_store;
@@ -35,6 +36,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 		\Ax\Zoom\Model\Ax360set $Ax360set,
         \Ax\Zoom\Model\Axproducts $Axproducts,
         \Ax\Zoom\Model\Axvideo $Axvideo,
+        \Ax\Zoom\Model\Axhotspot $Axhotspot,
         \Magento\Framework\Locale\Resolver $store,
 
 		array $data = []
@@ -46,6 +48,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 		$this->Ax360set = $Ax360set;
         $this->Axproducts = $Axproducts;
         $this->Axvideo = $Axvideo;
+        $this->Axhotspot = $Axhotspot;
 		$this->_imageHelper = $context2->getImageHelper();
 		$this->productRepository = $productRepository;
 		$this->_coreRegistry = $registry;
@@ -106,21 +109,40 @@ class AxProduct extends \Magento\Framework\View\Element\Template
     {
         $conf = $this->_scopeConfig->getValue('axzoom_options', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 
+/*
+print '<pre>';
+print_r($conf);
+print '</pre>';
+return;
+*/
         $this->_addCss('axzoom/axZm/axZm.css');
         $this->_addCss('axzoom/axZm/axZmCustom.css');
-        
-        if($conf['main']['galleryAxZmThumbSlider'] == 'true') {
+            
+
+        if($conf['general_settings']['galleryAxZmThumbSlider'] == 'true') {
             $this->_addCss('axzoom/axZm/extensions/axZmThumbSlider/skins/default/jquery.axZm.thumbSlider.css');
         }
 
-        $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoom.4.css');
+        
+        $this->_addCss('axzoom/axZm/extensions/jquery.axZm.expButton.css');
+
+        $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoom.5.css');
         $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/mods/jquery.axZm.mouseOverZoomMagento.4.css');
 
-        if($conf['main']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' || $conf['main']['ajaxZoomOpenMode'] == 'fancybox') {
+
+        if($conf['general_settings']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' || $conf['general_settings']['ajaxZoomOpenMode'] == 'fancybox') {
             $this->_addCss('axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.css');
-        } elseif($conf['main']['ajaxZoomOpenMode'] == 'colorbox') {
+        } elseif($conf['general_settings']['ajaxZoomOpenMode'] == 'colorbox') {
             $this->_addCss('axzoom/axZm/plugins/demo/colorbox/example2/colorbox.css');
         }
+
+
+        if($conf['plugin_settings']['pngModeCssFix'] == 'true') {
+            $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoomPng.5.css');
+        }
+
+        $this->_addCss('axzoom/axzoom.css');
+        
     }
 
     private function _addCss($path)
@@ -136,26 +158,34 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         //$scripts = ['jquery', 'jquery/ui', 'swatchRenderer', $baseUrl . 'axzoom/axZm/jquery.axZm.js'];
         $scripts = ['jquery', 'jquery/ui', $baseUrl . 'axzoom/axZm/jquery.axZm.js'];
         
-        if($conf['main']['galleryAxZmThumbSlider'] == 'true') {
+        if($conf['general_settings']['galleryAxZmThumbSlider'] == 'true') {
             array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmThumbSlider/lib/jquery.mousewheel.min.js");
             array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmThumbSlider/lib/jquery.axZm.thumbSlider.js");
         }
-        
-        if($conf['mouseOverZoomParam']['spinner'] == 'true') {
+
+        if($conf['mouseover']['spinner'] == 'true') {
             array_push($scripts, $baseUrl . "axzoom/axZm/plugins/spin/spin.min.js");
         }
 
-        array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoom.4.js");
-        array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoomInit.4.js");
+        
+        
+        array_push($scripts, $baseUrl . "axzoom/axZm/extensions/jquery.axZm.expButton.js");
+        array_push($scripts, $baseUrl . "axzoom/axZm/extensions/jquery.axZm.imageCropLoad.js");
+        
 
-        if($conf['main']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' || $conf['main']['ajaxZoomOpenMode'] == 'fancybox') {
+
+        array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoom.5.js");
+        array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoomInit.5.js");
+
+        if($conf['general_settings']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' || $conf['general_settings']['ajaxZoomOpenMode'] == 'fancybox') {
             array_push($scripts, $baseUrl . "axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js");
             array_push($scripts, $baseUrl . "axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js");
-        } elseif($conf['main']['ajaxZoomOpenMode'] == 'colorbox') {
+        } elseif($conf['general_settings']['ajaxZoomOpenMode'] == 'colorbox') {
             $page->addPageAsset($baseUrl . 'axzoom/axZm/plugins/demo/colorbox/jquery.colorbox-min.js');
         }
         
         array_push($scripts, $baseUrl . "axzoom/axZm/plugins/JSON/jquery.json-2.3.min.js");
+
 
         array_push($scripts, $baseUrl . "axzoom/axzoom.js");
 
@@ -303,6 +333,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
     {
         $product = $this->getProduct();
 
+        // !!! AZ: does not work for simple products
         $attributes = $product->getTypeInstance()->getConfigurableAttributesAsArray($product);
         $_children = $product->getTypeInstance()->getUsedProducts($product);
 
@@ -470,6 +501,8 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         require_once dirname(dirname(__FILE__)).'/AzMouseoverSettings.php';
         require dirname(dirname(__FILE__)).'/AzMouseoverConfig.php';
         $mouseover_settings = new \AzMouseoverSettings($az_mouseover_config_magento);
+
+        // !!!
         //if (empty($conf)) {
         //    $conf = Mage::getStoreConfig('axzoom_options');
         //}
@@ -541,5 +574,118 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         return $ret;
     }
 
+    public function test()
+    {
+        return '888';
+    }
 
+    public function getImageHotspotsProduct($id_product)
+    {
+
+
+        return $this->Axhotspot->getFrontendHotspots($id_product);
+
+        /*
+        $db = Mage::getSingleton('core/resource')->getConnection('core_write');
+        $db_prefix = (string)Mage::getConfig()->getTablePrefix();
+        $return = array();
+
+        $sql = $db->fetchAll('SELECT * FROM `'.$db_prefix.'ajaxzoomimagehotspots` WHERE `id_product` = '.(int)$pid);
+        if (!empty($sql)) {
+            foreach ($sql as $k => $r) {
+                $mid = $r['id_media'];
+                $return[$mid] = array();
+                if ($r['hotspots_active'] == 1) {
+                    $return[$mid]['hotspots'] = trim(preg_replace('/\s+/', ' ', $r['hotspots']));
+                    $return[$mid]['image_name'] = $r['image_name'];
+                }
+            }
+        }
+
+        return $return;
+        */
+    }
+
+
+    
+    public function getImagesBackendHotspots($id_product, $sub = false)
+    {
+        return 333;
+    }
+        //$id_product = (int)$id_product;
+        //$az_pictures_lst = array();
+        //print 9;
+        //$product = new Product($id_product);
+
+        //print 1;
+        //$images = $product->getMediaGalleryImages();
+        //foreach ($images as $image) {
+        //    print 2;
+        //}
+        //exit;
+
+        /*
+        $product = Mage::getModel('catalog/product')->load($id_product);
+        
+        $az_images_collection = $this->getMediaGalleryImagesAll($id_product);
+        $az_az_load = Mage::getBaseUrl('js') . 'axzoom/axZm/zoomLoad.php?azImg=';
+        $product_id = $id_product;
+
+        if (count($az_images_collection) > 0) {
+            foreach ($az_images_collection as $image) {
+                $id = $image->getId();
+                $label = $image->getLabel();
+
+                if ($id && !stristr($label, '-swatch')) {
+                    $urli = parse_url($image->getUrl());
+                    $pathi = pathinfo($urli['path']);
+                    $az_pictures_lst[$id] = array(
+                        'id_media' => (int)$id,
+                        'id_product' => (int)$product_id,
+                        'image_name' => $pathi['basename'],
+                        'path' => $urli['path'],
+                        'label' => $label,
+                        'thumb' => $az_az_load.$urli['path'].'&width=100&height=128&qual=128'
+                    );
+                }
+            }
+
+            if ($product->isConfigurable()) {
+                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
+
+                foreach ($childProducts as $child) {
+                    $additional_images = $this->getImagesBackendHotspots($child->getId(), true);
+                    if (!empty($additional_images)) {
+                        $az_pictures_lst = array_merge($az_pictures_lst, $additional_images);
+                    }
+                }
+            }
+
+            if ($sub === false && !empty($az_pictures_lst)) {
+                $new_arr = array();
+                $ids = array();
+                foreach ($az_pictures_lst as $k => $v) {
+                    if (isset($v['id_media']) && $v['id_media']) {
+                        array_push($ids, $v['id_media']);
+                        $new_arr[$v['id_media']] = $v;
+                    }
+                }
+
+                $az_pictures_lst = $new_arr;
+
+                if (!empty($ids)) {
+                    $about_hs = $this->getImagesHotspots($ids, true);
+                    if (!empty($about_hs)) {
+                        foreach ($about_hs as $k => $v) {
+                            $az_pictures_lst[$k]['hotspots'] = $v['hotspots'];
+                            $az_pictures_lst[$k]['active'] = $v['active'];
+                        }
+                    }
+                }
+            }
+        }
+        */
+
+        //return $az_pictures_lst;
+    //}
 }

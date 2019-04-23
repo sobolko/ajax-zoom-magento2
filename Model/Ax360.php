@@ -75,7 +75,7 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 
 				if($combination_id) {
 					$combinations = json_decode($group['combinations'], true);
-					if(count($combinations) > 0 && !in_array($combination_id, $combinations)) {
+					if(!empty($combinations) && count($combinations) > 0 && !in_array($combination_id, $combinations)) {
 						continue;
 					}
 				}
@@ -87,10 +87,22 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 				if (!empty($settings)) $settings = ", $settings";
 
 				if ($group['qty'] > 0) {
+
+					$crop_str = '';
+                    $crop = empty($group['crop']) ? '[]' : trim(preg_replace('/\s+/', ' ', $group['crop']));
+                    if ($crop && $crop != '[]') {
+                        $crop_str = ', "crop": '.stripslashes($crop);
+                    }
+                    $hotspot_str = '';                    
+                    $hotspot = empty($group['hotspot']) ? '[]' : trim(preg_replace('/\s+/', ' ', $group['hotspot']));
+                    if ($hotspot && $hotspot != '{}') {
+                        $hotspot_str = ', "hotspotFilePath": '.stripslashes($hotspot);
+                    }
+
 					if ($group['qty'] == 1) {
-						$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "/" . $group['id_360set'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "]}";
+						$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "/" . $group['id_360set'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
 					} else {
-						$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "]}";
+						$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
 					}
 				}
 			}
@@ -108,10 +120,22 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 			if (!empty($settings)) $settings = ", $settings";
 
 			if ($group['qty'] > 0) {
+
+				$crop_str = '';
+                $crop = empty($group['crop']) ? '[]' : trim(preg_replace('/\s+/', ' ', $group['crop']));
+                if ($crop && $crop != '[]') {
+                    $crop_str = ', "crop": '.stripslashes($crop);
+                }
+                $hotspot_str = '';                    
+                $hotspot = empty($group['hotspot']) ? '[]' : trim(preg_replace('/\s+/', ' ', $group['hotspot']));
+                if ($hotspot && $hotspot != '{}') {
+                    $hotspot_str = ', "hotspotFilePath": '.stripslashes($hotspot);
+                }
+
 				if ($group['qty'] == 1) {
-					$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "/" . $group['id_360set'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "]}";
+					$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "/" . $group['id_360set'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
 				} else {
-					$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "]}";
+					$tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
 				}
 			}
 		}

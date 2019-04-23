@@ -5837,8 +5837,9 @@ if (!class_exists('AzMouseoverSettings', false)) {
             $mouseover_param = array();
             $param = array();
             $return = '';
-
+//echo '<table border="1">';
             foreach ($this->getConfig(true) as $k => $v) {
+//echo '<tr>';
                 $cat = $v['category'];
 
                 if ($ovrprefix !== false) {
@@ -5860,6 +5861,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                 $value = $defaults ? $v['default'] : isset($cfg[$k]) ? $cfg[$k] : $cfg[$save_var];
 
                 if (!$defaults && $differ && $k != 'divID' && $k != 'galleryDivID') {
+//                    print '<td>' . $k . '</td>';
+//                    print '<td>' . $v['default'] . '</td>';
+//                    print '<td>' . $value . '</td>';
+
                     if ($this->jsVal($v['default'], true, true) == $this->jsVal($value, true, true)) {
                         continue;
                     }
@@ -5870,7 +5875,9 @@ if (!class_exists('AzMouseoverSettings', false)) {
                 } else {
                     $param[$k] = $this->jsKeyVal($k, $value);
                 }
+//echo '</tr>';                
             }
+//echo '</table>';            
 
             if (!$defaults) {
                 $param['lang'] = $this->jsKeyVal('lang', $holder_object.'.shopLang.substr(0, 2)', false);
@@ -5884,6 +5891,13 @@ if (!class_exists('AzMouseoverSettings', false)) {
             if (!empty($mouseover_param)) {
                 $param['mouseOverZoomParam'] = '"mouseOverZoomParam": {'.implode(', ', $mouseover_param).'}';
             }
+
+            //$param['mouseOverZoomParam'] = '"position":"right"';
+            //$param['main'] = '"galleryPosition":"right"';
+
+//            print_r($param);
+//            exit;
+            
 
             $return = '{'.implode(', ', $param).'}';
 

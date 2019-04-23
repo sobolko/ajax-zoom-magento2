@@ -3,22 +3,30 @@ $productId = $this->getProductId();
 $conf = $this->helper('Ax\Zoom\Helper\Data')->getConfig('axzoom_options');
 $ajaxzoom_initParam = $this->prepareInitParamFront($conf);
 
+//print_r($ajaxzoom_initParam);
+
 $axZmPath = $this->getBaseUrl() . 'axzoom/axZm/';
 $product = $this->getProduct();
 $imagesJson = $this->getImagesJson();
 $images360Json = $this->images360Json($productId);
-$az_gallery_position = $conf['main']['galleryPosition'];
+$az_gallery_position = @$conf['general_settings']['galleryPosition'];
 $images360jsonComb = $this->getImagesJsonComb();
+$az_img_hotspots = null;
 
 
-$ajaxzoom_displayInSelector = 'true'; //$conf['plugin_settings']['displayInSelector'];
-$ajaxzoom_displayInSelectorAppend = 'true'; //$conf['plugin_settings']['displayInSelectorAppend'];
+// !!! AZ: make it like magento1 plugin
+$az_img_hotspots = $this->getImageHotspotsProduct($productId);
+
+
+$ajaxzoom_displayInSelector = false; // !!! $conf['plugin_settings']['displayInSelector'];
+$ajaxzoom_displayInSelectorAppend = true; // !!! $conf['plugin_settings']['displayInSelectorAppend'];
 $ajaxzoom_containerId = 'axZm_mouseOverWithGalleryContainer';
 if (!isset($conf['plugin_settings']['displayInAzOpt'])) {
     $conf['plugin_settings']['displayInAzOpt'] = '{}';
 }
 
 $videosJson = $this->videosJson($productId);
+
 ?>
 
 
@@ -49,8 +57,20 @@ $videosJson = $this->videosJson($productId);
 
 </div>
 
-
-
+<?php
+/*
+if ($this->product_has_video_html5 === true && $conf['video_settings']['videoHtml5VideoJs'] == 'true') {
+    $videojs_src = (array)json_decode($conf['plugin_settings']['defaultVideoVideojsJS'], true);
+    foreach ($videojs_src as $k => $v) {
+        if (strstr($k, 'css') && $v) {
+            echo '<link rel="stylesheet" type="text/css" href="'.$v.'" />';
+        } elseif (strstr($k, 'js') && $v) {
+            echo '<script type="text/javascript" src="'.$v.'"></script>';
+        }
+    }
+}
+*/
+?>
 
 
 <!-- AJAX-ZOOM js block -->
@@ -76,11 +96,14 @@ require(["<?php echo implode('","', $this->_loadJS())?>"], function($){
 	    // Default 360
 	    jQuery.axZm_psh.IMAGES_360_JSON = IMAGES_360_JSON;
 	    jQuery.axZm_psh.VIDEOS_JSON = <?php echo $videosJson; ?>;
-	    jQuery.axZm_psh.IMAGES_HOTSPOTS = '{}';
+	    jQuery.axZm_psh.IMAGES_HOTSPOTS = <?php echo json_encode($az_img_hotspots, JSON_FORCE_OBJECT); ?>;
 
 	    jQuery.axZm_psh.axZmPath = '<?php echo $axZmPath; ?>';
 	    jQuery.axZm_psh.shopLang = '<?php echo substr($this->_store->getLocale(), 0, 2); ?>';
 	    jQuery.axZm_psh.initParam = <?php echo  $ajaxzoom_initParam; ?>;
+
+
+
 	    jQuery.axZm_psh.divID = jQuery.axZm_psh.initParam.divID;
 	    jQuery.axZm_psh.galleryDivID = jQuery.axZm_psh.initParam.galleryDivID;
 	    jQuery.axZm_psh.displayInSelector = '<?php echo $ajaxzoom_displayInSelector; ?>';
@@ -88,6 +111,8 @@ require(["<?php echo implode('","', $this->_loadJS())?>"], function($){
 	    jQuery.axZm_psh.containerId = '<?php echo $ajaxzoom_containerId; ?>';
 	    jQuery.axZm_psh.headSelector = '<?php echo __('360° / Video'); ?>';
 	    jQuery.axZm_psh.displayInAzOpt = <?php echo $conf['plugin_settings']['displayInAzOpt']; ?>;
+
+console.log(jQuery.axZm_psh);
 
 	    // Colors / attributes
 	    jQuery.axZm_psh.axAssociated = '{}';

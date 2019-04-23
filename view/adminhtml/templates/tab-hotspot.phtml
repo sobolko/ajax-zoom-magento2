@@ -1,3 +1,7 @@
+<?php
+$az_pictures_lst = $this->getImagesBackendHotspots($productId);
+?>
+
 <div id="" class="entry-edit ax-tab">
 	<div class="fieldset-wrapper">
 		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
@@ -5,8 +9,211 @@
 		</div>
 	</div>
 	<div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
+
+		<p class="message message-info">
+            <?php
+            echo __('You can add hotspots to you normal product pictures. ');
+            echo __('The image file itself will be not changed! ');
+            echo __('At front view, your users will see the hotspots at full screen or Fancybox. ');
+            echo __('For immediate visibility, activate axZmMode option in AJAX-ZOOM module settings. ');
+            echo __('New: if displayInSelector option is enabled, regular images are not shown in AJAX-ZOOM player. ');
+            echo __('However, regular images will be shown in the player, when the have hotspots configured here! ');
+            echo __('This image can be also excluded from gallery! ');
+            echo __('For configurable products, when displayInSelector is enabled, the image with hotspots must be part of configurable product and not assotiated ');
+            ?>
+        </p>
+        <br>
+
+        <div class="grid">
+            <table class="data border data-grid" id="az_picturesTable" cellspacing="0">
+                <thead>
+                    <tr class="headings">
+                        <th class="data-grid-th" style="width: 128px;"><span class="title_box"></span></th>
+                        <th class="data-grid-th" style="width: 90px"><span class="title_box"><span class="title_box"><?php echo __('Product ID'); ?></span></th>
+                        <th class="data-grid-th" style="width: 90px"><span class="title_box"><span class="title_box"><?php echo __('Media ID'); ?></span></th>
+                        <th class="data-grid-th"><span class="title_box"><span class="title_box"><?php echo __('Filename'); ?></span></th>
+                        <th class="data-grid-th"><span class="title_box"><span class="title_box"><?php echo __('Label'); ?></span></th>
+                        <th class="data-grid-th" style="width: 120px"><span class="title_box"><span class="title_box"><?php echo __('Hotspots active'); ?></span></th>
+                        <th class="data-grid-th" style="width: 145px"></th>
+                    </tr>
+                </thead>
+                <tbody id="az_picturesTableRows">
+                </tbody>
+            </table>
+
+            <table style="display: none;">
+                <tbody id="az_lineSetPictures">
+                    <tr id="az_picture_line_id">
+                        <td class="az_tbl_picture_img">
+                            <img picture_src 
+                                class="img-thumbnail" 
+                                style="max-width: 128px; max-height: 128px; cursor: pointer;">
+                        </td>
+                        <td style="word-break: break-all;">
+                            picture_pid
+                        </td>
+                        <td style="word-break: break-all;">
+                            picture_mid
+                        </td>
+                        <td style="word-break: break-all;">
+                            picture_name
+                        </td>
+                        <td style="word-break: break-all;">
+                            picture_label
+                        </td>
+                        <td>
+                            <span class="switch prestashop-switch fixed-width-lg hide_class az_switch_status_picture">
+                                <input type="radio" name="status_field" id="status_field_on" value="1" checked_on />
+                                <label class="t" for="status_field_on"><?php echo __('Yes'); ?></label>
+                                <input type="radio" name="status_field" id="status_field_off" value="0" checked_off />
+                                <label class="t" for="status_field_off"><?php echo __('No'); ?></label>
+                                <a class="slide-button btn"></a>
+                            </span>
+                        </td>
+                        <td>
+                            <button class="az_edit_picture_hotspots scalable" style="margin-bottom: 5px;">
+                                <span> <?php echo __('Edit hotspots'); ?></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
 		<div class="hor-scroll">
-tab content
+
 		</div>
 	</div>
 </div>
+
+
+<script type="text/javascript">
+/*!
+*  @author         AJAX-ZOOM <support@ajax-zoom.com>
+*  @copyright      2010-2017 AJAX-ZOOM, Vadim Jacobi
+*  @license        http://www.ajax-zoom.com/index.php?cid=download
+*/
+
+jQuery(function($) {
+    var id_product = <?php echo $productId; ?>;
+    window.az_pictures_lst = <?php echo json_encode($az_pictures_lst); ?>;
+
+    var az_lang_msg_pictures_refresh = '<?php echo __('Pictures list has been refreshed'); ?>';
+    var az_lang_hotspots_enabled = '<?php echo __('Hotspots for this image have been enabled'); ?>';
+    var az_lang_hotspots_disabled = '<?php echo __('Hotspots for this image have been disabled'); ?>';
+
+    window.az_refresh_pictures_list = function(msg) { 
+        $('#az_picturesTableRows td').css('backgroundColor', '#f4f8fb');
+
+        doAdminAjax360('<?php echo $this->getUrlAjax('refreshPicturesList'); ?>', {
+            "action": "refreshPicturesList",
+            "id_product": id_product
+        }, function(data) {
+            $('#az_picturesTableRows').empty();
+            az_pictures_lst = JSON.parse(data);
+            $.each(az_pictures_lst, function(k, v) {
+                setLinePicture(v);
+            } );
+
+            if (msg) {
+                showSuccessMessage(msg);
+            }
+        } );
+    };
+
+    function setLinePicture(dta)
+    {
+        var line = $("#az_lineSetPictures").html();
+        line = line.replace(/az_picture_line_id/g, 'az_picture_line_'+dta.id_media);
+        line = line.replace(/picture_name/g, '<a href="'+dta.path+'" target="_blank">'+dta.image_name+'</a>');
+        line = line.replace(/picture_src/g, 'src="'+dta.thumb+'" ');
+        line = line.replace(/picture_label/g, dta.label);
+        line = line.replace(/picture_pid/g, dta.id_product);
+        line = line.replace(/picture_mid/g, dta.id_media);
+
+        if (dta.hotspots) {
+            if (dta.active == 1) {
+                line = line.replace(/checked_on/g, 'checked');
+                line = line.replace(/checked_off/g, '');
+            } else {
+                line = line.replace(/checked_on/g, '');
+                line = line.replace(/checked_off/g, 'checked');
+            }
+
+            line = line.replace(/status_field/g, 'picture_status_' + dta.id_media);
+        } else {
+            line = $(line);
+            $('.az_switch_status_picture', line).replaceWith('-');
+        }
+
+        $("#az_picturesTableRows").append(line);
+    }
+
+    $.each(az_pictures_lst, function(k, v) { 
+        setLinePicture(v);
+    } );
+
+    $('#az_refresh_pictures_list')
+    .bind('click', function(e) { 
+        $(this).blur();
+        window.az_refresh_pictures_list(az_lang_msg_pictures_refresh);
+    } );
+
+    $('body').on('click', '.az_edit_picture_hotspots', function(e) { 
+        e.preventDefault();
+        $(this).blur();
+
+        var id_media = $(this).closest('tr').attr('id').replace('az_picture_line_', '');
+
+        id_media = parseInt(id_media);
+
+        /*
+        var qstr = 'token=' + window.az_token;
+        qstr += '&id_product=' + id_product;
+        qstr += '&id_media=' + id_media;
+        qstr += '&image_path=' + az_pictures_lst[id_media]['path'];
+        */
+
+        var hotspotHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/hotspoteditor.php?';
+            hotspotHref += 'zoomData='+az_pictures_lst[id_media]['path'];
+            hotspotHref += '&id_media='+id_media;
+            hotspotHref += '&id_product='+az_pictures_lst[id_media]['id_product'];
+            hotspotHref += '&image_name='+az_pictures_lst[id_media]['image_name'];
+            hotspotHref += '&url_get=<?php echo $this->getUrlAjax('GetHotspotImgJson'); ?>';
+            hotspotHref += '&url_set=<?php echo $this->getUrlAjax('SetHotspotImgJson'); ?>';
+            hotspotHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+
+        $.openAjaxZoomInFancyBox( {
+            href: hotspotHref,
+            iframe: true,
+            scrolling: 1,
+            boxOnClosed: window.az_refresh_pictures_list
+        } );
+
+    } );
+    
+
+    // deactivate hotspots
+    $('body').on('change', '.az_switch_status_picture input', function(e) {
+        e.preventDefault();
+        var status = $(this).val();
+        var id = $(this).closest('tr').attr('id').replace('az_picture_line_', '');
+
+        doAdminAjax360('<?php echo $this->getUrlAjax('setHotspotStatus'); ?>', {
+            "action": "setHotspotStatus",
+            "id_media": id,
+            "status": status,
+            "id_product": id_product
+        }, function(data) {
+            data = JSON.parse(data);
+            if (data.status == 1) {
+                az_showSuccessMessage(az_lang_hotspots_enabled);
+            } else {
+                az_showSuccessMessage(az_lang_hotspots_disabled);
+            }
+        } );
+    } );
+} );
+
+</script>

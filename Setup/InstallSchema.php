@@ -24,6 +24,8 @@ class InstallSchema implements InstallSchemaInterface
             `id_product` int(11) NOT NULL,  `name` varchar(255) NOT NULL,  
             `num` int(11) NOT NULL DEFAULT '1',  
             `settings` text NOT NULL,  
+            `crop` text NOT NULL,  
+            `hotspot` text NOT NULL,  
             `status` tinyint(1) NOT NULL DEFAULT '0',  
             `combinations` text NOT NULL, 
             PRIMARY KEY (`id_360`)) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;");
@@ -64,7 +66,7 @@ class InstallSchema implements InstallSchemaInterface
             `hotspots` text NOT NULL,
             PRIMARY KEY (`id`)) 
             ENGINE=InnoDB 
-            DEFAULT CHARSET=utf8;";
+            DEFAULT CHARSET=utf8;");
 
         $installer->run("CREATE TABLE IF NOT EXISTS `{$db_prefix}ajaxzoomproductsettings` 
             (`id_product` int(11) NOT NULL, 
@@ -72,7 +74,7 @@ class InstallSchema implements InstallSchemaInterface
             `psettings_embed` text NOT NULL, 
             PRIMARY KEY (`id_product`)) 
             ENGINE=InnoDB 
-            DEFAULT CHARSET=utf8;";
+            DEFAULT CHARSET=utf8;");
 
 
         $installer->endSetup();

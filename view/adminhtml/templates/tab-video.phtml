@@ -342,7 +342,7 @@ var az_videos = <?php echo json_encode($az_videos, true); ?>;
 var az_select_videos = jQuery('#az_id_video').clone();
 var az_languages = {"en":"en","fr":"fr","de":"de"}; <?php /*echo json_encode($az_languages, true);*/ ?>;
 var az_id_product = <?php echo $productId; ?>;
-var az_token = '<?php /* !!!! echo Mage::getSingleton('core/session')->getFormKey();*/ ?>';
+var az_token = '<?php echo $this->getFormKey(); ?>';
 
 var az_lang_define_key = '<?php echo __('Please define Key / Url field'); ?>';
 var az_lang_success_change_settings = '<?php echo __('Video settings have been changed'); ?>';
