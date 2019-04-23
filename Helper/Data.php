@@ -7,7 +7,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->scopeConfig->getValue(
             $config_path,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            'default'  /*\Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE*/ /*SCOPE_STORE*/
         );
     }
 }

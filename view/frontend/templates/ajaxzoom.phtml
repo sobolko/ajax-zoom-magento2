@@ -1,9 +1,8 @@
 <?php
 $productId = $this->getProductId();
 $conf = $this->helper('Ax\Zoom\Helper\Data')->getConfig('axzoom_options');
-$ajaxzoom_initParam = $this->prepareInitParamFront($conf);
 
-//print_r($ajaxzoom_initParam);
+$ajaxzoom_initParam = $this->prepareInitParamFront($conf);
 
 $axZmPath = $this->getBaseUrl() . 'axzoom/axZm/';
 $product = $this->getProduct();
