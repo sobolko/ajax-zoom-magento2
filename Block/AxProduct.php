@@ -338,7 +338,7 @@ return;
             return $for_js;
         }
 
-        // !!! AZ: does not work for simple products
+        // !!! AZ: does not work for simple products.
         $attributes = $product->getTypeInstance()->getConfigurableAttributesAsArray($product);
         $_children = $product->getTypeInstance()->getUsedProducts($product);
 
