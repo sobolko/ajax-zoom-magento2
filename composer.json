@@ -26,5 +26,7 @@
         "psr-4": {
             "Ax\\Zoom\\": ""
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true    
 }
