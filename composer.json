@@ -10,14 +10,7 @@
         "OSL-3.0",
         "AFL-3.0"
     ],
-    "extra": {
-        "map": [
-            [
-                "*",
-                "Ax/Zoom"
-            ]
-        ]
-    },
+
     "autoload": {
         "files": [ "registration.php" ],
         "psr-4": {
