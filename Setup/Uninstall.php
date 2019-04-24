@@ -16,9 +16,13 @@ class Uninstall implements \Magento\Framework\Setup\UninstallInterface
     ) {
         $setup->startSetup();
 
+        // !!! AZ: use prefix
         $setup->run('DROP TABLE ajaxzoom360;');
         $setup->run('DROP TABLE ajaxzoom360set;');
         $setup->run('DROP TABLE ajaxzoomproducts;');
+        $setup->run('DROP TABLE ajaxzoomimagehotspots;');
+        $setup->run('DROP TABLE ajaxzoomproductsettings;');
+        $setup->run('DROP TABLE ajaxzoomvideo;');
 
         $setup->endSetup();
     }

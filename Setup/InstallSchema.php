@@ -102,7 +102,7 @@ class InstallSchema implements InstallSchemaInterface
 
         // download axZm if not exists
         if (!file_exists(BP . '/axzoom/axZm') && ini_get('allow_url_fopen') ) {
-            $remoteFileContents = file_get_contents('http://www.ajax-zoom.com/download.php?ver=latest', false, stream_context_create($arrContextOptions));
+            $remoteFileContents = file_get_contents('http://www.ajax-zoom.com/download.php?ver=latest&magento2=1', false, stream_context_create($arrContextOptions));
             $localFilePath = BP . '/axzoom/pic/tmp/jquery.ajaxZoom_ver_latest.zip';
 
             file_put_contents($localFilePath, $remoteFileContents);
