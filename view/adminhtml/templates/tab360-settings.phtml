@@ -23,6 +23,10 @@ foreach($usedProducts as $p) {
 }
 </style>
 
+
+
+
+
 <div class="entry-edit ax-tab">
 	<div class="fieldset-wrapper">
 		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
@@ -142,6 +146,40 @@ foreach($usedProducts as $p) {
 <script type="text/javascript">
 require(["jquery"], function($){
 	
+
+	function deserialize(serializedString){
+		var str = decodeURI(serializedString);
+		var pairs = str.split('&');
+		var obj = {}, p, idx, val;
+		for (var i=0, n=pairs.length; i < n; i++) {
+			p = pairs[i].split('=');
+			idx = p[0];
+
+			if (idx.indexOf("[]") == (idx.length - 2)) {
+				// Eh um vetor
+				var ind = idx.substring(0, idx.length-2)
+				if (obj[ind] === undefined) {
+					obj[ind] = [];
+				}
+				obj[ind].push(p[1]);
+			}
+			else {
+				obj[idx] = p[1];
+			}
+		}
+		return obj;
+	}
+
+
+	function ajaxSaveSettings()
+	{
+		var postData = deserialize($('#az_hidden_values :input').serialize());
+
+		doAdminAjax360('<?php echo $this->getUrlAjax('saveSettings'); ?>', postData, afterSaveSettings
+		);
+	}
+
+
 	function pairLine(name, value)
 	{ 
 		var line = $("#pairTemplate").html();
@@ -155,11 +193,11 @@ require(["jquery"], function($){
 	function afterSaveSettings(data) { 
 		var data = $.parseJSON(data);
 
-		$('#id_360').replaceWith(data.select);
-		$('#pairs').hide();
-		$('#comb').hide();
-		$('select#id_360').val('');
-		showSuccessMessage(data.confirmations);
+		//$('#id_360').replaceWith(data.select);
+		//$('#pairs').hide();
+		//$('#comb').hide();
+		//$('select#id_360').val('');
+		az_showSuccessMessage(data.confirmations);
 	} 
 
 	function getFieldValues(class1) {
@@ -181,6 +219,7 @@ require(["jquery"], function($){
     	};
     	
     	$('#settings_' + $('select#id_360').val()).val(encodeURIComponent(JSON.stringify(res)));
+    	ajaxSaveSettings();
 	}
 
 	function setComb() {
@@ -191,6 +230,7 @@ require(["jquery"], function($){
     	});
     	
     	$('#settings_comb_' + $('select#id_360').val()).val(encodeURIComponent(JSON.stringify(values)));
+    	ajaxSaveSettings();
 	}
 	
 	$('body').on('change', '.pair-names, .pair-values', function(e) {
@@ -257,10 +297,12 @@ require(["jquery"], function($){
 
     $('.comb-check-all:button').toggle(function() { 
         $('input.settings-combinations').attr('checked','checked');
-        $(this).val('uncheck all')
+        $(this).val('uncheck all');
+        ajaxSaveSettings();
     } ,function() { 
         $('input.settings-combinations').removeAttr('checked');
-        $(this).val('check all');        
+        $(this).val('check all');
+        ajaxSaveSettings();
     } );
 });
 </script>

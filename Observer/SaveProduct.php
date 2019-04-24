@@ -44,6 +44,7 @@ class SaveProduct implements \Magento\Framework\Event\ObserverInterface
 		$productId = $object->getId();
 		
     	$postData = $this->request->getPost();
+        //$post = $this->request->getParams();
 
     	
     	/*
