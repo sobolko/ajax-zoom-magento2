@@ -75,61 +75,79 @@ if ($this->product_has_video_html5 === true && $conf['video_settings']['videoHtm
 <!-- AJAX-ZOOM js block -->
 <script type="text/javascript">
 var axBaseUrl = '<?php echo $this->getBaseUrl(); ?>';
-require(["<?php echo implode('","', $this->_loadJS())?>"], function($){
 
-	var AXZMPATH = '<?php echo $axZmPath; ?>';
-	var IMAGES_JSON = <?php echo $imagesJson ?>;
-	var IMAGES_360_JSON = <?php echo $images360Json?>;
+require(["jquery", "jquery/ui"], function() {
+    var proceedMageAjaxZoom = function() {
 
-	var images360jsonComb = jQuery.parseJSON('<?php echo json_encode($images360jsonComb); ?>');
+        require(["<?php echo implode('","', $this->_loadJS())?>"], function($) {
 
-	window.initAxzoom = function() {
-	    if (!jQuery.axZm_psh) {
-	        jQuery.axZm_psh = { };
-	    }
+	        var AXZMPATH = '<?php echo $axZmPath; ?>';
+	        var IMAGES_JSON = <?php echo $imagesJson ?>;
+	        var IMAGES_360_JSON = <?php echo $images360Json?>;
 
-	    // Default plain images
-	    jQuery.axZm_psh.IMAGES_JSON = IMAGES_JSON;
-	    
+	        var images360jsonComb = jQuery.parseJSON('<?php echo json_encode($images360jsonComb); ?>');
 
-	    // Default 360
-	    jQuery.axZm_psh.IMAGES_360_JSON = IMAGES_360_JSON;
-	    jQuery.axZm_psh.VIDEOS_JSON = <?php echo $videosJson; ?>;
-	    jQuery.axZm_psh.IMAGES_HOTSPOTS = <?php echo json_encode($az_img_hotspots, JSON_FORCE_OBJECT); ?>;
+	        window.initAxzoom = function() {
+	            if (!jQuery.axZm_psh) {
+	                jQuery.axZm_psh = { };
+	            }
 
-	    jQuery.axZm_psh.axZmPath = '<?php echo $axZmPath; ?>';
-	    jQuery.axZm_psh.shopLang = '<?php echo substr($this->_store->getLocale(), 0, 2); ?>';
-	    jQuery.axZm_psh.initParam = <?php echo  $ajaxzoom_initParam; ?>;
+	            // Default plain images
+	            jQuery.axZm_psh.IMAGES_JSON = IMAGES_JSON;
+	            
+
+	            // Default 360
+	            jQuery.axZm_psh.IMAGES_360_JSON = IMAGES_360_JSON;
+	            jQuery.axZm_psh.VIDEOS_JSON = <?php echo $videosJson; ?>;
+	            jQuery.axZm_psh.IMAGES_HOTSPOTS = <?php echo json_encode($az_img_hotspots, JSON_FORCE_OBJECT); ?>;
+
+	            jQuery.axZm_psh.axZmPath = '<?php echo $axZmPath; ?>';
+	            jQuery.axZm_psh.shopLang = '<?php echo substr($this->_store->getLocale(), 0, 2); ?>';
+	            jQuery.axZm_psh.initParam = <?php echo  $ajaxzoom_initParam; ?>;
 
 
 
-	    jQuery.axZm_psh.divID = jQuery.axZm_psh.initParam.divID;
-	    jQuery.axZm_psh.galleryDivID = jQuery.axZm_psh.initParam.galleryDivID;
-	    jQuery.axZm_psh.displayInSelector = '<?php echo $ajaxzoom_displayInSelector; ?>';
-	    jQuery.axZm_psh.displayInSelectorAppend = <?php echo $ajaxzoom_displayInSelectorAppend ? 'true' : 'false'; ?>;
-	    jQuery.axZm_psh.containerId = '<?php echo $ajaxzoom_containerId; ?>';
-	    jQuery.axZm_psh.headSelector = '<?php echo __('360° / Video'); ?>';
-	    jQuery.axZm_psh.displayInAzOpt = <?php echo $conf['plugin_settings']['displayInAzOpt']; ?>;
+	            jQuery.axZm_psh.divID = jQuery.axZm_psh.initParam.divID;
+	            jQuery.axZm_psh.galleryDivID = jQuery.axZm_psh.initParam.galleryDivID;
+	            jQuery.axZm_psh.displayInSelector = '<?php echo $ajaxzoom_displayInSelector; ?>';
+	            jQuery.axZm_psh.displayInSelectorAppend = <?php echo $ajaxzoom_displayInSelectorAppend ? 'true' : 'false'; ?>;
+	            jQuery.axZm_psh.containerId = '<?php echo $ajaxzoom_containerId; ?>';
+	            jQuery.axZm_psh.headSelector = '<?php echo __('360° / Video'); ?>';
+	            jQuery.axZm_psh.displayInAzOpt = <?php echo $conf['plugin_settings']['displayInAzOpt']; ?>;
 
-console.log(jQuery.axZm_psh);
+                console.log(jQuery.axZm_psh);
 
-	    // Colors / attributes
-	    jQuery.axZm_psh.axAssociated = '{}';
-	    window.preRenderAxzoom();
-	};
+	            // Colors / attributes
+	            jQuery.axZm_psh.axAssociated = '{}';
+	            window.preRenderAxzoom();
+	        };
 
-	window.triggerAxzoom = function() {
+	        window.triggerAxzoom = function() {
 
-	    if (window.jQuery === undefined || window.renderAxzoom === undefined) {
-	        setTimeout(window.triggerAxzoom, 100);
-	        return false;
-	    } else {
-	        window.initAxzoom();
-	    }
-	}
+	            if (window.jQuery === undefined || window.renderAxzoom === undefined) {
+	                setTimeout(window.triggerAxzoom, 100);
+	                return false;
+	            } else {
+	                window.initAxzoom();
+	            }
+	        }
 
-	window.triggerAxzoom();
+	        window.triggerAxzoom();
 
-	$('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
+	        $('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
+        });
+    };
+
+    var doubleCheckJqueryCore = function() {
+        if (window.jQuery) {
+            jQuery.migrateMute = 1;
+            proceedMageAjaxZoom();
+        } else {
+            window.setTimeout(doubleCheckJqueryCore, 50);
+        }
+    };
+
+    doubleCheckJqueryCore();
 });
+
 </script>
