@@ -77,7 +77,7 @@ $files      = $this->getArcList();
 							<td class="label"><label for="zip"><?php echo __('Add images from ZIP archive') ?></label></td>
 							<td class="value">
 								<input type="checkbox" id="zip" name="zip" value="1" />
-								<p class="note"><?php echo __('This is the most easy and quick way of adding 360 views to your product! Upload over FTP your 360\'s zipped (each images set in one zip file) to /modules/ajaxzoom/zip/ directory. After you did so these zip files will instantly appear in the select field below. All you have to do then is select one of the zip files and press \'add\' button. Images from the selected zip file will be instantly imported.') ?></p>
+								<p class="note"><?php echo __('This is the most easy and quick way of adding 360 views to your product! Upload over FTP your 360\'s zipped (each images set in one zip file) to /pub/ajaxzoom/zip/ directory. After you did so these zip files will instantly appear in the select field below. All you have to do then is select one of the zip files and press \'add\' button. Images from the selected zip file will be instantly imported.') ?></p>
 							</td>
 							<td class="scope-label"><span class="nobr"></span></td>
 						</tr>
@@ -92,7 +92,7 @@ $files      = $this->getArcList();
 									<?php endforeach; ?>
 								</select>
 								<?php else: ?>
-								<p><b><?php echo __('There are no files found in the "js/axzoom/zip" folder') ?></b></p>
+								<p><b><?php echo __('There are no files found in the "pub/axzoom/zip" folder') ?></b></p>
 								<?php endif; ?>
 							</td>
 							<td class="scope-label"><span class="nobr"></span></td>

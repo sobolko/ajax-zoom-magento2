@@ -121,6 +121,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     {
     	$model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
     	
+
     	return $model->getBaseDir();
     } 
 

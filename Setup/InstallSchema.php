@@ -87,7 +87,7 @@ class InstallSchema implements InstallSchemaInterface
     private function createFolders()
     {
         foreach (array('360', 'cache', 'zoomgallery', 'zoommap', 'zoomthumb', 'zoomtiles_80', 'tmp') as $folder) {
-            $this->io->checkAndCreateFolder(BP . '/axzoom/pic/' . $folder, 0777);
+            $this->io->checkAndCreateFolder(BP . '/pub/axzoom/pic/' . $folder, 0777);
         }
     }
 
@@ -101,18 +101,18 @@ class InstallSchema implements InstallSchemaInterface
         );
 
         // download axZm if not exists
-        if (!file_exists(BP . '/axzoom/axZm') && ini_get('allow_url_fopen') ) {
+        if (!file_exists(BP . '/pub/axzoom/axZm') && ini_get('allow_url_fopen') ) {
             $remoteFileContents = file_get_contents('http://www.ajax-zoom.com/download.php?ver=latest&magento2=1', false, stream_context_create($arrContextOptions));
-            $localFilePath = BP . '/axzoom/pic/tmp/jquery.ajaxZoom_ver_latest.zip';
+            $localFilePath = BP . '/pub/axzoom/pic/tmp/jquery.ajaxZoom_ver_latest.zip';
 
             file_put_contents($localFilePath, $remoteFileContents);
     
             $zip = new \ZipArchive();
             $res = $zip->open($localFilePath);
-            $zip->extractTo(BP . '/axzoom/pic/tmp/');
+            $zip->extractTo(BP . '/pub/axzoom/pic/tmp/');
             $zip->close();
             
-            rename(BP . '/axzoom/pic/tmp/axZm', BP . '/axzoom/axZm');
+            rename(BP . '/pub/axzoom/pic/tmp/axZm', BP . '/axzoom/axZm');
         }        
     }
 }

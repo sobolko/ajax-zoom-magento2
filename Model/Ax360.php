@@ -278,7 +278,9 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 
     public function getBaseUrl()
     {
-    	return $this->_storeManager->getStore()->getBaseUrl();
+    	$Ax360set = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
+    	return $Ax360set->getBaseUrl();
+    	//return $this->_storeManager->getStore()->getBaseUrl();
     }    
 
     public function getBaseDir()

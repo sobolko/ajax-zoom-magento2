@@ -204,7 +204,8 @@ return;
 
     public function getBaseUrl()
     {
-    	return $this->_storeManager->getStore()->getBaseUrl();
+        return $this->Ax360set->getBaseUrl();
+    	//return $this->_storeManager->getStore()->getBaseUrl();
     }
 
 

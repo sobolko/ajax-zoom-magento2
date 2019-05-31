@@ -42,7 +42,7 @@ class Ax360set extends \Magento\Framework\Model\AbstractModel
 		$setsCollection->getSelect()->join(array('t2' => $tbl_set_group), 'main_table.id_360 = t2.id_360 AND t2.id_product = ' . $productId, array('t2.name', 't2.status'));
 		$sets = $setsCollection->getData();
 
-		$baseDir = BP;
+		$baseDir = $this->getBaseDir();
 		$baseUrlJs = $this->getBaseUrl();
 				
 		foreach ($sets as &$set) {
@@ -64,11 +64,11 @@ class Ax360set extends \Magento\Framework\Model\AbstractModel
 
     public function getBaseUrl()
     {
-    	return $this->_storeManager->getStore()->getBaseUrl();
+    	return $this->_storeManager->getStore()->getBaseUrl() . 'pub/';
     }    
 
     public function getBaseDir()
     {
-    	return BP;
+    	return BP . substr($this->rootFolder(), 0, -1);
     }   
 }
