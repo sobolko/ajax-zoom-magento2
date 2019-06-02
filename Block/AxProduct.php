@@ -22,6 +22,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
     protected $swatchHelper;
     protected $productModelFactory;
     public $_store;
+    protected $localeResolver;
     public $product_has_video_html5 = false;
 
 
@@ -38,6 +39,8 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         \Ax\Zoom\Model\Axvideo $Axvideo,
         \Ax\Zoom\Model\Axhotspot $Axhotspot,
         \Magento\Framework\Locale\Resolver $store,
+        \Magento\Framework\Locale\ResolverInterface $localeResolver,
+
 
 		array $data = []
 	)
@@ -53,6 +56,10 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 		$this->productRepository = $productRepository;
 		$this->_coreRegistry = $registry;
         $this->_store = $store;
+
+
+        $this->localeResolver = $localeResolver;
+
 
 		parent::__construct(
             $context,
@@ -535,23 +542,59 @@ return;
         return __($str);
     }
 
+
+    public function videoParseUrl($url)
+    {
+        $video = false;
+        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match)) {
+            $video = array(
+                'key' => $match[1],
+                'settings' => array(),
+                'combinations' => array(),
+                'type' => 'youtube'
+            );
+        }
+
+        return $video;
+    }
+
+    public function getLang()
+    {
+        $currentLocale = $this->localeResolver->getLocale();
+        list($lang,) = explode('_', $currentLocale);
+        return $lang;
+    }
+
     public function videosJson($id_product, $tojson = true)
     {
+        $ret = array();
+        $i = 0;
+
+
+        // Magento Native videos
+        $items = $this->getGalleryImagesArray();
+        
+        foreach($items as $item) {
+            if($item['media_type'] == 'external-video') {
+                $i++;    
+                if( $video = $this->videoParseUrl($item['video_url']) )
+                {
+                    $ret[$i] = $video;
+                }       
+            }
+        }
+
+
+        // Ajax Zoom videos
         $r = array();
         $videos = $this->Axvideo->getVideos($id_product);
         foreach ($videos as $video) {
             $r[$video['id_video']] = $video;
         }
 
-        $ret = array();
-        $i = 0;
+            
+        $lang = $this->getLang();
 
-        $lang = 'en'; // !!!
-        /*
-        $lang = substr(Mage::app()->getLocale()->getLocaleCode(), 0, 2);
-        if ($lang) {
-            $lang = strtolower($lang);
-        }*/
 
         foreach ($videos as $k => $v) {
             $i++;
