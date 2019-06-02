@@ -75,9 +75,12 @@ if ($this->product_has_video_html5 === true && $conf['video_settings']['videoHtm
 <!-- AJAX-ZOOM js block -->
 <script type="text/javascript">
 var axBaseUrl = '<?php echo $this->getBaseUrl(); ?>';
-
+var spConfig = {};
 require(["jquery", "jquery/ui"], function() {
+
+
     var proceedMageAjaxZoom = function() {
+
 
         require(["<?php echo implode('","', $this->_loadJS())?>"], function($) {
 
@@ -118,7 +121,7 @@ require(["jquery", "jquery/ui"], function() {
                 console.log(jQuery.axZm_psh);
 
 	            // Colors / attributes
-	            jQuery.axZm_psh.axAssociated = '{}';
+	            jQuery.axZm_psh.axAssociated = {};
 	            window.preRenderAxzoom();
 	        };
 
@@ -148,6 +151,37 @@ require(["jquery", "jquery/ui"], function() {
     };
 
     doubleCheckJqueryCore();
+
+
+    
+
+    // handle swatch click (update images if needed)
+    jQuery(document).on('click', '.swatch-option', function() {
+        var IMAGES_JSON = {};
+        var mageSwatchRenderer = jQuery('.swatch-opt').data('mageSwatchRenderer');
+        var product_id = mageSwatchRenderer.getProduct();
+        if(!product_id) {
+            return;
+        }
+        var images = mageSwatchRenderer.options.jsonConfig.images[product_id];
+        jQuery.each(images, function (idx, image) {
+            if(image.type == 'image') {
+                var el = document.createElement('a');
+                el.href = image.full;
+                IMAGES_JSON[idx+1] = {'img': el.pathname, 'title': image.caption};
+            }
+        });
+        jQuery.axZm_psh.IMAGES_JSON = IMAGES_JSON;
+
+        setTimeout(function () {
+            jQuery.axZm_psh.resetAxZoom();
+        }, 500);
+
+        
+        
+    });
+
+
 });
 
 </script>
