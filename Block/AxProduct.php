@@ -320,12 +320,15 @@ return;
 
     public function getImagesJson() {
     	$images = $this->getGalleryImagesArray();
+
     	$tmp = array();
     	$cnt = 1;
     	foreach($images as $image) {
-    		$p = parse_url($image['url']);
-    		$tmp[] = $cnt . ': {img: "' . $p['path'] . '", title: ""}';
-    		$cnt++;
+            if($image['media_type'] == 'image') {
+                $p = parse_url($image['url']);
+                $tmp[] = $cnt . ': {img: "' . $p['path'] . '", title: ""}';
+                $cnt++;
+            }
     	}
     	return '{' . implode(',', $tmp) . '}';
     }
