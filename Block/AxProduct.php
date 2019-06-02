@@ -546,12 +546,21 @@ return;
     public function videoParseUrl($url)
     {
         $video = false;
+
+        // youtube
         if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match)) {
             $video = array(
                 'key' => $match[1],
                 'settings' => array(),
                 'combinations' => array(),
                 'type' => 'youtube'
+            );
+        } elseif( preg_match('%vimeo%i', $url) ) {
+            $video = array(
+                'key' => (int) substr(parse_url($url, PHP_URL_PATH), 1),
+                'settings' => array(),
+                'combinations' => array(),
+                'type' => 'vimeo'
             );
         }
 
