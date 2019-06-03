@@ -78,6 +78,7 @@ var axBaseUrl = '<?php echo $this->getBaseUrl(); ?>';
 var spConfig = {};
 require(["jquery", "jquery/ui"], function() {
 
+    var images360jsonComb = jQuery.parseJSON('<?php echo json_encode($images360jsonComb); ?>');
 
     var proceedMageAjaxZoom = function() {
 
@@ -88,7 +89,7 @@ require(["jquery", "jquery/ui"], function() {
 	        var IMAGES_JSON = <?php echo $imagesJson ?>;
 	        var IMAGES_360_JSON = <?php echo $images360Json?>;
 
-	        var images360jsonComb = jQuery.parseJSON('<?php echo json_encode($images360jsonComb); ?>');
+	        
 
 	        window.initAxzoom = function() {
 	            if (!jQuery.axZm_psh) {
@@ -118,11 +119,11 @@ require(["jquery", "jquery/ui"], function() {
 	            jQuery.axZm_psh.headSelector = '<?php echo __('360° / Video'); ?>';
 	            jQuery.axZm_psh.displayInAzOpt = <?php echo $conf['plugin_settings']['displayInAzOpt']; ?>;
 
-                console.log(jQuery.axZm_psh);
-
 	            // Colors / attributes
 	            jQuery.axZm_psh.axAssociated = {};
 	            window.preRenderAxzoom();
+
+
 	        };
 
 	        window.triggerAxzoom = function() {
@@ -136,6 +137,9 @@ require(["jquery", "jquery/ui"], function() {
 	        }
 
 	        window.triggerAxzoom();
+
+
+
 
 	        $('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
         });
@@ -153,16 +157,22 @@ require(["jquery", "jquery/ui"], function() {
     doubleCheckJqueryCore();
 
 
-    
 
     // handle swatch click (update images if needed)
     jQuery(document).on('click', '.swatch-option', function() {
         var IMAGES_JSON = {};
         var mageSwatchRenderer = jQuery('.swatch-opt').data('mageSwatchRenderer');
         var product_id = mageSwatchRenderer.getProduct();
+
+
         if(!product_id) {
             return;
         }
+
+
+        var encoded  = images360jsonComb[product_id];
+
+
         var images = mageSwatchRenderer.options.jsonConfig.images[product_id];
         jQuery.each(images, function (idx, image) {
             if(image.type == 'image') {
@@ -172,6 +182,7 @@ require(["jquery", "jquery/ui"], function() {
             }
         });
         jQuery.axZm_psh.IMAGES_JSON = IMAGES_JSON;
+        jQuery.axZm_psh.IMAGES_360_JSON = jQuery.parseJSON(decodeURIComponent(encoded.replace(/\+/g, ' ')));
 
         setTimeout(function () {
             jQuery.axZm_psh.resetAxZoom();

@@ -116,12 +116,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
     {
         $conf = $this->_scopeConfig->getValue('axzoom_options', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 
-/*
-print '<pre>';
-print_r($conf);
-print '</pre>';
-return;
-*/
         $this->_addCss('axzoom/axZm/axZm.css');
         $this->_addCss('axzoom/axZm/axZmCustom.css');
             
@@ -340,6 +334,33 @@ return;
     	return '{' . implode(',', $tmp) . '}';
     }
 
+
+    public function getImagesJsonComb()
+    {
+
+        $product = $this->getProduct();
+        $for_js = array();
+
+        if(!$product->canConfigure()) {
+            return $for_js;
+        }
+
+
+        // !!! AZ: does not work for simple products.
+        $_children = $product->getTypeInstance()->getUsedProducts($product);
+        foreach ($_children as $childObj) {
+            $child = $childObj->getData();
+            
+            $extraGroups = array(); // !!!
+            $str = $this->Ax360->images360Json($this->getProductId(), $extraGroups, $child['entity_id']);
+            $images360json = str_replace("'", '"', $str);
+            $for_js[$child['entity_id']] = urlencode($images360json);
+        }
+
+        return $for_js;
+    }
+
+    /*
     public function getImagesJsonComb()
     {
         $product = $this->getProduct();
@@ -402,22 +423,22 @@ return;
         return $for_js;
 
 
-        /*
+        
         // method (2)
         //$attributes = $product->getTypeInstance()->getConfigurableAttributesAsArray($product);
-        $_children = $product->getTypeInstance()->getUsedProducts($product);
-        foreach ($_children as $child) {
-            $combination_id = $child->getID();
-            $attributes = $child->getAttributes();
+        //$_children = $product->getTypeInstance()->getUsedProducts($product);
+        //foreach ($_children as $child) {
+        //    $combination_id = $child->getID();
+        //    $attributes = $child->getAttributes();
 
-            $extraGroups = array();
-            $setsGroups = $this->Ax360->getSetsGroups($combination_id);
-            if($setsGroups) foreach($setsGroups as $group) array_push($extraGroups, $group['id_360']);
+        //    $extraGroups = array();
+        //    $setsGroups = $this->Ax360->getSetsGroups($combination_id);
+        //    if($setsGroups) foreach($setsGroups as $group) array_push($extraGroups, $group['id_360']);
 
 
-            $str = $this->Ax360->images360Json($this->getProductId(), $extraGroups, $combination_id);
-            $images360json = str_replace("'", '"', $str);
-        }
+        //    $str = $this->Ax360->images360Json($this->getProductId(), $extraGroups, $combination_id);
+        //    $images360json = str_replace("'", '"', $str);
+        //}
 
         //foreach ($_children as $child){
             //print $child->getID();
@@ -452,8 +473,9 @@ return;
             //exit;
             //$logger->info("Here are your child Product Ids ".$child->getID());
         //}
-        */
+        
     }
+    */
 
 
     public function arrayCombinations($arrays, $i = 0)
