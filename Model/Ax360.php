@@ -78,6 +78,10 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 					if(!empty($combinations) && count($combinations) > 0 && !in_array($combination_id, $combinations)) {
 						continue;
 					}
+				} else { // we ignore the "360 views" which assigned to the child products (we dont show them by default)
+					if(!in_array($group['combinations'], [''], '[]')) {
+						continue;
+					}
 				}
 
 				if ($group['status'] == 0)
