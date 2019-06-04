@@ -29,7 +29,6 @@ class SetCropJson extends \Magento\Backend\App\Action
 
         $this->Ax360->load($id_360)->addData(array('crop' => addslashes($json)))->save();
 
-        //$result = $db->query($query);
 
         die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode(array(
             'status' => 1 // !!!

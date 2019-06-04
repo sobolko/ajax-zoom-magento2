@@ -47,15 +47,10 @@ class Get360 extends \Magento\Framework\App\Action\Action
     {
         $result = [];
 
-
-
         if ($productId = (int)$this->getRequest()->getParam('product_id')) {
             $attributes = (array)$this->getRequest()->getParam('attributes');
 
-            //error_log("\n attributes: " . print_r($attributes, true), 3, '_log.txt');
-
             $combination_id = $this->getCombinationIdByAttributes($productId, $attributes);
-            //error_log("\n combination_id:" . $combination_id, 3, '_log.txt');
             
             $extraGroups = array();
             $setsGroups = $this->Ax360->getSetsGroups($combination_id);
@@ -66,8 +61,6 @@ class Get360 extends \Magento\Framework\App\Action\Action
                 'id' => $combination_id,
                 'images360json' => str_replace("'", '"', $str)
                 );
-
-            //error_log("\n" . print_r($result, true), 3, '_log.txt');
         }
 
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */

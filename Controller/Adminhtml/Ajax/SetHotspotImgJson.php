@@ -48,8 +48,6 @@ class SetHotspotImgJson extends \Magento\Backend\App\Action
       
         }
 
-        //$result = $db->query($query);
-
         die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode(array(
             'status' => 1 // !!!
             )));

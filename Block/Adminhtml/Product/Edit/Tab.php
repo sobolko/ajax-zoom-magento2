@@ -38,6 +38,8 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     private function _loadMedia()
     {
         $this->_addCss('axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.css');
+        $this->_addCss('axzoom/jquery.editable-select.css');
+
     }
 
     private function _addCss($path)
@@ -274,6 +276,77 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         */
 
         return $az_pictures_lst;
+    }
+
+
+    public function getPluginOptNameLabel($flip = false)
+    {
+        require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/AzMouseoverSettings.php';
+        require dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/AzMouseoverConfig.php';
+        $mouseover_settings = new \AzMouseoverSettings($az_mouseover_config_magento);
+
+        $excl_arr = array(
+            'displayOnlyForThisProductID',
+            'uploadNoCompress',
+            'default360settings',
+            'headerZindex',
+            'magentoAdminThumb'
+        );
+
+        $opt_arr = array();
+
+        $cfg = $mouseover_settings->getConfig();
+        //$cat = $mouseover_settings->getCategories();
+
+        foreach ($cfg as $k => $v) {
+            if (in_array($k, $excl_arr)) {
+                continue;
+            }
+
+            $varname = 'AJAXZOOM_'.strtoupper($k);
+            $opt_arr[$varname] = $k;
+        }
+
+        if ($flip === true) {
+            return array_flip($opt_arr);
+        }
+
+        return $opt_arr;
+    }
+
+    public function filter360data($arr)
+    {
+        $groups_360 = array();
+
+        if (is_array($arr) && !empty($arr)) {
+            foreach ($arr as $k => $v) {
+                $id_360 = $v['id_360'];
+                $groups_360[$id_360] = $v;
+                unset($groups_360[$id_360]['hotspot']);
+                unset($groups_360[$id_360]['crop']);
+                unset($groups_360[$id_360]['status']);
+            }
+        }
+
+        return $groups_360;
+    }
+
+    public function getProductPluginOpt($id_product = 0)
+    {
+        $resource = $this->_objectManager->get('Magento\Framework\App\ResourceConnection');
+        $connection = $resource->getConnection();
+        $tableName = $resource->getTableName('ajaxzoomproductsettings'); //gives table name with prefix
+
+
+        $conf = $connection->fetchAll('SELECT * FROM '.$tableName.' 
+            WHERE id_product = '.(int)$id_product
+        );
+
+        if (isset($conf[0]['psettings'])) {
+            return $conf[0]['psettings'];
+        } else {
+            return '{}';
+        }
     }
 
 }

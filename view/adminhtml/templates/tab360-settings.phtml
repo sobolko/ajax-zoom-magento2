@@ -1,5 +1,11 @@
 <?php
+
+$az_plugin_opt = $this->getPluginOptNameLabel();
+$az_plugin_prod_opt = $this->getProductPluginOpt($productId);
+
+
 $groups = $this->getGroups();
+$groups_360 = $this->filter360data($groups);
 $active = $this->isActive();
 
 // associated products
@@ -27,7 +33,7 @@ foreach($usedProducts as $p) {
 
 
 
-<div class="entry-edit ax-tab">
+<div class="entry-edit ax-tab az_container">
 	<div class="fieldset-wrapper">
 		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
 			<strong class="title"><?php echo __('Enable / Disable AJAX-ZOOM for this product') ?></strong>
@@ -43,6 +49,76 @@ foreach($usedProducts as $p) {
 			<label class="t" for="az_active_off"><?php echo __('No') ?></label>
 		</div>
 	</div>
+	<div class="fieldset fieldset-wide ax-tab-content">
+		<a href="javascript: void(0)" id="az_toggle_az_settings" style="text-decoration: none">
+            <span class="az_arrowhead_down az_arrowhead_span"></span>
+            <?php echo __('Individual module settings for this product') ?>
+        </a>
+	</div>
+
+            <div style="display: none;" id="az_az_settings">
+
+                <p class="message message-info">
+                    <?php echo __('Override module settings for this product only.') ?>
+                    <?php echo __('It is not needed and you do not have to set them here individually.') ?>
+                    <?php echo __('This is just for testing / experimenting and demo.') ?>
+                    <?php echo __('For reference see in module settings or visit www.ajax-zoom.com/examples/example32.php') ?>
+                </p>
+
+
+                <table style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th><?php echo __('Name') ?></th>
+                            <th></th>
+                            <th><?php echo __('Value') ?></th>
+                            <th style="width: 120px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="az_pairRows_module">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <div class="row_">
+                                    <button class="scalable add" id="az_link_add_option_module" style="margin-top: 3px;">
+                                        <span><span><span><?php echo __('Add an option') ?></span></span></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table id="az_pairTemplate_module" style="display: none">
+                    <tr>
+                        <td><input type="text" name="az_pair_name_module[]" value="name_placeholder" 
+                            class="az_pair_names_module form-control" data-list="az_pair_list_names">
+                        </td>
+                        <td style="width: 20px;">&nbsp; : &nbsp;</td>
+                        <td><input type="text" name="az_pair_value_module[]" value="value_placeholder" 
+                            class="az_pair_values_module form-control"></td>
+                        <td style="white-space: nowrap;">
+                            &nbsp;&nbsp;
+                            <a class="link_textarea_option_module" href="#">
+                                <?php echo __('Edit') ?>
+                            </a>
+                            &nbsp;&nbsp;
+                            <a class="link_remove_option_module" href="#">
+                                <?php echo __('Delete') ?>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+
+                <div>
+                    <button style="display:none;" data-but="do not remove" type="submit" name="az_submitSettings_module" 
+                        id="az_submitSettings_module" class="scalable save az_biggerButton" style="margin-top: 10px;">
+                    	<span><span><span>Save and stay</span></span></span>
+                    </button>
+                    &nbsp;
+                </div>
+            </div>
+
 </div>
 
 <div class="entry-edit ax-tab">
@@ -144,8 +220,100 @@ foreach($usedProducts as $p) {
 </div>
 
 <script type="text/javascript">
-require(["jquery"], function($){
+
+window.az_data_360 = <?php echo json_encode($groups_360); ?>;
+window.az_plugin_opt = <?php echo json_encode($az_plugin_opt); ?>;
+window.az_plugin_prod_opt = JSON.parse('<?php echo $az_plugin_prod_opt; ?>');
+window.az_lang_success_change_status = '<?php echo __('Status of AJAX-ZOOM being enabled for this product has been changed'); ?>';
+window.az_lang_settings_360_saved = '<?php echo __('Settings for 360 have been saved'); ?>';
+window.az_lang_module_settings_edited = '<?php echo __('Module settings for this product have been set'); ?>';
+
+require(["jquery",
+	"<?php echo $this->getBaseUrl() ?>axzoom/jquery.editable-select.js"
+	], function($){
 	
+	// auto save
+	$('#az_pairRows_module').on('change', 'input', function () {
+		$('#az_submitSettings_module').click();
+	});
+
+
+    $('#az_toggle_az_settings').bind('click', function() {
+        if ($('.az_arrowhead_span', $(this)).is('.az_arrowhead_down')) {
+            $('.az_arrowhead_span', $(this)).removeClass('az_arrowhead_down').addClass('az_arrowhead_up');
+        } else {
+            $('.az_arrowhead_span', $(this)).removeClass('az_arrowhead_up').addClass('az_arrowhead_down');
+        }
+
+        $('#az_az_settings').slideToggle(150);
+    } );
+
+    $('#az_link_add_option_module').bind('click', function(e) {
+        e.preventDefault();
+        pairLineModule('', '');
+    } );
+
+    $('body').on('click', '.link_textarea_option_module', function(e) {
+        e.preventDefault();
+        var td = $(this).parent().prev();
+        if ($('input', td).length == 1) { 
+            var Val = $('input', td).val().replace(/"/g, "&quot;");
+            $('input', td).replaceWith('<textarea class="az_pair_values_module_a form-control" type="text" name="az_pair_value[]">'+Val+'</textarea>');
+        } else if ($('textarea', td).length == 1) { 
+            var Val = $('textarea', td).val().replace(/"/g, "&quot;");
+            $('textarea', td).replaceWith('<input class="az_pair_values_module_a form-control" type="text" value="'+Val+'" name="az_pair_value[]">');
+        }
+    } );
+
+    $('body').on('click', '.link_remove_option_module', function(e) {
+        e.preventDefault();
+        $(this).closest('tr').remove();
+        $('#az_submitSettings_module').addClass('az_save_require');
+    } );
+
+    // PLUGIN SETTINGS FOR PRODUCT
+    if (window.az_plugin_opt && typeof az_plugin_opt == 'object') {
+        var datalist = '<datalist id="az_plugin_opt_list">';
+        $.each(az_plugin_opt, function(k, v) {
+            datalist += '<option value="'+v+'">'+v+'</option>';
+        } );
+
+        datalist += '</datalist>';
+        $('body').append(datalist);
+        delete datalist;
+    }
+
+    function pairLineModule(name, value) { 
+        if (typeof value == 'object') {
+            value = JSON.stringify(value).replace(/"/g, "&quot;");
+        }
+
+        if (typeof value == 'string') {
+            value = value.replace(/"/g, "&quot;");
+        }
+
+        if (name.indexOf('/') != -1) {
+            name = name.split('/')[1];
+        }
+
+        var line = $("#az_pairTemplate_module").html();
+        line = line.replace(/name_placeholder/g, name);
+        line = line.replace(/value_placeholder/g, value);
+        line = line.replace(/az_pair_names_module/g, 'az_pair_names_module_a');
+        line = line.replace(/az_pair_values_module/g, 'az_pair_values_module_a');
+        line = line.replace(/az_pair_list_names/g, 'az_plugin_opt_list');
+        line = line.replace(/<tbody>/gi, "");
+        line = line.replace(/<\/tbody>/gi, "");
+        line = $(line);
+
+        $("#az_pairRows_module").append(line);
+
+        setTimeout(function() {
+        	// !!! some css/js bug
+            $('input.az_pair_names_module_a', line).aZeditableSelect();
+        }, 100);
+    }
+
 
 	function deserialize(serializedString){
 		var str = decodeURI(serializedString);
@@ -169,6 +337,52 @@ require(["jquery"], function($){
 		}
 		return obj;
 	}
+
+
+    $.each(window.az_plugin_prod_opt, function(a, b) {
+        pairLineModule(a, b);
+    } );
+
+
+    $('#az_submitSettings_module').bind('click', function(e) {
+        e.preventDefault();
+        $(this).blur();
+
+        var names = [];
+        var values = [];
+
+        $('.az_pair_names_module_a[value!=name_placeholder]').each(function() { 
+            var vn = $(this).val();
+            names.push(vn)
+        } );
+
+        $('.az_pair_values_module_a[value!=value_placeholder]').each(function() { 
+            var vv = $(this).val();
+            values.push(vv)
+        } );
+
+        $('#az_submitSettings_module').removeClass('az_save_require');
+
+        doAdminAjax360('<?php echo $this->getUrlAjax('saveProductAzSettings'); ?>', { 
+            "action": "saveProductAzSettings",
+            "id_product": <?php echo $productId; ?>,
+            "names": names.join('|'),
+            "values": values.join('|'),
+            "ajax": 1
+        }, function (data) { 
+            data = $.parseJSON(data);
+            window.az_plugin_prod_opt = $.parseJSON(data.moduleSettings);
+
+            $("#az_pairRows_module").empty();
+            $.each(window.az_plugin_prod_opt, function(a, b) {
+                pairLineModule(a, b);
+            } );
+
+            az_showSuccessMessage(az_lang_module_settings_edited);
+        } );
+    } );
+
+
 
 
 	function ajaxSaveSettings()

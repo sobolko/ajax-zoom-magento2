@@ -142,6 +142,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
             $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoomPng.5.css');
         }
 
+        
         $this->_addCss('axzoom/axzoom.css');
         
     }
@@ -186,8 +187,8 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         }
         
         array_push($scripts, $baseUrl . "axzoom/axZm/plugins/JSON/jquery.json-2.3.min.js");
-
-
+        
+        
         array_push($scripts, $baseUrl . "axzoom/axzoom.js");
 
         return $scripts;
@@ -339,7 +340,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
     {
 
         $product = $this->getProduct();
-        $for_js = array();
+        $for_js = '';
 
         if(!$product->canConfigure()) {
             return $for_js;
@@ -372,168 +373,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 
         return $for_js;
     }
-
-    /*
-    public function getImagesJsonComb()
-    {
-        $product = $this->getProduct();
-        $for_js = array();
-
-        if(!$product->canConfigure()) {
-            return $for_js;
-        }
-
-        // !!! AZ: does not work for simple products.
-        $attributes = $product->getTypeInstance()->getConfigurableAttributesAsArray($product);
-        $_children = $product->getTypeInstance()->getUsedProducts($product);
-
-        // method (1)
-        $result = array();
-        $result_idx = array();
-        $attributes_codes = array();
-        $idx = 0;
-        foreach ($attributes as $attribute) {
-            
-            array_push($attributes_codes, $attribute['attribute_code']);
-
-            foreach ($_children as $child) {
-                $attributeValue = $child->getData($attribute['attribute_code']);
-                if ($attributeValue) {
-
-                    if(!isset($result[$attribute['attribute_code']])) {
-                        $result[$attribute['attribute_code']] = array();
-                    }
-
-                    if(!in_array($attributeValue, $result[$attribute['attribute_code']])) {
-                        $result[$attribute['attribute_code']][] = $attributeValue;
-                        $result_idx[$idx][] = $attributeValue;
-                    }
-                }
-            }
-            $idx++;
-        }
-
-        $combinations = $this->arrayCombinations($result_idx);
-
-        
-        foreach($combinations as $combination) {
-            $attributes = array();
-            $ids = array();
-            foreach($combination as $idx => $attr) {
-                $attributes[$attributes_codes[$idx]] = $attr;
-                array_push($ids, $attr);
-            }
-            $combination_id = $this->getCombinationIdByAttributes($this->getProductId(), $attributes);
-            
-            $extraGroups = array();
-            $setsGroups = $this->Ax360->getSetsGroups($combination_id);
-            if($setsGroups) foreach($setsGroups as $group) array_push($extraGroups, $group['id_360']);
-
-            $str = $this->Ax360->images360Json($this->getProductId(), $extraGroups, $combination_id);
-            $images360json = str_replace("'", '"', $str);
-            $for_js[implode('-', $ids)] = urlencode($images360json);
-        }
-        return $for_js;
-
-
-        
-        // method (2)
-        //$attributes = $product->getTypeInstance()->getConfigurableAttributesAsArray($product);
-        //$_children = $product->getTypeInstance()->getUsedProducts($product);
-        //foreach ($_children as $child) {
-        //    $combination_id = $child->getID();
-        //    $attributes = $child->getAttributes();
-
-        //    $extraGroups = array();
-        //    $setsGroups = $this->Ax360->getSetsGroups($combination_id);
-        //    if($setsGroups) foreach($setsGroups as $group) array_push($extraGroups, $group['id_360']);
-
-
-        //    $str = $this->Ax360->images360Json($this->getProductId(), $extraGroups, $combination_id);
-        //    $images360json = str_replace("'", '"', $str);
-        //}
-
-        //foreach ($_children as $child){
-            //print $child->getID();
-
-
-            //$attributes = $child->getAttributes();
-            //foreach ($attributes as $attribute) { 
-                //echo $attribute->getAttributeCode(); echo '[' . $attribute->isInSet() ? 1 : 0 . '] ' . '<br />';
-            //    print_r(get_class_methods($attribute));
-            //    exit;
-                  
-            //}
-
-            //print_r($child->getData());
-              
-            //$attributes = $child->getCustomAttributes(); 
-            //print_r($attributes);
-
-            //$attributes = $child->getConfigurableAttributes(); 
-            //print_r($attributes);
-            //exit;
-              
-            //foreach ($attributes as $attribute) {
-            //    print_r(get_class_methods($attribute));
-            //    exit;
-            //}
-
-            //print_r(get_class_methods($child));
-              
-              
-            //print '<br>';
-            //exit;
-            //$logger->info("Here are your child Product Ids ".$child->getID());
-        //}
-        
-    }
-    */
-
-
-    public function arrayCombinations($arrays, $i = 0)
-    {
-            if (!isset($arrays[$i])) {
-                return array();
-            }
-            if ($i == count($arrays) - 1) {
-                return $arrays[$i];
-            }
-
-            // get combinations from subsequent arrays
-            $tmp = $this->arrayCombinations($arrays, $i + 1);
-
-            $result = array();
-
-            // concat each array from tmp with each element from $arrays[$i]
-            foreach ($arrays[$i] as $v) {
-                foreach ($tmp as $t) {
-                    $result[] = is_array($t) ? 
-                        array_merge(array($v), $t) :
-                        array($v, $t);
-                }
-            }
-
-            return $result;
-        }
-
-
-    public function getCombinationIdByAttributes($productId, $attributes)
-    {
-        $currentConfigurable = $this->productModelFactory->create()->load($productId);
-
-        $resultAttributes = $attributes;
-        $product = $this->swatchHelper->loadVariationByFallback($currentConfigurable, $resultAttributes);
-        if (!$product || (!$product->getImage() || $product->getImage() == 'no_selection')) {
-            $product = $this->swatchHelper->loadFirstVariationWithImage(
-                $currentConfigurable,
-                $resultAttributes
-            );
-        }        
-        $data = $product->getData();
-        return $data['entity_id'];
-    }
-
 
     public function normalizeConfig($conf, $prefix = '')
     {
@@ -670,40 +509,15 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         return $ret;
     }
 
-    public function test()
-    {
-        return '888';
-    }
+
 
     public function getImageHotspotsProduct($id_product)
     {
-
-
         return $this->Axhotspot->getFrontendHotspots($id_product);
-
-        /*
-        $db = Mage::getSingleton('core/resource')->getConnection('core_write');
-        $db_prefix = (string)Mage::getConfig()->getTablePrefix();
-        $return = array();
-
-        $sql = $db->fetchAll('SELECT * FROM `'.$db_prefix.'ajaxzoomimagehotspots` WHERE `id_product` = '.(int)$pid);
-        if (!empty($sql)) {
-            foreach ($sql as $k => $r) {
-                $mid = $r['id_media'];
-                $return[$mid] = array();
-                if ($r['hotspots_active'] == 1) {
-                    $return[$mid]['hotspots'] = trim(preg_replace('/\s+/', ' ', $r['hotspots']));
-                    $return[$mid]['image_name'] = $r['image_name'];
-                }
-            }
-        }
-
-        return $return;
-        */
     }
 
 
-    
+    // !!!
     public function getImagesBackendHotspots($id_product, $sub = false)
     {
         return 333;
