@@ -16,7 +16,21 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
                 </field>				
 			</group>
-
+			<group id="actions" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Actions</label>
+                <field id="actions_reset" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Ax\Zoom\Block\System\Config\Reset</frontend_model>
+                    <label>Reset all options to default values</label>
+                </field>
+                <field id="actions_get_number_images" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Ax\Zoom\Block\System\Config\GetNumberImages</frontend_model>
+                    <label>Get number images</label>
+                </field>
+                <field id="actions_update" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Ax\Zoom\Block\System\Config\Update</frontend_model>
+                    <label>Update AJAX-ZOOM</label>
+                </field>                
+            </group>
 		</section>
 	</system>
 </config>

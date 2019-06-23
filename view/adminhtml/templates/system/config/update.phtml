@@ -1,0 +1,49 @@
+
+<script>
+    require([
+        'jquery',
+        'prototype'
+    ], function(jQuery){
+
+        var theSpan = jQuery('#update_span');
+
+        jQuery('#update_button').click(function () {
+            var params = {};
+            new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+                parameters:     params,
+                loaderArea:     false,
+                asynchronous:   true,
+                onCreate: function() {
+                    theSpan.find('.updated').hide();
+                    theSpan.find('.processing').show();
+                    jQuery('#update_message_span').text('');
+                },
+                onSuccess: function(response) {
+                    theSpan.find('.processing').hide();
+
+                    var resultText = '';
+                    if (response.status > 200) {
+                        resultText = response.statusText;
+                    } else {
+                        resultText = 'Success';
+                        theSpan.find('.updated').show();
+                    }
+                    jQuery('#update_message_span').text(resultText);
+
+                    var json = response.responseJSON;
+                    if (typeof json.time != 'undefined') {
+                        jQuery('#row_mageworx_alsobought_general_collect_time').find('.value .time').text(json.time);
+                    }
+                }
+            });
+        });
+
+    });
+</script>
+
+<?php echo $block->getButtonHtml() ?>
+<span class="collect-indicator" id="update_span">
+    <img class="processing" hidden="hidden" alt="Updating" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
+    <img class="updated" hidden="hidden" alt="Updated" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
+    <span id="update_message_span"></span>
+</span>
