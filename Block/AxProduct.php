@@ -338,14 +338,13 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 
     public function getImagesJsonComb()
     {
-
         $product = $this->getProduct();
-        $for_js = '';
-
+        
         if(!$product->canConfigure()) {
-            return $for_js;
+            return '';
         }
 
+        $for_js = [];
 
         // !!! AZ: does not work for simple products.
         $_children = $product->getTypeInstance()->getUsedProducts($product);
@@ -354,8 +353,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
             
             $extraGroups = array(); // !!!
             $str = $this->Ax360->images360Json($this->getProductId(), $extraGroups, $child['entity_id']);
-
-
 
             // merge with its own "360 views"
             $str2 = $this->Ax360->images360Json($child['entity_id']);
