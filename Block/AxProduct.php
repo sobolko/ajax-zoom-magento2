@@ -347,7 +347,13 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         $for_js = [];
 
         // !!! AZ: does not work for simple products.
-        $_children = $product->getTypeInstance()->getUsedProducts($product);
+        $obj = $product->getTypeInstance();
+        
+        if(!method_exists ( $obj , 'getUsedProducts' )) {
+            return '';
+        }
+
+        $_children = $obj->getUsedProducts($product);
         foreach ($_children as $childObj) {
             $child = $childObj->getData();
             
