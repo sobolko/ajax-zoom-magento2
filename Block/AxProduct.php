@@ -128,7 +128,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         $this->_addCss('axzoom/axZm/extensions/jquery.axZm.expButton.css');
 
         $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoom.5.css');
-        $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/mods/jquery.axZm.mouseOverZoomMagento.4.css');
+        //$this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/mods/jquery.axZm.mouseOverZoomMagento.4.css');
 
 
         if($conf['general_settings']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' || $conf['general_settings']['ajaxZoomOpenMode'] == 'fancybox') {
