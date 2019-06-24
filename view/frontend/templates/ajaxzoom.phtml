@@ -28,6 +28,12 @@ $videosJson = $this->videosJson($productId);
 
 ?>
 
+<style type="text/css">
+    /* AZ: magento2 default theme menuover fix */
+    .axZm_mouseOverImg {
+        z-index: 2 !important;
+    }
+</style>
 
 <div class="axZm_mouseOverWithGalleryContainer" id="<?php echo $ajaxzoom_containerId;?>" 
     style="<?php echo $ajaxzoom_displayInSelector ? 'display: none' : ''; ?>">
@@ -162,6 +168,7 @@ require(["jquery", "jquery/ui"], function() {
     jQuery(document).on('click', '.swatch-option', function() {
         var IMAGES_JSON = {};
         var mageSwatchRenderer = jQuery('.swatch-opt').data('mageSwatchRenderer');
+
         var product_id = mageSwatchRenderer.getProduct();
 
 
