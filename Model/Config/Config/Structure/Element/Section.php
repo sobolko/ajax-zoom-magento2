@@ -39,7 +39,7 @@ class Section
         require_once($module_path . '/AzMouseoverConfig.php');
         require_once($module_path . '/AzMouseoverSettings.php');
         
-        $object = new \AzMouseoverSettings();
+        $object = new \Ax\Zoom\AzMouseoverSettings();
         $this->config = $object->magento2_config();
         
         // set default values only once

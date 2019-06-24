@@ -283,7 +283,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     {
         require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/AzMouseoverSettings.php';
         require dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/AzMouseoverConfig.php';
-        $mouseover_settings = new \AzMouseoverSettings($az_mouseover_config_magento);
+        $mouseover_settings = new \Ax\Zoom\AzMouseoverSettings($az_mouseover_config_magento);
 
         $excl_arr = array(
             'displayOnlyForThisProductID',

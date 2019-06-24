@@ -387,7 +387,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
     {
         require_once dirname(dirname(__FILE__)).'/AzMouseoverSettings.php';
         require dirname(dirname(__FILE__)).'/AzMouseoverConfig.php';
-        $mouseover_settings = new \AzMouseoverSettings($az_mouseover_config_magento);
+        $mouseover_settings = new \Ax\Zoom\AzMouseoverSettings($az_mouseover_config_magento);
 
         // !!!
         //if (empty($conf)) {

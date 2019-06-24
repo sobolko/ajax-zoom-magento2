@@ -1,4 +1,6 @@
 <?php
+namespace Ax\Zoom;
+
 /**
 *  AzMouseoverSettings.php
 *  Copyright: Copyright (c) 2010-2018 Vadim Jacobi
