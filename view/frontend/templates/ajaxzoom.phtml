@@ -167,7 +167,8 @@ require(["jquery", "jquery/ui"], function() {
     // handle swatch click (update images if needed)
     jQuery(document).on('click', '.swatch-option', function() {
         var IMAGES_JSON = {};
-        var mageSwatchRenderer = jQuery('.swatch-opt').data('mageSwatchRenderer');
+        
+        var mageSwatchRenderer = jQuery('.swatch-opt').data('mageSwatchRenderer') || jQuery('.swatch-opt').data('amasty_confSwatchRenderer');
 
         var product_id = mageSwatchRenderer.getProduct();
 
