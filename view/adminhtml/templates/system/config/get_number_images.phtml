@@ -8,7 +8,9 @@
         var collectSpan = jQuery('#get_number_images_span');
 
         jQuery('#get_number_images_button').click(function () {
-            var params = {'xxx': 'yyy'};
+
+            jQuery("#axzoom_getnumberimages_2d, #axzoom_getnumberimages_360").html("&#8986;");
+            var params = {};
             new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
                 parameters:     params,
                 loaderArea:     false,
@@ -31,9 +33,17 @@
                     jQuery('#get_number_images_message_span').text(resultText);
 
                     var json = response.responseJSON;
-                    if (typeof json.time != 'undefined') {
-                        jQuery('#row_mageworx_alsobought_general_collect_time').find('.value .time').text(json.time);
+
+                    if (!json) {
+                        json = JSON.parse(response.responseText);
                     }
+
+                    jQuery("#axzoom_getnumberimages_2d").html(json.images2d);
+                    jQuery("#axzoom_getnumberimages_360").html(json.images360);
+                    jQuery("#axzoom_getnumberimages_sum").html(parseInt(json.images360) + parseInt(json.images2d));
+
+
+
                 }
             });
         });
@@ -41,7 +51,27 @@
     });
 </script>
 
+
+
+<table>
+    <tbody>
+        <tr>
+            <td style="padding-right: 20px; padding-top: 0px; font-size: 12px;">Unique images: </td>
+            <td style="padding-top: 0px; font-size: 12px;"><span id="axzoom_getnumberimages_2d"> ⚽ </span> (from DB)</td>
+        </tr>
+        <tr>
+            <td style="padding-top: 10px; font-size: 12px;">Images 360° / 3D: </td>
+            <td style="padding-top: 10px; font-size: 12px;"><span id="axzoom_getnumberimages_360"> ⚽ </span></td>
+        </tr>
+        <tr>
+            <td style="padding-top: 10px; font-size: 12px; padding-bottom: 10px;">Sum: </td>
+            <td style="padding-top: 10px; font-size: 12px;"><span id="axzoom_getnumberimages_sum"> ⚽ </span></td>
+        </tr>
+    </tbody>
+</table>
+
 <?php echo $block->getButtonHtml() ?>
+<p class="note"><?php echo __('Request total number of images') ?></p>
 <span class="collect-indicator" id="get_number_images_span">
     <img class="processing" hidden="hidden" alt="Collecting" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
     <img class="collected" hidden="hidden" alt="Collected" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>

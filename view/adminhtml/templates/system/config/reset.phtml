@@ -8,41 +8,51 @@
         var collectSpan = jQuery('#reset_span');
 
         jQuery('#reset_button').click(function () {
-            var params = {'btn': 'reset'};
-            new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
-                parameters:     params,
-                loaderArea:     false,
-                asynchronous:   true,
-                onCreate: function() {
-                    collectSpan.find('.collected').hide();
-                    collectSpan.find('.processing').show();
-                    jQuery('#reset_message_span').text('');
-                },
-                onSuccess: function(response) {
-                    collectSpan.find('.processing').hide();
 
-                    var resultText = '';
-                    if (response.status > 200) {
-                        resultText = response.statusText;
-                    } else {
-                        resultText = 'Success';
-                        collectSpan.find('.collected').show();
-                    }
-                    jQuery('#reset_message_span').text(resultText);
+            var result = confirm("Are you sure you want to reset all AJAX-ZOOM plugin options to their defaults?");
 
-                    var json = response.responseJSON;
-                    if (typeof json.time != 'undefined') {
-                        jQuery('#row_mageworx_alsobought_general_collect_time').find('.value .time').text(json.time);
+            if(result) {
+                var params = {};
+                new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+                    parameters:     params,
+                    loaderArea:     false,
+                    asynchronous:   true,
+                    onCreate: function() {
+                        collectSpan.find('.collected').hide();
+                        collectSpan.find('.processing').show();
+                        jQuery('#reset_message_span').text('');
+                    },
+                    onSuccess: function(response) {
+                        collectSpan.find('.processing').hide();
+
+                        var resultText = '';
+                        if (response.status > 200) {
+                            resultText = response.statusText;
+                        } else {
+                            resultText = 'Success';
+                            collectSpan.find('.collected').show();
+                        }
+                        jQuery('#reset_message_span').text(resultText);
+
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500)
+
+                        var json = response.responseJSON;
+                        if (typeof json.time != 'undefined') {
+                            jQuery('#row_mageworx_alsobought_general_collect_time').find('.value .time').text(json.time);
+                        }
                     }
-                }
-            });
+                });
+            }
+
         });
 
     });
 </script>
 
 <?php echo $block->getButtonHtml() ?>
-
+<p class="note"><?php echo __('No data will be replaced or removed! It will only create new tables in case they are not present. Should be performed after AJAX-ZOOM module update in case new tables are not created by the update script instantly.') ?></p>
 <span class="collect-indicator" id="reset_span">
     <img class="processing" hidden="hidden" alt="Collecting" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
     <img class="collected" hidden="hidden" alt="Collected" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
