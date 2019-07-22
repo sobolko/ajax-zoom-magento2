@@ -5,10 +5,10 @@
         'prototype'
     ], function(jQuery){
 
-        var collectSpan = jQuery('#collect_span');
+        var collectSpan = jQuery('#reset_span');
 
         jQuery('#reset_button').click(function () {
-            var params = {};
+            var params = {'btn': 'reset'};
             new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
                 parameters:     params,
                 loaderArea:     false,
@@ -16,7 +16,7 @@
                 onCreate: function() {
                     collectSpan.find('.collected').hide();
                     collectSpan.find('.processing').show();
-                    jQuery('#collect_message_span').text('');
+                    jQuery('#reset_message_span').text('');
                 },
                 onSuccess: function(response) {
                     collectSpan.find('.processing').hide();
@@ -28,7 +28,7 @@
                         resultText = 'Success';
                         collectSpan.find('.collected').show();
                     }
-                    jQuery('#collect_message_span').text(resultText);
+                    jQuery('#reset_message_span').text(resultText);
 
                     var json = response.responseJSON;
                     if (typeof json.time != 'undefined') {
@@ -43,8 +43,8 @@
 
 <?php echo $block->getButtonHtml() ?>
 
-<span class="collect-indicator" id="collect_span">
+<span class="collect-indicator" id="reset_span">
     <img class="processing" hidden="hidden" alt="Collecting" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
     <img class="collected" hidden="hidden" alt="Collected" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
-    <span id="collect_message_span"></span>
+    <span id="reset_message_span"></span>
 </span>

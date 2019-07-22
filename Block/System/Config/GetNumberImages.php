@@ -53,7 +53,7 @@ class GetNumberImages extends Field
      */
     public function getAjaxUrl()
     {
-        return $this->getUrl('ax_zoom/system_config/collect');
+        return $this->getUrl('axzoom/Ajax/ActionGetNumberImages');
     }
 
     /**
