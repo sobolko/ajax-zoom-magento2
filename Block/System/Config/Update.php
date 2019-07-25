@@ -51,6 +51,26 @@ class Update extends Field
      *
      * @return string
      */
+    public function getDownloadAxZmUrl()
+    {
+        return $this->getUrl('axzoom/Ajax/DownloadAxZm');
+    }
+
+    /**
+     * Return ajax url for collect button
+     *
+     * @return string
+     */
+    public function getAzAvailVersionUrl()
+    {
+        return $this->getUrl('axzoom/Ajax/GetAzAvailVersion');
+    }
+
+    /**
+     * Return ajax url for collect button
+     *
+     * @return string
+     */
     public function getAjaxUrl()
     {
         return $this->getUrl('axzoom/Ajax/ActionUpdate');
@@ -67,7 +87,7 @@ class Update extends Field
             'Magento\Backend\Block\Widget\Button'
         )->setData(
             [
-                'id' => 'update_button',
+                'id' => 'axzoom_updateaz',
                 'label' => __('Check for available updates'),
             ]
         );

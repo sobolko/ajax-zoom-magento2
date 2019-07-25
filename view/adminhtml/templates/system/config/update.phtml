@@ -1,5 +1,23 @@
-
+<style type="text/css">
+    #row_axzoom_options_actions_actions_update .label {
+        min-width: 100px;
+    }
+    #row_axzoom_options_license_lic .label {
+        min-width: 75px;    
+    }
+</style>
 <script>
+
+    function az_versionCompare(b,c,a){function d(a){
+        return(e?/^\d+[A-Za-z]*$/:/^\d+$/).test(a)}var e=a&&a.lexicographical;a=a&&a.zeroExtend;
+        b=b.split(".");c=c.split(".");if(!b.every(d)||!c.every(d))return NaN;
+        if(a){for(;b.length<c.length;)b.push("0");
+        for(;c.length<b.length;)c.push("0")}e||(b=b.map(Number),c=c.map(Number));
+        for(a=0;a<b.length;++a){if(c.length==a)return 1;
+        if(b[a]!=c[a])return b[a]>c[a]?1:-1}
+        return b.length!=c.length?-1:0
+    }
+
     require([
         'jquery',
         'prototype'
@@ -7,7 +25,17 @@
 
         var theSpan = jQuery('#update_span');
 
-        jQuery('#update_button').click(function () {
+
+        jQuery("#row_axzoom_options_actions_updateaz td.scope-label").next().remove();
+        jQuery("#row_axzoom_options_actions_updateaz td.scope-label").remove();
+        jQuery("#row_axzoom_options_actions_updateaz td.value").attr("colspan", 3);
+
+        jQuery('#axzoom_updateaz').click(function () {
+
+
+            var dta_installed;
+            var dta_avail;
+
             var params = {};
             new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
                 parameters:     params,
@@ -19,6 +47,128 @@
                     jQuery('#update_message_span').text('');
                 },
                 onSuccess: function(response) {
+
+
+                        dta_installed = response.responseText;
+                        if (typeof dta_installed == "string") {
+                            dta_installed = JSON.parse(dta_installed);
+                        }
+
+                        if (dta_installed.version) {
+                            var info_installed = "Version: "+dta_installed.version+"<br>";
+                            info_installed += "Date: "+dta_installed.date+"<br>";
+                            info_installed += "Review: "+dta_installed.review+"<br>";
+
+                            jQuery("#az_updateTdInstalled").html(info_installed);
+                            jQuery("#az_updateTable").slideDown(300);
+
+                            jQuery.ajax( {
+                                url: '<?php echo $block->getAzAvailVersionUrl() ?>',
+                                data: {'xx': 'yy'},
+                                success: function(data) {
+                                    dta_avail = data;
+                                    if (typeof dta_avail == "string") {
+                                        dta_avail = JSON.parse(dta_avail);
+                                    }
+
+                                    var info_avail = "Version: "+dta_avail.version+"<br>";
+                                    info_avail += "Date: "+dta_avail.date+"<br>";
+                                    info_avail += "Review: "+dta_avail.review+"<br>";
+
+                                    jQuery("#az_updateTdAvail").html(info_avail);
+
+                                    if (dta_installed.version != dta_avail.version) {
+var msg_install = "";
+msg_install = "<p class=\"note\" style=\"width: auto\">";
+msg_install += "In order the AJAX-ZOOM module for Magento to work it requires that the core ";
+msg_install += "AJAX-ZOOM files are present in /js/axzoom/axZm folder. When you update the module, ";
+msg_install += "the core files do not get updated instantly! You can download the latest AJAX-ZOOM core files ";
+msg_install += "(without examples and test images) from https://www.ajax-zoom.com/index.php?cid=download ";
+msg_install += "and unzip the axZm folder (containing in this download) into /js/axzoom/axZm, ";
+msg_install += "previously renaming the old axZm folder to e.g. axZm_old or other name in order to backup it. ";
+msg_install += "This is how you could do it manually over FTP...";
+msg_install += "<br><br>";
+msg_install += "Since module version 1.4.0 you can update these core files by ";
+msg_install += "pressing on the button above. Before updating, make sure that you or your developer did not make ";
+msg_install += "any substantial changes to AJAX-ZOOM core files, which is mostly bad practice. ";
+msg_install += "Anyway, while updating, the currently installed AJAX-ZOOM core version, located in /js/axzoom/axZm, ";
+msg_install += "will be backed up into /js/axzoom/backups/axZm_[timestamp] folder, so in case ";
+msg_install += "the result after updating causes any issues you can always restore the previous version manually. ";
+msg_install += "Before restoring please make sure that an eventual problem is not caused by template and ";
+msg_install += "js / css files caching - refresh if needed!";
+msg_install += "</p>";
+                                        var txt_notes = "";
+                                        txt_notes += "<button type=\"button\" style= \"margin-top: 10px\" onsubmit=\"return false;\" ";
+                                        txt_notes += "id=\"axzoom_updateazcore\" style=\"width: 100%;\">";
+                                        txt_notes += "Perform update to version "+dta_avail.version+"</button>" + msg_install;
+                                        txt_notes += "<div class=\"content-header\" style=\"margin-top: 20px\">";
+                                        txt_notes += "<h3>Release notes</h3></div>";
+                                        txt_notes += "<table style=\"min-width: 640px; border-width: 0\"><tbody>";
+                                        jQuery.each(dta_avail.notes, function(v, t) {
+                                            if (az_versionCompare(dta_installed.version, v) == -1) {
+                                                txt_notes += "<tr><td style=\"vertical-align: top; border-width: 0\">"+v;
+                                                txt_notes += "</td><td style=\"vertical-align: top; border-width: 0\">"+t;
+                                                txt_notes += "</td></tr>";
+                                            }
+                                        } );
+
+                                        txt_notes += "</tbody></table>";
+                                        jQuery("#az_updateTdAvail").append(txt_notes);
+
+                                        jQuery("#axzoom_updateazcore")
+                                        .unbind()
+                                        .bind("click", function(e) {
+                                            var new_html = "<div id=\"az_update_status\"><div class=\"notification-global\">";
+                                            new_html += "Performing update, please wait. This can last a while...</div></div>";
+
+                                            jQuery(this).replaceWith(new_html);
+                                            jQuery("#axzoom_updateaz").addClass("disabled");
+
+                                            jQuery.ajax( {
+                                                url: '<?php echo $block->getDownloadAxZmUrl() ?>',
+                                                data: {'xx': 'yy'},
+                                                success: function(data) {
+                                                    var data = jQuery.parseJSON(data);
+                                                    jQuery("#axzoom_updateaz").removeClass("disabled");
+
+                                                    if (data.success) {
+                                                        var location_reload_to = setTimeout(function() {
+                                                            jQuery("#axzoom_updateaz").trigger("click");
+                                                        }, 100);
+                                                    } else {
+                                                        jQuery("#az_update_status").html(
+                                                            "<div class=\"notification-global\">Update failed</div>"
+                                                        );
+                                                    }
+                                                },
+                                                error: function(data) {
+                                                    jQuery("#axzoom_updateaz").removeClass("disabled");
+                                                    jQuery("#az_update_status").html(
+                                                        "<div class=\"notification-global\">Technical error</div>"
+                                                    );
+                                                }
+                                            } );
+                                        } );
+                                    } else {
+                                        var txt_notes = "<br><span style=\"color: #3d6611; font-weight: bold;\">";
+                                        txt_notes += "You have latest AJAX-ZOOM core version installed.";
+                                        txt_notes += "</span>";
+                                        jQuery("#az_updateTdAvail").append(txt_notes);
+                                    }
+                                },
+                                error: function(data) {
+                                    alert("[TECHNICAL ERROR]");
+                                }
+                            } );
+                        } else {
+                            
+                        }
+
+
+
+
+
+
                     theSpan.find('.processing').hide();
 
                     var resultText = '';
@@ -40,6 +190,25 @@
 
     });
 </script>
+
+        <div class="grid">
+        <table cellspacing="0" cellpadding="0" style="display: none;" class="border" id="az_updateTable">
+            <tbody>
+                <tr class="headings">
+                    <th style="min-width: 150px;">Installed&nbsp;AJAX-ZOOM (core) version</th>
+                    <th>Available AJAX-ZOOM (core) version</th>
+                </tr>
+                <tr>
+                    <td id="az_updateTdInstalled" style="vertical-align: top;"></td>
+                    <td id="az_updateTdAvail" style="vertical-align: top;">
+                        Version: ? <br>
+                        Date: ? <br>
+                        Review: ? <br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
 
 <?php echo $block->getButtonHtml() ?>
 <p class="note"><?php echo __('Check if new AJAX-ZOOM (core files) version is available. It is located in /js/axzoom/axZm folder.') ?></p>
