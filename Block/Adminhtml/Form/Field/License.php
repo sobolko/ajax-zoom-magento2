@@ -10,36 +10,36 @@ class License extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\
      */
     protected function _prepareToRender()
     {
-        $this->addColumn('domain', array(
+        $this->addColumn('domain', [
             'label' => __('Domain'),
             'style' => 'width:200px'
-        ));
-        $this->addColumn('type', array(
+        ]);
+        $this->addColumn('type', [
             'label' => __('License Type'),
             'style' => 'width:200px'
-        ));
+        ]);
 
-        $this->addColumn('license', array(
+        $this->addColumn('license', [
             'label' => __('License Key'),
             'style' => 'width:200px'
-        ));
+        ]);
 
-        $this->addColumn('error200', array(
+        $this->addColumn('error200', [
             'label' => __('Error200'),
             'style' => 'width:100px'
-        ));
+        ]);
 
-        $this->addColumn('error300', array(
+        $this->addColumn('error300', [
             'label' => __('Error300'),
             'style' => 'width:100px'
-        ));
+        ]);
  
         $this->_addAfter = false;
         $this->_addButtonLabel = __('Add');
     }
 
     public function renderCellTemplate($columnName)
-    {    
+    {
         if ($columnName == 'type') {
             $el = $this->getElement();
             

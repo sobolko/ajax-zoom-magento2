@@ -14,72 +14,72 @@ $images360jsonComb = $this->getImagesJsonComb();
 
 
 
-if (!$az_gallery_position){$az_gallery_position = 'bottom';}
+if (!$az_gallery_position) {$az_gallery_position = 'bottom';}
 ?>
 
 
 <?php if ($az_gallery_position == 'bottom') { ?>
 <!-- AJAX-ZOOM mouseover block gallery bottom -->
 <div id="az_mouseOverZoomParent" style="position: relative; width: 100%; background-color: #FFFFFF; z-index:1;">
-	<!-- Container for mouse over image -->
-	<div id="az_mouseOverZoomContainer">
-	    Zoom loading...
-	</div>
+    <!-- Container for mouse over image -->
+    <div id="az_mouseOverZoomContainer">
+        Zoom loading...
+    </div>
 
-	<!-- gallery with thumbs (will be filled with thumbs by javascript) -->
-	<div id="az_mouseOverZoomGallery">
-	    Gellery loading...
-	</div>
+    <!-- gallery with thumbs (will be filled with thumbs by javascript) -->
+    <div id="az_mouseOverZoomGallery">
+        Gellery loading...
+    </div>
 </div>
 <?php } elseif ($az_gallery_position == 'top') { ?>
-	<!-- AJAX-ZOOM mouseover block gallery top -->
-	<div id="az_mouseOverZoomParent" style="position: relative; width: 100%; z-index:1;">
-	
-		<!-- gallery with thumbs (will be filled with thumbs by javascript) -->
-		<div id="az_mouseOverZoomGallery" style="position: relative; margin-bottom: 10px; height: 76px; width: 100%;">
-		    Gellery loading...
-		</div>
-		
-		<!-- Container for mouse over image -->
-		<div id="az_mouseOverZoomContainer" style="position: relative; background-color: #FFFFFF; border: #AAA 1px solid;">
-		    Mouseover Zoom loading...
-		</div>
-	</div>
+    <!-- AJAX-ZOOM mouseover block gallery top -->
+    <div id="az_mouseOverZoomParent" style="position: relative; width: 100%; z-index:1;">
+    
+        <!-- gallery with thumbs (will be filled with thumbs by javascript) -->
+        <div id="az_mouseOverZoomGallery" style="position: relative; margin-bottom: 10px; height: 76px; width: 100%;">
+            Gellery loading...
+        </div>
+        
+        <!-- Container for mouse over image -->
+        <div id="az_mouseOverZoomContainer" style="position: relative; background-color: #FFFFFF; border: #AAA 1px solid;">
+            Mouseover Zoom loading...
+        </div>
+    </div>
 <?php } elseif ($az_gallery_position == 'left') { ?>
-	<!-- AJAX-ZOOM mouseover block gallery left -->
-	<div id="az_mouseOverZoomParent" style="position: relative; width: 100%; margin-bottom: 20px;z-index:1;">
+    <!-- AJAX-ZOOM mouseover block gallery left -->
+    <div id="az_mouseOverZoomParent" style="position: relative; width: 100%; margin-bottom: 20px;z-index:1;">
 
-		<!-- gallery with thumbs (will be filled with thumbs by javascript) -->
-		<div id="az_mouseOverZoomGallery" style="position: absolute; margin-top: 0; width: 72px; z-index: 1; height: 100%;">
-			Gellery loading...
-		</div> 
+        <!-- gallery with thumbs (will be filled with thumbs by javascript) -->
+        <div id="az_mouseOverZoomGallery" style="position: absolute; margin-top: 0; width: 72px; z-index: 1; height: 100%;">
+            Gellery loading...
+        </div> 
 
-		<!-- Parent container for offset to the left or right -->
-		<div id="az_mouseOverZoomContainerParentGalleryLeft" style="margin-left: 80px; min-height: 100px;">
-			
-			<!-- Container for mouse over image -->
-			<div id="az_mouseOverZoomContainer" style="position: relative; border: #AAA 1px solid; background-color: #FFFFFF; padding: 0;">
-				Mouseover Zoom loading...
-			</div>
-		</div>
-	</div>
+        <!-- Parent container for offset to the left or right -->
+        <div id="az_mouseOverZoomContainerParentGalleryLeft" style="margin-left: 80px; min-height: 100px;">
+            
+            <!-- Container for mouse over image -->
+            <div id="az_mouseOverZoomContainer" style="position: relative; border: #AAA 1px solid; background-color: #FFFFFF; padding: 0;">
+                Mouseover Zoom loading...
+            </div>
+        </div>
+    </div>
 <?php } elseif ($az_gallery_position == 'right') { ?>
-	<!-- AJAX-ZOOM mouseover block gallery right -->
-	<div id="az_mouseOverZoomParent" style="position: relative; width: 100%; margin-bottom: 20px;z-index:1;">
-		<!-- gallery with thumbs (will be filled with thumbs by javascript) -->
-		<div id="az_mouseOverZoomGallery" style="position: absolute; margin-top: 0; right: 0; width: 72px; z-index: 1; height: 100%;">
-			Gellery loading...
-		</div>
+    <!-- AJAX-ZOOM mouseover block gallery right -->
+    <div id="az_mouseOverZoomParent" style="position: relative; width: 100%; margin-bottom: 20px;z-index:1;">
+        <!-- gallery with thumbs (will be filled with thumbs by javascript) -->
+        <div id="az_mouseOverZoomGallery" style="position: absolute; margin-top: 0; right: 0; width: 72px; z-index: 1; height: 100%;">
+            Gellery loading...
+        </div>
 
-		<!-- Parent container for offset to the left or right -->
-		<div id="az_mouseOverZoomContainerParentGalleryRight" style="margin-right: 80px; min-height: 100px;">
-			
-			<!-- Container for mouse over image -->
-			<div id="az_mouseOverZoomContainer" style="position: relative; border: #AAA 1px solid; background-color: #FFFFFF; padding: 0;">
-				Mouseover Zoom loading...
-			</div>
-		</div>
-	</div>
+        <!-- Parent container for offset to the left or right -->
+        <div id="az_mouseOverZoomContainerParentGalleryRight" style="margin-right: 80px; min-height: 100px;">
+            
+            <!-- Container for mouse over image -->
+            <div id="az_mouseOverZoomContainer" style="position: relative; border: #AAA 1px solid; background-color: #FFFFFF; padding: 0;">
+                Mouseover Zoom loading...
+            </div>
+        </div>
+    </div>
 
 <?php } ?>
 
@@ -90,173 +90,173 @@ var axBaseUrl = '<?php echo $this->getBaseUrl(); ?>';
 require(["<?php echo implode('","', $this->_loadJS())?>"], function($){
 
 
-	// Load plugin settings
-	<?php
-	$exclParArray = array('LICENSE_LIC');
-	foreach ($conf as $group => $data){
-		foreach ($data as $key => $value){
-			$groupKey = strtoupper($group . '_' . $key);
-			if (!in_array($groupKey, $exclParArray)){
-				if ($value == 'false' || $value == 'true' || $value == 'null' || is_numeric($value) || substr(trim($value), 0, 1) == '{' || substr(trim($value), 0, 1) == '['){
-					echo '	var AJAXZOOM_' . $groupKey . ' = ' . $value . '; ' . "\n";
-				} else {
-					echo '	var AJAXZOOM_' . $groupKey . ' = "' . str_replace('"', '&#34;', $value) . '"; ' . "\n";
-				}
-			}
-		}
-	}
-	?>
+    // Load plugin settings
+    <?php
+    $exclParArray = ['LICENSE_LIC'];
+    foreach ($conf as $group => $data) {
+        foreach ($data as $key => $value) {
+            $groupKey = strtoupper($group . '_' . $key);
+            if (!in_array($groupKey, $exclParArray)) {
+                if ($value == 'false' || $value == 'true' || $value == 'null' || is_numeric($value) || substr(trim($value), 0, 1) == '{' || substr(trim($value), 0, 1) == '[') {
+                    echo '	var AJAXZOOM_' . $groupKey . ' = ' . $value . '; ' . "\n";
+                } else {
+                    echo '	var AJAXZOOM_' . $groupKey . ' = "' . str_replace('"', '&#34;', $value) . '"; ' . "\n";
+                }
+            }
+        }
+    }
+    ?>
 
-	var AXZMPATH = '<?php echo $axZmPath; ?>';
-	var IMAGES_JSON = <?php echo $imagesJson ?>;
-	var IMAGES_360_JSON = <?php echo $images360Json?>;
-
-
-	var test = '<?php echo json_encode($images360jsonComb); ?>';
-	console.log(test);
-
-	var images360jsonComb = jQuery.parseJSON('<?php echo json_encode($images360jsonComb); ?>');
-	console.log(images360jsonComb);
+    var AXZMPATH = '<?php echo $axZmPath; ?>';
+    var IMAGES_JSON = <?php echo $imagesJson ?>;
+    var IMAGES_360_JSON = <?php echo $images360Json?>;
 
 
-	// AJAX-ZOOM mouseover and other parameters
-	var zoomParams = {
-		disableAllMsg: AJAXZOOM_MAIN_DISABLEALLMSG,
-		axZmPath: AXZMPATH,
-		divID: AJAXZOOM_MAIN_DIVID,
-		galleryDivID: AJAXZOOM_MAIN_GALLERYDIVID,
-		hideGalleryOneImage: AJAXZOOM_MAIN_HIDEGALLERYONEIMAGE,
-		hideGalleryAddClass: AJAXZOOM_MAIN_HIDEGALLERYADDCLASS,
-		galleryHover: AJAXZOOM_MAIN_GALLERYHOVER,
-		galleryAxZmThumbSlider: AJAXZOOM_MAIN_GALLERYAXZMTHUMBSLIDER,
-		galleryAxZmThumbSliderParam: (AJAXZOOM_MAIN_GALLERYPOSITION == 'bottom' || AJAXZOOM_MAIN_GALLERYPOSITION == 'top') ? AJAXZOOM_MAIN_GALLERYAXZMTHUMBSLIDERPARAM : AJAXZOOM_MAIN_GALLERYAXZMTHUMBSLIDERPARAM_VERTICAL,
-		thumbW: AJAXZOOM_MAIN_THUMBW, 
-		thumbH: AJAXZOOM_MAIN_THUMBH,
-		thumbRetina: AJAXZOOM_MAIN_THUMBRETINA,
-		qualityThumb: AJAXZOOM_MAIN_QUALITYTHUMB,
-		quality: AJAXZOOM_MAIN_QUALITY,
-		qualityZoom: AJAXZOOM_MAIN_QUALITYZOOM,
-		images: IMAGES_JSON,
-		firstImageToLoad: AJAXZOOM_MAIN_FIRSTIMAGETOLOAD,
-		images360: IMAGES_360_JSON,
-		images360firstToLoad: AJAXZOOM_MAIN_IMAGES360FIRSTTOLOAD,
-		images360Thumb: AJAXZOOM_MAIN_IMAGES360THUMB,
-		images360Overlay: AJAXZOOM_MAIN_IMAGES360OVERLAY,
-		images360Preview: AJAXZOOM_MAIN_IMAGES360PREVIEW,
-		images360PreviewResponsive: AJAXZOOM_MAIN_IMAGES360PREVIEWRESPONSIVE,
-		images360examplePreview: AJAXZOOM_MAIN_IMAGES360EXAMPLEPREVIEW,
-		zoomMsg360: AJAXZOOM_MAIN_ZOOMMSG360,
-		zoomMsg360_touch: AJAXZOOM_MAIN_ZOOMMSG360_TOUCH,
-		preloadMouseOverImages: AJAXZOOM_MAIN_PRELOADMOUSEOVERIMAGES,
-		noImageAvailableClass: AJAXZOOM_MAIN_NOIMAGEAVAILABLECLASS,
-		width: AJAXZOOM_MAIN_WIDTH,
-		height: AJAXZOOM_MAIN_HEIGHT,
-		responsive: AJAXZOOM_MAIN_RESPONSIVE,
-		oneSrcImg: AJAXZOOM_MAIN_ONESRCIMG,
-		heightRatio: AJAXZOOM_MAIN_HEIGHTRATIO,
-		heightMaxWidthRatio: AJAXZOOM_MAIN_HEIGHTMAXWIDTHRATIO,
-		widthRatio: AJAXZOOM_MAIN_WIDTHRATIO,
-		widthMaxHeightRatio: AJAXZOOM_MAIN_WIDTHMAXHEIGHTRATIO,
-		maxSizePrc: AJAXZOOM_MAIN_MAXSIZEPRC,
-		mouseOverZoomWidth: AJAXZOOM_MAIN_MOUSEOVERZOOMWIDTH,
-		mouseOverZoomHeight: AJAXZOOM_MAIN_MOUSEOVERZOOMHEIGHT,
-		ajaxZoomOpenMode: AJAXZOOM_MAIN_AJAXZOOMOPENMODE,
-		fancyBoxParam: AJAXZOOM_MAIN_FANCYBOXPARAM,
-		colorBoxParam: AJAXZOOM_MAIN_COLORBOXPARAM,
-		example: AJAXZOOM_MAIN_EXAMPLE,
-		exampleFancyboxFullscreen: AJAXZOOM_MAIN_EXAMPLEFANCYBOXFULLSCREEN,
-		exampleFancybox: AJAXZOOM_MAIN_EXAMPLEFANCYBOX,
-		exampleColorbox: AJAXZOOM_MAIN_EXAMPLECOLORBOX,
-		enforceFullScreenRes: AJAXZOOM_MAIN_ENFORCEFULLSCREENRES,
-		prevNextArrows: AJAXZOOM_MAIN_PREVNEXTARROWS,
-		disableScrollAnm: AJAXZOOM_MAIN_DISABLESCROLLANM,
-		fullScreenApi: AJAXZOOM_MAIN_FULLSCREENAPI,
-		axZmCallBacks: AJAXZOOM_MAIN_AXZMCALLBACKS,
-		azOptions: AJAXZOOM_MAIN_AZOPTIONS,
-		azOptions360: AJAXZOOM_MAIN_AZOPTIONS360,
-		postMode: AJAXZOOM_MAIN_POSTMODE,
-		pinterest: {
-			enabled: AJAXZOOM_PINTEREST_ENABLED,
-			build: AJAXZOOM_PINTEREST_BUILD,
-			wrapClass: AJAXZOOM_PINTEREST_WRAPCLASS,
-			btnSrc: AJAXZOOM_PINTEREST_BTNSRC,
-			data: { // any data attributes
-				"pin-do" : "buttonPin",
-				"pin-shape": null,
-				"pin-config": "none", 
-				"pin-color": null,
-				"pin-height": null
-			}
-		},
-		mouseOverZoomParam: {
-			position: AJAXZOOM_MOUSEOVERZOOMPARAM_POSITION,
-			posAutoInside: AJAXZOOM_MOUSEOVERZOOMPARAM_POSAUTOINSIDE,
-			touchScroll: AJAXZOOM_MOUSEOVERZOOMPARAM_TOUCHSCROLL,
-			noMouseOverZoom: AJAXZOOM_MOUSEOVERZOOMPARAM_NOMOUSEOVERZOOM,
-			autoFlip: AJAXZOOM_MOUSEOVERZOOMPARAM_AUTOFLIP,
-			biggestSpace: AJAXZOOM_MOUSEOVERZOOMPARAM_BIGGESTSPACE,
-			zoomFullSpace: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMFULLSPACE,
-			zoomWidth: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMWIDTH,
-			zoomHeight: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMHEIGHT,
-			autoMargin: AJAXZOOM_MOUSEOVERZOOMPARAM_AUTOMARGIN,
-			adjustX: AJAXZOOM_MOUSEOVERZOOMPARAM_ADJUSTX,
-			adjustY: AJAXZOOM_MOUSEOVERZOOMPARAM_ADJUSTY,
-			lensOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_LENSOPACITY, 
-			lensStyle: AJAXZOOM_MOUSEOVERZOOMPARAM_LENSSTYLE,
-			lensClass: AJAXZOOM_MOUSEOVERZOOMPARAM_LENSCLASS,
-			zoomAreaBorderWidth: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMAREABORDERWIDTH,
-			galleryFade: AJAXZOOM_MOUSEOVERZOOMPARAM_GALLERYFADE,
-			shutterSpeed: AJAXZOOM_MOUSEOVERZOOMPARAM_SHUTTERSPEED,
-			showFade: AJAXZOOM_MOUSEOVERZOOMPARAM_SHOWFADE,
-			hideFade: AJAXZOOM_MOUSEOVERZOOMPARAM_HIDEFADE, 
-			autoScroll: AJAXZOOM_MOUSEOVERZOOMPARAM_AUTOSCROLL,
-			flyOutSpeed: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYOUTSPEED,
-			flyOutTransition: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYOUTTRANSITION,
-			flyOutOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYOUTOPACITY,
-			flyBackSpeed: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYBACKSPEED,
-			flyBackTransition: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYBACKTRANSITION,
-			flyBackOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYBACKOPACITY,
-			smoothMove: AJAXZOOM_MOUSEOVERZOOMPARAM_SMOOTHMOVE, 
-			tint: AJAXZOOM_MOUSEOVERZOOMPARAM_TINT,
-			tintOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_TINTOPACITY, 
-			tintFilter: AJAXZOOM_MOUSEOVERZOOMPARAM_TINTFILTER,
-			tintLensBack: AJAXZOOM_MOUSEOVERZOOMPARAM_TINTLENSBACK,
-			showTitle: AJAXZOOM_MOUSEOVERZOOMPARAM_SHOWTITLE, 
-			titleOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_TITLEOPACITY, 
-			titlePosition: AJAXZOOM_MOUSEOVERZOOMPARAM_TITLEPOSITION, 
-			cursorPositionX: AJAXZOOM_MOUSEOVERZOOMPARAM_CURSORPOSITIONX, 
-			cursorPositionY: AJAXZOOM_MOUSEOVERZOOMPARAM_CURSORPOSITIONY,
-			loading: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADING, 
-			loadingMessage: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGMESSAGE, 
-			loadingWidth: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGWIDTH, 
-			loadingHeight: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGHEIGHT, 
-			loadingOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGOPACITY,
-			zoomHintEnable: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMHINTENABLE,
-			zoomHintText: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMHINTTEXT,
-			zoomMsgHover: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMMSGHOVER,
-			zoomMsgClick: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMMSGCLICK,
-			slideInTime: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINTIME,
-			slideInEasingCSS3: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINEASINGCSS3,
-			slideInEasing: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINEASING,
-			slideInScale:AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINSCALE,
-			slideOutScale: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEOUTSCALE,
-			slideOutOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEOUTOPACITY, 
-			slideOutDest: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEOUTDEST,
-			onInit: AJAXZOOM_MOUSEOVERZOOMPARAM_ONINIT, 
-			onLoad: AJAXZOOM_MOUSEOVERZOOMPARAM_ONLOAD,
-			onImageChange: AJAXZOOM_MOUSEOVERZOOMPARAM_ONIMAGECHANGE,
-			onMouseOver: AJAXZOOM_MOUSEOVERZOOMPARAM_ONMOUSEOVER,
-			onMouseOut: AJAXZOOM_MOUSEOVERZOOMPARAM_ONMOUSEOUT,
-			spinner: AJAXZOOM_MOUSEOVERZOOMPARAM_SPINNER,
-			spinnerParam: AJAXZOOM_MOUSEOVERZOOMPARAM_SPINNERPARAM
-		}
-	};
-	
+    var test = '<?php echo json_encode($images360jsonComb); ?>';
+    console.log(test);
 
-	$.mouseOverZoomInit(zoomParams);
+    var images360jsonComb = jQuery.parseJSON('<?php echo json_encode($images360jsonComb); ?>');
+    console.log(images360jsonComb);
 
-	//$('.gallery-placeholder').hide();
-	$('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
+
+    // AJAX-ZOOM mouseover and other parameters
+    var zoomParams = {
+        disableAllMsg: AJAXZOOM_MAIN_DISABLEALLMSG,
+        axZmPath: AXZMPATH,
+        divID: AJAXZOOM_MAIN_DIVID,
+        galleryDivID: AJAXZOOM_MAIN_GALLERYDIVID,
+        hideGalleryOneImage: AJAXZOOM_MAIN_HIDEGALLERYONEIMAGE,
+        hideGalleryAddClass: AJAXZOOM_MAIN_HIDEGALLERYADDCLASS,
+        galleryHover: AJAXZOOM_MAIN_GALLERYHOVER,
+        galleryAxZmThumbSlider: AJAXZOOM_MAIN_GALLERYAXZMTHUMBSLIDER,
+        galleryAxZmThumbSliderParam: (AJAXZOOM_MAIN_GALLERYPOSITION == 'bottom' || AJAXZOOM_MAIN_GALLERYPOSITION == 'top') ? AJAXZOOM_MAIN_GALLERYAXZMTHUMBSLIDERPARAM : AJAXZOOM_MAIN_GALLERYAXZMTHUMBSLIDERPARAM_VERTICAL,
+        thumbW: AJAXZOOM_MAIN_THUMBW, 
+        thumbH: AJAXZOOM_MAIN_THUMBH,
+        thumbRetina: AJAXZOOM_MAIN_THUMBRETINA,
+        qualityThumb: AJAXZOOM_MAIN_QUALITYTHUMB,
+        quality: AJAXZOOM_MAIN_QUALITY,
+        qualityZoom: AJAXZOOM_MAIN_QUALITYZOOM,
+        images: IMAGES_JSON,
+        firstImageToLoad: AJAXZOOM_MAIN_FIRSTIMAGETOLOAD,
+        images360: IMAGES_360_JSON,
+        images360firstToLoad: AJAXZOOM_MAIN_IMAGES360FIRSTTOLOAD,
+        images360Thumb: AJAXZOOM_MAIN_IMAGES360THUMB,
+        images360Overlay: AJAXZOOM_MAIN_IMAGES360OVERLAY,
+        images360Preview: AJAXZOOM_MAIN_IMAGES360PREVIEW,
+        images360PreviewResponsive: AJAXZOOM_MAIN_IMAGES360PREVIEWRESPONSIVE,
+        images360examplePreview: AJAXZOOM_MAIN_IMAGES360EXAMPLEPREVIEW,
+        zoomMsg360: AJAXZOOM_MAIN_ZOOMMSG360,
+        zoomMsg360_touch: AJAXZOOM_MAIN_ZOOMMSG360_TOUCH,
+        preloadMouseOverImages: AJAXZOOM_MAIN_PRELOADMOUSEOVERIMAGES,
+        noImageAvailableClass: AJAXZOOM_MAIN_NOIMAGEAVAILABLECLASS,
+        width: AJAXZOOM_MAIN_WIDTH,
+        height: AJAXZOOM_MAIN_HEIGHT,
+        responsive: AJAXZOOM_MAIN_RESPONSIVE,
+        oneSrcImg: AJAXZOOM_MAIN_ONESRCIMG,
+        heightRatio: AJAXZOOM_MAIN_HEIGHTRATIO,
+        heightMaxWidthRatio: AJAXZOOM_MAIN_HEIGHTMAXWIDTHRATIO,
+        widthRatio: AJAXZOOM_MAIN_WIDTHRATIO,
+        widthMaxHeightRatio: AJAXZOOM_MAIN_WIDTHMAXHEIGHTRATIO,
+        maxSizePrc: AJAXZOOM_MAIN_MAXSIZEPRC,
+        mouseOverZoomWidth: AJAXZOOM_MAIN_MOUSEOVERZOOMWIDTH,
+        mouseOverZoomHeight: AJAXZOOM_MAIN_MOUSEOVERZOOMHEIGHT,
+        ajaxZoomOpenMode: AJAXZOOM_MAIN_AJAXZOOMOPENMODE,
+        fancyBoxParam: AJAXZOOM_MAIN_FANCYBOXPARAM,
+        colorBoxParam: AJAXZOOM_MAIN_COLORBOXPARAM,
+        example: AJAXZOOM_MAIN_EXAMPLE,
+        exampleFancyboxFullscreen: AJAXZOOM_MAIN_EXAMPLEFANCYBOXFULLSCREEN,
+        exampleFancybox: AJAXZOOM_MAIN_EXAMPLEFANCYBOX,
+        exampleColorbox: AJAXZOOM_MAIN_EXAMPLECOLORBOX,
+        enforceFullScreenRes: AJAXZOOM_MAIN_ENFORCEFULLSCREENRES,
+        prevNextArrows: AJAXZOOM_MAIN_PREVNEXTARROWS,
+        disableScrollAnm: AJAXZOOM_MAIN_DISABLESCROLLANM,
+        fullScreenApi: AJAXZOOM_MAIN_FULLSCREENAPI,
+        axZmCallBacks: AJAXZOOM_MAIN_AXZMCALLBACKS,
+        azOptions: AJAXZOOM_MAIN_AZOPTIONS,
+        azOptions360: AJAXZOOM_MAIN_AZOPTIONS360,
+        postMode: AJAXZOOM_MAIN_POSTMODE,
+        pinterest: {
+            enabled: AJAXZOOM_PINTEREST_ENABLED,
+            build: AJAXZOOM_PINTEREST_BUILD,
+            wrapClass: AJAXZOOM_PINTEREST_WRAPCLASS,
+            btnSrc: AJAXZOOM_PINTEREST_BTNSRC,
+            data: { // any data attributes
+                "pin-do" : "buttonPin",
+                "pin-shape": null,
+                "pin-config": "none", 
+                "pin-color": null,
+                "pin-height": null
+            }
+        },
+        mouseOverZoomParam: {
+            position: AJAXZOOM_MOUSEOVERZOOMPARAM_POSITION,
+            posAutoInside: AJAXZOOM_MOUSEOVERZOOMPARAM_POSAUTOINSIDE,
+            touchScroll: AJAXZOOM_MOUSEOVERZOOMPARAM_TOUCHSCROLL,
+            noMouseOverZoom: AJAXZOOM_MOUSEOVERZOOMPARAM_NOMOUSEOVERZOOM,
+            autoFlip: AJAXZOOM_MOUSEOVERZOOMPARAM_AUTOFLIP,
+            biggestSpace: AJAXZOOM_MOUSEOVERZOOMPARAM_BIGGESTSPACE,
+            zoomFullSpace: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMFULLSPACE,
+            zoomWidth: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMWIDTH,
+            zoomHeight: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMHEIGHT,
+            autoMargin: AJAXZOOM_MOUSEOVERZOOMPARAM_AUTOMARGIN,
+            adjustX: AJAXZOOM_MOUSEOVERZOOMPARAM_ADJUSTX,
+            adjustY: AJAXZOOM_MOUSEOVERZOOMPARAM_ADJUSTY,
+            lensOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_LENSOPACITY, 
+            lensStyle: AJAXZOOM_MOUSEOVERZOOMPARAM_LENSSTYLE,
+            lensClass: AJAXZOOM_MOUSEOVERZOOMPARAM_LENSCLASS,
+            zoomAreaBorderWidth: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMAREABORDERWIDTH,
+            galleryFade: AJAXZOOM_MOUSEOVERZOOMPARAM_GALLERYFADE,
+            shutterSpeed: AJAXZOOM_MOUSEOVERZOOMPARAM_SHUTTERSPEED,
+            showFade: AJAXZOOM_MOUSEOVERZOOMPARAM_SHOWFADE,
+            hideFade: AJAXZOOM_MOUSEOVERZOOMPARAM_HIDEFADE, 
+            autoScroll: AJAXZOOM_MOUSEOVERZOOMPARAM_AUTOSCROLL,
+            flyOutSpeed: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYOUTSPEED,
+            flyOutTransition: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYOUTTRANSITION,
+            flyOutOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYOUTOPACITY,
+            flyBackSpeed: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYBACKSPEED,
+            flyBackTransition: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYBACKTRANSITION,
+            flyBackOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_FLYBACKOPACITY,
+            smoothMove: AJAXZOOM_MOUSEOVERZOOMPARAM_SMOOTHMOVE, 
+            tint: AJAXZOOM_MOUSEOVERZOOMPARAM_TINT,
+            tintOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_TINTOPACITY, 
+            tintFilter: AJAXZOOM_MOUSEOVERZOOMPARAM_TINTFILTER,
+            tintLensBack: AJAXZOOM_MOUSEOVERZOOMPARAM_TINTLENSBACK,
+            showTitle: AJAXZOOM_MOUSEOVERZOOMPARAM_SHOWTITLE, 
+            titleOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_TITLEOPACITY, 
+            titlePosition: AJAXZOOM_MOUSEOVERZOOMPARAM_TITLEPOSITION, 
+            cursorPositionX: AJAXZOOM_MOUSEOVERZOOMPARAM_CURSORPOSITIONX, 
+            cursorPositionY: AJAXZOOM_MOUSEOVERZOOMPARAM_CURSORPOSITIONY,
+            loading: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADING, 
+            loadingMessage: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGMESSAGE, 
+            loadingWidth: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGWIDTH, 
+            loadingHeight: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGHEIGHT, 
+            loadingOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_LOADINGOPACITY,
+            zoomHintEnable: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMHINTENABLE,
+            zoomHintText: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMHINTTEXT,
+            zoomMsgHover: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMMSGHOVER,
+            zoomMsgClick: AJAXZOOM_MOUSEOVERZOOMPARAM_ZOOMMSGCLICK,
+            slideInTime: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINTIME,
+            slideInEasingCSS3: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINEASINGCSS3,
+            slideInEasing: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINEASING,
+            slideInScale:AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEINSCALE,
+            slideOutScale: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEOUTSCALE,
+            slideOutOpacity: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEOUTOPACITY, 
+            slideOutDest: AJAXZOOM_MOUSEOVERZOOMPARAM_SLIDEOUTDEST,
+            onInit: AJAXZOOM_MOUSEOVERZOOMPARAM_ONINIT, 
+            onLoad: AJAXZOOM_MOUSEOVERZOOMPARAM_ONLOAD,
+            onImageChange: AJAXZOOM_MOUSEOVERZOOMPARAM_ONIMAGECHANGE,
+            onMouseOver: AJAXZOOM_MOUSEOVERZOOMPARAM_ONMOUSEOVER,
+            onMouseOut: AJAXZOOM_MOUSEOVERZOOMPARAM_ONMOUSEOUT,
+            spinner: AJAXZOOM_MOUSEOVERZOOMPARAM_SPINNER,
+            spinnerParam: AJAXZOOM_MOUSEOVERZOOMPARAM_SPINNERPARAM
+        }
+    };
+    
+
+    $.mouseOverZoomInit(zoomParams);
+
+    //$('.gallery-placeholder').hide();
+    $('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
 
 
 function urldecode(url) {
@@ -268,53 +268,53 @@ function urldecode(url) {
 
 
 
-		if(settings.url == axBaseUrl + 'swatches/ajax/media') {
+        if(settings.url == axBaseUrl + 'swatches/ajax/media') {
 
 
-			if(typeof(xhr.responseJSON) == 'undefined') {
-				return;
-			}
+            if(typeof(xhr.responseJSON) == 'undefined') {
+                return;
+            }
 
-			var newAZimagesObj = { } ;
-			var newAZ360Obj = IMAGES_360_JSON;
-			$.each(xhr.responseJSON.gallery, function (idx, data) {
-				var el = document.createElement('a');
-				el.href = data.large;
-				newAZimagesObj[idx] = {'img': el.pathname, 'title': ''};
-			});
+            var newAZimagesObj = { } ;
+            var newAZ360Obj = IMAGES_360_JSON;
+            $.each(xhr.responseJSON.gallery, function (idx, data) {
+                var el = document.createElement('a');
+                el.href = data.large;
+                newAZimagesObj[idx] = {'img': el.pathname, 'title': ''};
+            });
 
 
-			
+            
 
-			var params = JSON.parse('{"' + decodeURI(settings.data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-			var ids = [];
-			$.each(params, function (index, value) {
+            var params = JSON.parse('{"' + decodeURI(settings.data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+            var ids = [];
+            $.each(params, function (index, value) {
 
-				if (index.match("^attributes\\[")) {
-					ids.push(value);
-				}
-			});
+                if (index.match("^attributes\\[")) {
+                    ids.push(value);
+                }
+            });
 
-			var idx = ids.join('-');
-			var imgs = images360jsonComb[idx];
+            var idx = ids.join('-');
+            var imgs = images360jsonComb[idx];
 
-		
-			//$.post(axBaseUrl + 'axzoom/ajax/get360', settings.data, function (res) {
-				
-				//newAZ360Obj = jQuery.parseJSON(res.images360json);
-				
-					newAZ360Obj = jQuery.parseJSON(imgs ? urldecode(imgs) : '{}');
-					$.mouseOverZoomInit.replaceImages( { 
-						divID: AJAXZOOM_MAIN_DIVID,
-						galleryDivID: AJAXZOOM_MAIN_GALLERYDIVID,
-						images: newAZimagesObj,
-						images360: newAZ360Obj
-					});
-				
-				
-			//}, 'json');
+        
+            //$.post(axBaseUrl + 'axzoom/ajax/get360', settings.data, function (res) {
+                
+                //newAZ360Obj = jQuery.parseJSON(res.images360json);
+                
+                    newAZ360Obj = jQuery.parseJSON(imgs ? urldecode(imgs) : '{}');
+                    $.mouseOverZoomInit.replaceImages( { 
+                        divID: AJAXZOOM_MAIN_DIVID,
+                        galleryDivID: AJAXZOOM_MAIN_GALLERYDIVID,
+                        images: newAZimagesObj,
+                        images360: newAZ360Obj
+                    });
+                
+                
+            //}, 'json');
 
-    	}
-	});
+        }
+    });
 });
 </script>

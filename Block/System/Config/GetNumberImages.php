@@ -75,4 +75,3 @@ class GetNumberImages extends Field
         return $button->toHtml();
     }
 }
-?>

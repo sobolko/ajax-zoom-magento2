@@ -9,9 +9,9 @@ class Truefalse implements \Magento\Framework\Option\ArrayInterface
      */
     public function toOptionArray()
     {
-        return array(
-            array('value' => 'true', 'label' => __('Yes')),
-            array('value' => 'false',    'label' => __('No'))
-        );
+        return [
+            ['value' => 'true', 'label' => __('Yes')],
+            ['value' => 'false',    'label' => __('No')]
+        ];
     }
 }

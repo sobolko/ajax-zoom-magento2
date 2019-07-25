@@ -9,23 +9,23 @@ $groups_360 = $this->filter360data($groups);
 $active = $this->isActive();
 
 // associated products
-$associated = array();
+$associated = [];
 $usedProducts = $this->getUsedProducts();
-foreach($usedProducts as $p) {
-	$data = $p->getData();
-	$associated[$data['entity_id']] = $data['name'] . ' (' . $data['sku'] . ')';
+foreach ($usedProducts as $p) {
+    $data = $p->getData();
+    $associated[$data['entity_id']] = $data['name'] . ' (' . $data['sku'] . ')';
 }
 ?>
 <style type="text/css">
 .pull-right {
-	float: right;
+    float: right;
 }
 #pairRows input, #pairRows textarea{
-	margin-bottom: 3px;
+    margin-bottom: 3px;
 }
 
 #pairRows textarea{
-	resize:vertical;
+    resize:vertical;
 }
 </style>
 
@@ -34,27 +34,27 @@ foreach($usedProducts as $p) {
 
 
 <div class="entry-edit ax-tab az_container">
-	<div class="fieldset-wrapper">
-		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-			<strong class="title"><?php echo __('Enable / Disable AJAX-ZOOM for this product') ?></strong>
-		</div>
-	</div>
-	<div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
-		<div class="hor-scroll">
-			<?php echo __('AJAX ZOOM enabled for detail view of this product') ?></label>
-			<br>
-			<input type="radio" name="az_active" id="az_active_on" value="1" <?php if($active == 1):?>checked="checked"<?php endif ?>/>
-			<label class="t" for="az_active_on"><?php echo __('Yes') ?></label>
-			<input type="radio" name="az_active" id="az_active_off" value="0" <?php if($active == 0):?>checked="checked"<?php endif ?>/>
-			<label class="t" for="az_active_off"><?php echo __('No') ?></label>
-		</div>
-	</div>
-	<div class="fieldset fieldset-wide ax-tab-content">
-		<a href="javascript: void(0)" id="az_toggle_az_settings" style="text-decoration: none">
+    <div class="fieldset-wrapper">
+        <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
+            <strong class="title"><?php echo __('Enable / Disable AJAX-ZOOM for this product') ?></strong>
+        </div>
+    </div>
+    <div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
+        <div class="hor-scroll">
+            <?php echo __('AJAX ZOOM enabled for detail view of this product') ?></label>
+            <br>
+            <input type="radio" name="az_active" id="az_active_on" value="1" <?php if ($active == 1) :?>checked="checked"<?php endif ?>/>
+            <label class="t" for="az_active_on"><?php echo __('Yes') ?></label>
+            <input type="radio" name="az_active" id="az_active_off" value="0" <?php if ($active == 0) :?>checked="checked"<?php endif ?>/>
+            <label class="t" for="az_active_off"><?php echo __('No') ?></label>
+        </div>
+    </div>
+    <div class="fieldset fieldset-wide ax-tab-content">
+        <a href="javascript: void(0)" id="az_toggle_az_settings" style="text-decoration: none">
             <span class="az_arrowhead_down az_arrowhead_span"></span>
             <?php echo __('Individual module settings for this product') ?>
         </a>
-	</div>
+    </div>
 
             <div style="display: none;" id="az_az_settings">
 
@@ -113,7 +113,7 @@ foreach($usedProducts as $p) {
                 <div>
                     <button style="display:none;" data-but="do not remove" type="submit" name="az_submitSettings_module" 
                         id="az_submitSettings_module" class="scalable save az_biggerButton" style="margin-top: 10px;">
-                    	<span><span><span>Save and stay</span></span></span>
+                        <span><span><span>Save and stay</span></span></span>
                     </button>
                     &nbsp;
                 </div>
@@ -122,101 +122,101 @@ foreach($usedProducts as $p) {
 </div>
 
 <div class="entry-edit ax-tab">
-	<div class="fieldset-wrapper">
-		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-			<strong class="title"><?php echo __('Settings for existing 360/3D') ?></strong>
-		</div>
-	</div>
+    <div class="fieldset-wrapper">
+        <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
+            <strong class="title"><?php echo __('Settings for existing 360/3D') ?></strong>
+        </div>
+    </div>
 
-	<div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
-		<div class="hor-scroll">
-			<table cellspacing="0" class="form-list">
-				<tbody>
-					<tr>
-						<td class="label"><label for="meta_title"><?php echo __('360/3D View') ?></label></td>
-						<td class="value">
-							<div id="az_hidden_values">
-							<?php foreach ($groups as $group): ?>
-							<input type="hidden" name="settings[<?php echo $group['id_360'] ?>]" id="settings_<?php echo $group['id_360'] ?>" value="<?php echo urlencode($group['settings']) ?>">
-							<input type="hidden" name="comb[<?php echo $group['id_360'] ?>]" id="settings_comb_<?php echo $group['id_360'] ?>" value="<?php echo urlencode($group['combinations']) ?>">
-							
-							<?php endforeach; ?>
-							</div>
-							<select id="id_360" name="id_360" style="min-width: 100px">
-								<option value=""><?php echo __('Select') ?></option>
-								<?php foreach ($groups as $group): ?>
-								<option value="<?php echo $group['id_360'] ?>" data-settings="<?php echo urlencode($group['settings']) ?>" data-combinations="[<?php echo urlencode($group['combinations']) ?>]"><?php echo $group['name'] ?></option>
-								<?php endforeach; ?>
-							</select>						
-						</td>
-						<td class="scope-label"><span class="nobr"></span></td>
-					</tr>
-					<tr id="pairs" style="display:none;">
-						<td class="label"><label for="meta_title"><?php echo __('Settings') ?></label></td>
-						<td class="value">
-							<table>
-								<thead>
-									<tr>
-										<th><?php echo __('Name') ?></th>
-										<th></th>
-										<th style="width: 220px"><?php echo __('Value') ?></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody id="pairRows">
-								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="4">
-											<div class="row_">
-												<button class="scalable add link_add_option">
-													<span><span><span><?php echo __('Add an option') ?></span></span></span>
-												</button>
-											</div>
-										</td>
-									</tr>
-								</tfoot>	
-							</table>
-							<table id="pairTemplate" style="display: none">
-								<tr>
-									<td><input type="text" name="name[]" value="name_placeholder" class="pair-names"></td>
-									<td>&nbsp; : &nbsp;</td>
-									<td><input type="text" name="value[]" value="value_placeholder" class="pair-values"></td>
-									<td>
-										<a class="link_textarea_option" href="#">
-											<?php echo __('Edit') ?>
-										</a>
-										&nbsp;&nbsp;
-										<a class="link_remove_option" href="#">
-											<?php echo __('Delete') ?>
-										</a>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
+    <div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
+        <div class="hor-scroll">
+            <table cellspacing="0" class="form-list">
+                <tbody>
+                    <tr>
+                        <td class="label"><label for="meta_title"><?php echo __('360/3D View') ?></label></td>
+                        <td class="value">
+                            <div id="az_hidden_values">
+                            <?php foreach ($groups as $group) : ?>
+                            <input type="hidden" name="settings[<?php echo $group['id_360'] ?>]" id="settings_<?php echo $group['id_360'] ?>" value="<?php echo urlencode($group['settings']) ?>">
+                            <input type="hidden" name="comb[<?php echo $group['id_360'] ?>]" id="settings_comb_<?php echo $group['id_360'] ?>" value="<?php echo urlencode($group['combinations']) ?>">
+                            
+                            <?php endforeach; ?>
+                            </div>
+                            <select id="id_360" name="id_360" style="min-width: 100px">
+                                <option value=""><?php echo __('Select') ?></option>
+                                <?php foreach ($groups as $group) : ?>
+                                <option value="<?php echo $group['id_360'] ?>" data-settings="<?php echo urlencode($group['settings']) ?>" data-combinations="[<?php echo urlencode($group['combinations']) ?>]"><?php echo $group['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>                        
+                        </td>
+                        <td class="scope-label"><span class="nobr"></span></td>
+                    </tr>
+                    <tr id="pairs" style="display:none;">
+                        <td class="label"><label for="meta_title"><?php echo __('Settings') ?></label></td>
+                        <td class="value">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th><?php echo __('Name') ?></th>
+                                        <th></th>
+                                        <th style="width: 220px"><?php echo __('Value') ?></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pairRows">
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="row_">
+                                                <button class="scalable add link_add_option">
+                                                    <span><span><span><?php echo __('Add an option') ?></span></span></span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>    
+                            </table>
+                            <table id="pairTemplate" style="display: none">
+                                <tr>
+                                    <td><input type="text" name="name[]" value="name_placeholder" class="pair-names"></td>
+                                    <td>&nbsp; : &nbsp;</td>
+                                    <td><input type="text" name="value[]" value="value_placeholder" class="pair-values"></td>
+                                    <td>
+                                        <a class="link_textarea_option" href="#">
+                                            <?php echo __('Edit') ?>
+                                        </a>
+                                        &nbsp;&nbsp;
+                                        <a class="link_remove_option" href="#">
+                                            <?php echo __('Delete') ?>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-					<?php if (count($associated)): ?>
-					<tr id="comb" style="display:none;">
-						<td class="label"><label for="meta_title"><?php echo __('Associated products') ?></label></td>
-						<td class="value">
-							<button class="comb-check-all" style="margin-bottom: 10px;" value="check all" >check all</button><br>
+                    <?php if (count($associated)) : ?>
+                    <tr id="comb" style="display:none;">
+                        <td class="label"><label for="meta_title"><?php echo __('Associated products') ?></label></td>
+                        <td class="value">
+                            <button class="comb-check-all" style="margin-bottom: 10px;" value="check all" >check all</button><br>
 
-							<?php foreach ($associated as $id => $name): ?>
-							<input type="checkbox" name="combinations[]" value="<?php echo $id ?>" class="settings-combinations"> <?php echo $name ?><br>
-							<?php endforeach; ?>
-							
-							<div class="" style="display: block; margin-top: 10px;">
-								<?php echo __('Same as with images you can define which 360 should be shown in conjunction with which combinations.') ?>
-								<?php echo __('If you do not select any this 360 will be shown for all combinations.') ?>
-							</div>							
-						</td>
-					</tr>
-					<?php endif; ?>
-				</tbody>
-			</table>
-		</div>
-	</div>
+                            <?php foreach ($associated as $id => $name) : ?>
+                            <input type="checkbox" name="combinations[]" value="<?php echo $id ?>" class="settings-combinations"> <?php echo $name ?><br>
+                            <?php endforeach; ?>
+                            
+                            <div class="" style="display: block; margin-top: 10px;">
+                                <?php echo __('Same as with images you can define which 360 should be shown in conjunction with which combinations.') ?>
+                                <?php echo __('If you do not select any this 360 will be shown for all combinations.') ?>
+                            </div>                            
+                        </td>
+                    </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -229,13 +229,13 @@ window.az_lang_settings_360_saved = '<?php echo __('Settings for 360 have been s
 window.az_lang_module_settings_edited = '<?php echo __('Module settings for this product have been set'); ?>';
 
 require(["jquery",
-	"<?php echo $this->getBaseUrl() ?>axzoom/jquery.editable-select.js"
-	], function($){
-	
-	// auto save
-	$('#az_pairRows_module').on('change', 'input', function () {
-		$('#az_submitSettings_module').click();
-	});
+    "<?php echo $this->getBaseUrl() ?>axzoom/jquery.editable-select.js"
+    ], function($){
+    
+    // auto save
+    $('#az_pairRows_module').on('change', 'input', function () {
+        $('#az_submitSettings_module').click();
+    });
 
 
     $('#az_toggle_az_settings').bind('click', function() {
@@ -309,34 +309,34 @@ require(["jquery",
         $("#az_pairRows_module").append(line);
 
         setTimeout(function() {
-        	// !!! some css/js bug
+            // !!! some css/js bug
             $('input.az_pair_names_module_a', line).aZeditableSelect();
         }, 100);
     }
 
 
-	function deserialize(serializedString){
-		var str = decodeURI(serializedString);
-		var pairs = str.split('&');
-		var obj = {}, p, idx, val;
-		for (var i=0, n=pairs.length; i < n; i++) {
-			p = pairs[i].split('=');
-			idx = p[0];
+    function deserialize(serializedString){
+        var str = decodeURI(serializedString);
+        var pairs = str.split('&');
+        var obj = {}, p, idx, val;
+        for (var i=0, n=pairs.length; i < n; i++) {
+            p = pairs[i].split('=');
+            idx = p[0];
 
-			if (idx.indexOf("[]") == (idx.length - 2)) {
-				// Eh um vetor
-				var ind = idx.substring(0, idx.length-2)
-				if (obj[ind] === undefined) {
-					obj[ind] = [];
-				}
-				obj[ind].push(p[1]);
-			}
-			else {
-				obj[idx] = p[1];
-			}
-		}
-		return obj;
-	}
+            if (idx.indexOf("[]") == (idx.length - 2)) {
+                // Eh um vetor
+                var ind = idx.substring(0, idx.length-2)
+                if (obj[ind] === undefined) {
+                    obj[ind] = [];
+                }
+                obj[ind].push(p[1]);
+            }
+            else {
+                obj[idx] = p[1];
+            }
+        }
+        return obj;
+    }
 
 
     $.each(window.az_plugin_prod_opt, function(a, b) {
@@ -385,129 +385,129 @@ require(["jquery",
 
 
 
-	function ajaxSaveSettings()
-	{
-		var postData = deserialize($('#az_hidden_values :input').serialize());
+    function ajaxSaveSettings()
+    {
+        var postData = deserialize($('#az_hidden_values :input').serialize());
 
-		doAdminAjax360('<?php echo $this->getUrlAjax('saveSettings'); ?>', postData, afterSaveSettings
-		);
-	}
-
-
-	function pairLine(name, value)
-	{ 
-		var line = $("#pairTemplate").html();
-		line = line.replace(/name_placeholder/g, name);
-		line = line.replace(/value_placeholder/g, value);
-		line = line.replace(/<tbody>/gi, "");
-		line = line.replace(/<\/tbody>/gi, "");
-		$("#pairRows").append(line);
-	}
-
-	function afterSaveSettings(data) { 
-		var data = $.parseJSON(data);
-
-		//$('#id_360').replaceWith(data.select);
-		//$('#pairs').hide();
-		//$('#comb').hide();
-		//$('select#id_360').val('');
-		az_showSuccessMessage(data.confirmations);
-	} 
-
-	function getFieldValues(class1) {
-		var inputs = document.getElementsByClassName( class1 );
-		var res = [];
-		for (var i = 0; i < inputs.length; i++) {
-			res.push(inputs[i].value);
-		};
-    	return res;
-	}
-
-	function setPairString() {
-    	var names = getFieldValues('pair-names');
-    	var values = getFieldValues('pair-values');
-    	var res = {};
-    	for (var i = 0; i < names.length; i++) {
-    		if(names[i] == 'name_placeholder') continue;
-    		res[names[i]] = values[i];
-    	};
-    	
-    	$('#settings_' + $('select#id_360').val()).val(encodeURIComponent(JSON.stringify(res)));
-    	ajaxSaveSettings();
-	}
-
-	function setComb() {
-    	
-    	var values = [];
-    	$('.settings-combinations:checked').each(function () {
-    		values.push($(this).val());
-    	});
-    	
-    	$('#settings_comb_' + $('select#id_360').val()).val(encodeURIComponent(JSON.stringify(values)));
-    	ajaxSaveSettings();
-	}
-	
-	$('body').on('change', '.pair-names, .pair-values', function(e) {
-		setPairString();
-	} );
-
-	$('.settings-combinations').on('change', function(e) {
-		setComb();
-	} );
+        doAdminAjax360('<?php echo $this->getUrlAjax('saveSettings'); ?>', postData, afterSaveSettings
+        );
+    }
 
 
-	$('.link_add_option').click(function (e) {
-		e.preventDefault();
-		pairLine('', '');
-	} );
+    function pairLine(name, value)
+    { 
+        var line = $("#pairTemplate").html();
+        line = line.replace(/name_placeholder/g, name);
+        line = line.replace(/value_placeholder/g, value);
+        line = line.replace(/<tbody>/gi, "");
+        line = line.replace(/<\/tbody>/gi, "");
+        $("#pairRows").append(line);
+    }
 
-	$('body').on('click', '.link_remove_option', function(e) {
-		e.preventDefault();
-		$(this).parent().parent().remove();
-		setPairString();
-	} );
-	
-	$('body').on('click', '.link_textarea_option', function(e) {
-		e.preventDefault();
-		var td = $(this).parent().prev();
-		if ($('input', td).length == 1) { 
-			var Val = $('input', td).val();
-			$('input', td).replaceWith('<textarea class="pair-values" type="text" name="value[]">'+Val+'</textarea>');
-		} else if ($('textarea', td).length == 1) { 
-			var Val = $('textarea', td).val();
-			$('textarea', td).replaceWith('<input class="pair-values" type="text" value="'+Val+'" name="value[]">');
-		}
-	} );
-	
-	$('body').on('change', 'select#id_360', function(e) {
-		
-		$('#pairRows').html('');
+    function afterSaveSettings(data) { 
+        var data = $.parseJSON(data);
 
-		if($(this).val() != '') { 
+        //$('#id_360').replaceWith(data.select);
+        //$('#pairs').hide();
+        //$('#comb').hide();
+        //$('select#id_360').val('');
+        az_showSuccessMessage(data.confirmations);
+    } 
 
-			// set pairs name:value
-			var settings = $.parseJSON(unescape($('option:selected', $(this)).attr('data-settings')));
-			for(var k in settings) { 
-				pairLine(k, settings[k])
-			} 
+    function getFieldValues(class1) {
+        var inputs = document.getElementsByClassName( class1 );
+        var res = [];
+        for (var i = 0; i < inputs.length; i++) {
+            res.push(inputs[i].value);
+        };
+        return res;
+    }
 
-			// set combinations checkboxes
-			var combinations = $.parseJSON(unescape($('option:selected', $(this)).attr('data-combinations')))[0];
-			
-			$('input.settings-combinations').attr('checked', false);
-			if(combinations && combinations.length) {
-				for (var i = combinations.length - 1; i >= 0; i--) {
-					$('input.settings-combinations[value=' + combinations[i] + ']').attr('checked', true);
-				};
-			}
+    function setPairString() {
+        var names = getFieldValues('pair-names');
+        var values = getFieldValues('pair-values');
+        var res = {};
+        for (var i = 0; i < names.length; i++) {
+            if(names[i] == 'name_placeholder') continue;
+            res[names[i]] = values[i];
+        };
+        
+        $('#settings_' + $('select#id_360').val()).val(encodeURIComponent(JSON.stringify(res)));
+        ajaxSaveSettings();
+    }
 
-			$('#pairs').show();
-			$('#comb').show();
-		} else {
-			$('#pairs').hide();
-			$('#comb').hide();
-		}
-	});
+    function setComb() {
+        
+        var values = [];
+        $('.settings-combinations:checked').each(function () {
+            values.push($(this).val());
+        });
+        
+        $('#settings_comb_' + $('select#id_360').val()).val(encodeURIComponent(JSON.stringify(values)));
+        ajaxSaveSettings();
+    }
+    
+    $('body').on('change', '.pair-names, .pair-values', function(e) {
+        setPairString();
+    } );
+
+    $('.settings-combinations').on('change', function(e) {
+        setComb();
+    } );
+
+
+    $('.link_add_option').click(function (e) {
+        e.preventDefault();
+        pairLine('', '');
+    } );
+
+    $('body').on('click', '.link_remove_option', function(e) {
+        e.preventDefault();
+        $(this).parent().parent().remove();
+        setPairString();
+    } );
+    
+    $('body').on('click', '.link_textarea_option', function(e) {
+        e.preventDefault();
+        var td = $(this).parent().prev();
+        if ($('input', td).length == 1) { 
+            var Val = $('input', td).val();
+            $('input', td).replaceWith('<textarea class="pair-values" type="text" name="value[]">'+Val+'</textarea>');
+        } else if ($('textarea', td).length == 1) { 
+            var Val = $('textarea', td).val();
+            $('textarea', td).replaceWith('<input class="pair-values" type="text" value="'+Val+'" name="value[]">');
+        }
+    } );
+    
+    $('body').on('change', 'select#id_360', function(e) {
+        
+        $('#pairRows').html('');
+
+        if($(this).val() != '') { 
+
+            // set pairs name:value
+            var settings = $.parseJSON(unescape($('option:selected', $(this)).attr('data-settings')));
+            for(var k in settings) { 
+                pairLine(k, settings[k])
+            } 
+
+            // set combinations checkboxes
+            var combinations = $.parseJSON(unescape($('option:selected', $(this)).attr('data-combinations')))[0];
+            
+            $('input.settings-combinations').attr('checked', false);
+            if(combinations && combinations.length) {
+                for (var i = combinations.length - 1; i >= 0; i--) {
+                    $('input.settings-combinations[value=' + combinations[i] + ']').attr('checked', true);
+                };
+            }
+
+            $('#pairs').show();
+            $('#comb').show();
+        } else {
+            $('#pairs').hide();
+            $('#comb').hide();
+        }
+    });
 
     $('.comb-check-all:button').toggle(function() { 
         $('input.settings-combinations').attr('checked','checked');
@@ -520,4 +520,4 @@ require(["jquery",
     } );
 });
 </script>
-	
+    

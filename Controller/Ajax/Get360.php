@@ -52,15 +52,19 @@ class Get360 extends \Magento\Framework\App\Action\Action
 
             $combination_id = $this->getCombinationIdByAttributes($productId, $attributes);
             
-            $extraGroups = array();
+            $extraGroups = [];
             $setsGroups = $this->Ax360->getSetsGroups($combination_id);
-            if($setsGroups) foreach($setsGroups as $group) array_push($extraGroups, $group['id_360']);
+            if ($setsGroups) {
+                foreach ($setsGroups as $group) {
+                    array_push($extraGroups, $group['id_360']);
+                }
+            }
 
             $str = $this->Ax360->images360Json($productId, $extraGroups, $combination_id);
-            $result = array(
+            $result = [
                 'id' => $combination_id,
                 'images360json' => str_replace("'", '"', $str)
-                );
+                ];
         }
 
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
@@ -80,7 +84,7 @@ class Get360 extends \Magento\Framework\App\Action\Action
                 $currentConfigurable,
                 $resultAttributes
             );
-        }        
+        }
         $data = $product->getData();
         return $data['entity_id'];
     }

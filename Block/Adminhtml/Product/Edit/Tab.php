@@ -8,7 +8,7 @@ use Magento\Framework\Data\Collection;
 
 class Tab extends \Magento\Backend\Block\Widget\Tab
 {
-	protected $_objectManager;
+    protected $_objectManager;
     protected $_configurableType;
     protected $_coreRegistry;
     protected $_template = 'tab.phtml';
@@ -26,7 +26,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = []
     ) {
-    	$this->_objectManager = $objectManager;
+        $this->_objectManager = $objectManager;
         parent::__construct($context, $data);
         $this->_configurableType = $configurableType;
         $this->_coreRegistry = $coreRegistry;
@@ -39,7 +39,6 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     {
         $this->_addCss('axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.css');
         $this->_addCss('axzoom/jquery.editable-select.css');
-
     }
 
     private function _addCss($path)
@@ -54,7 +53,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
     public function getProductId()
     {
-    	return $this->getRequest()->getParam('id');
+        return $this->getRequest()->getParam('id');
     }
 
     public function getUsedProducts()
@@ -71,89 +70,89 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
     public function getGroups()
     {
-    	$productId = $this->getProductId();
+        $productId = $this->getProductId();
 
-    	$model = $this->_objectManager->create('Ax\Zoom\Model\Ax360');
-    	$groups = $model->getCollection()->addFieldToFilter('id_product', $productId)->getData();
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360');
+        $groups = $model->getCollection()->addFieldToFilter('id_product', $productId)->getData();
 
-    	return $groups;
+        return $groups;
     }
 
     public function getSetGroups()
     {
-    	$productId = $this->getProductId();
+        $productId = $this->getProductId();
 
-    	$model = $this->_objectManager->create('Ax\Zoom\Model\Ax360');
-    	
-    	return $model->getSetsGroups($productId);
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360');
+        
+        return $model->getSetsGroups($productId);
     }
 
     public function isActive()
     {
         $productId = $this->getProductId();
-    	$model = $this->_objectManager->create('Ax\Zoom\Model\Axproducts');
-    	$active = $model->getCollection()->addFieldToFilter('id_product', $productId)->count() > 0 ? 0 : 1;
-    	return $active;
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Axproducts');
+        $active = $model->getCollection()->addFieldToFilter('id_product', $productId)->count() > 0 ? 0 : 1;
+        return $active;
     }
 
     public function getSets()
     {
-    	$productId = $this->getProductId();
+        $productId = $this->getProductId();
 
-    	$model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
-    	
-    	return $model->getSets($productId);
-    }    
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
+        
+        return $model->getSets($productId);
+    }
 
     public function rootFolder()
     {
-    	$model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
-    	
-    	return $model->rootFolder();
-    }        
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
+        
+        return $model->rootFolder();
+    }
 
     public function getBaseUrl()
     {
-    	$model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
-    	
-    	return $model->getBaseUrl();
-    }     
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
+        
+        return $model->getBaseUrl();
+    }
 
     public function getBaseDir()
     {
-    	$model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
-    	
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
+        
 
-    	return $model->getBaseDir();
-    } 
+        return $model->getBaseDir();
+    }
 
     public function getUrlAjax($action)
     {
-    	return $this->getUrl('axzoom/Ajax/' . $action);
+        return $this->getUrl('axzoom/Ajax/' . $action);
     }
 
-	public function getArcList()
+    public function getArcList()
     {
-		$baseDir = $this->getBaseDir();
-		$files = array();
-		
-		if ($handle = opendir($baseDir . '/axzoom/zip/')) {
-			
-			while (false !== ($entry = readdir($handle))) {
-				if ($entry != '.' && $entry != '..' && (strtolower(substr($entry, -3)) == 'zip' || is_dir($baseDir . '/axzoom/zip/' . $entry)) ) {
-					array_push($files, $entry);
-				}
-			}
-			closedir($handle);
-		}
-		  
-		return $files;
-	}
+        $baseDir = $this->getBaseDir();
+        $files = [];
+        
+        if ($handle = opendir($baseDir . '/axzoom/zip/')) {
+            
+            while (false !== ($entry = readdir($handle))) {
+                if ($entry != '.' && $entry != '..' && (strtolower(substr($entry, -3)) == 'zip' || is_dir($baseDir . '/axzoom/zip/' . $entry))) {
+                    array_push($files, $entry);
+                }
+            }
+            closedir($handle);
+        }
+          
+        return $files;
+    }
 
-	public function getAxModel()
+    public function getAxModel()
     {
-		return $this->_objectManager->create('Ax\Zoom\Model\Ax360');
-	}
+        return $this->_objectManager->create('Ax\Zoom\Model\Ax360');
+    }
 
     public function getFormKey()
     {
@@ -173,7 +172,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
     public function getStoreLanguages()
     {
-        $langugaes_array = array('en' => 'en');
+        $langugaes_array = ['en' => 'en'];
 
         $storeManager = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface');
         $stores = $storeManager->getStores($withDefault = false);
@@ -184,13 +183,13 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         }
 
         return $langugaes_array;
-    }    
+    }
 
 
     public function getImagesBackendHotspots($id_product, $sub = false)
     {
         $id_product = (int)$id_product;
-        $az_pictures_lst = array();
+        $az_pictures_lst = [];
         $az_az_load = $this->getBaseUrl() . 'axzoom/axZm/zoomLoad.php?azImg=';
         
         $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($id_product);
@@ -201,21 +200,21 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
             if ($data['id'] && !stristr($data['label'], '-swatch')) {
                 $urli = parse_url($data['url']);
                 $pathi = pathinfo($urli['path']);
-                $az_pictures_lst[$data['id']] = array(
+                $az_pictures_lst[$data['id']] = [
                     'id_media' => (int)$data['id'],
                     'id_product' => (int)$id_product,
                     'image_name' => $pathi['basename'],
                     'path' => $urli['path'],
                     'label' => $data['label'],
                     'thumb' => $az_az_load.$urli['path'].'&width=100&height=128&qual=128'
-                );   
+                ];
             }
         }
 
 
         /*
         $product = Mage::getModel('catalog/product')->load($id_product);
-        
+
         $az_images_collection = $this->getMediaGalleryImagesAll($id_product);
         $az_az_load = Mage::getBaseUrl('js') . 'axzoom/axZm/zoomLoad.php?azImg=';
         $product_id = $id_product;
@@ -285,15 +284,15 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         require dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/AzMouseoverConfig.php';
         $mouseover_settings = new \Ax\Zoom\AzMouseoverSettings($az_mouseover_config_magento);
 
-        $excl_arr = array(
+        $excl_arr = [
             'displayOnlyForThisProductID',
             'uploadNoCompress',
             'default360settings',
             'headerZindex',
             'magentoAdminThumb'
-        );
+        ];
 
-        $opt_arr = array();
+        $opt_arr = [];
 
         $cfg = $mouseover_settings->getConfig();
         //$cat = $mouseover_settings->getCategories();
@@ -316,7 +315,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
     public function filter360data($arr)
     {
-        $groups_360 = array();
+        $groups_360 = [];
 
         if (is_array($arr) && !empty($arr)) {
             foreach ($arr as $k => $v) {
@@ -339,8 +338,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
 
         $conf = $connection->fetchAll('SELECT * FROM '.$tableName.' 
-            WHERE id_product = '.(int)$id_product
-        );
+            WHERE id_product = '.(int)$id_product);
 
         if (isset($conf[0]['psettings'])) {
             return $conf[0]['psettings'];
@@ -348,5 +346,4 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
             return '{}';
         }
     }
-
 }

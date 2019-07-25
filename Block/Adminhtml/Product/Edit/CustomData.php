@@ -1,6 +1,7 @@
 <?php
 
 namespace Ax\Zoom\Block\Adminhtml\Product\Edit;
+
 use Magento\Backend\Block\Template\Context;
 use Magento\Framework\Registry;
 
@@ -14,8 +15,7 @@ class CustomData extends \Magento\Framework\View\Element\Template
         Context $context,
         Registry $registry,
         array $data = []
-    )
-    {
+    ) {
         $this->_coreRegistry = $registry;
         parent::__construct($context, $data);
     }

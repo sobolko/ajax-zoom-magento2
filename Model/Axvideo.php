@@ -10,15 +10,15 @@ class Axvideo extends \Magento\Framework\Model\AbstractModel
 
     public function getVideos($productId)
     {
-		$collection = $this->getCollection()->addFieldToFilter('id_product', $productId);
-		$collection->getSelect();
-		$videos = $collection->getData();
+        $collection = $this->getCollection()->addFieldToFilter('id_product', $productId);
+        $collection->getSelect();
+        $videos = $collection->getData();
 
-        $r = array();
+        $r = [];
         foreach ($videos as $video) {
             $r[$video['id_video']] = $video;
         }
 
-		return $r;
-    }    
+        return $r;
+    }
 }

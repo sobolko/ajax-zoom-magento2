@@ -8,16 +8,15 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
     protected $_storeManager;
 
     public function __construct(
-            \Magento\Framework\ObjectManagerInterface $objectManager,
-            \Magento\Store\Model\StoreManager $storeManager,
-            \Magento\Framework\App\ResourceConnection $res,
-            \Magento\Framework\Model\Context $context,
-            \Magento\Framework\Registry $registry,
-            \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-            \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-            
-            array $data = []
-        ) {
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Store\Model\StoreManager $storeManager,
+        \Magento\Framework\App\ResourceConnection $res,
+        \Magento\Framework\Model\Context $context,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        array $data = []
+    ) {
         $this->_res = $res;
         $this->_objectManager = $objectManager;
         $this->_storeManager = $storeManager;
@@ -36,10 +35,10 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
         $collection->getSelect();
         $rows = $collection->getData();
 
-        $return = array();
+        $return = [];
         foreach ($rows as $r) {
             $mid = $r['id_media'];
-            $return[$mid] = array();
+            $return[$mid] = [];
             if ($r['hotspots_active'] == 1) {
                 $return[$mid]['hotspots'] = stripslashes(trim(preg_replace('/\s+/', ' ', $r['hotspots'])));
                 $return[$mid]['image_name'] = $r['image_name'];
@@ -47,13 +46,13 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
         }
 
         return $return;
-    } 
+    }
 
 
     public function getImagesBackendHotspots($id_product, $sub = false)
     {
         $id_product = (int)$id_product;
-        $az_pictures_lst = array();
+        $az_pictures_lst = [];
         $az_az_load = $this->getBaseUrl() . 'axzoom/axZm/zoomLoad.php?azImg=';
         
         $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($id_product);
@@ -64,14 +63,14 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
             if ($data['id'] && !stristr($data['label'], '-swatch')) {
                 $urli = parse_url($data['url']);
                 $pathi = pathinfo($urli['path']);
-                $az_pictures_lst[$data['id']] = array(
+                $az_pictures_lst[$data['id']] = [
                     'id_media' => (int)$data['id'],
                     'id_product' => (int)$id_product,
                     'image_name' => $pathi['basename'],
                     'path' => $urli['path'],
                     'label' => $data['label'],
                     'thumb' => $az_az_load.$urli['path'].'&width=100&height=128&qual=128'
-                );   
+                ];
             }
         }
 
@@ -122,6 +121,5 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
         $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
         
         return $model->getBaseUrl();
-    }     
-
+    }
 }

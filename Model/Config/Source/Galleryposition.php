@@ -4,16 +4,16 @@ namespace Ax\Zoom\Model\Config\Source;
 
 class Galleryposition implements \Magento\Framework\Option\ArrayInterface
 {
-	/**
+    /**
      * @return array
      */
     public function toOptionArray()
     {
-        return array(
-            array('value' => 'top',    'label' => __('top')),
-            array('value' => 'right',  'label' => __('right')),
-            array('value' => 'bottom', 'label' => __('bottom')),
-            array('value' => 'left',   'label' => __('left'))
-        );
+        return [
+            ['value' => 'top',    'label' => __('top')],
+            ['value' => 'right',  'label' => __('right')],
+            ['value' => 'bottom', 'label' => __('bottom')],
+            ['value' => 'left',   'label' => __('left')]
+        ];
     }
 }

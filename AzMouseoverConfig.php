@@ -1,22 +1,22 @@
 <?php
 /**
-*  Module: jQuery AJAX-ZOOM for Magento, /app/code/local/Ax/Zoom/AzMouseoverConfig.php
-*  Copyright: Copyright (c) 2010-2018 Vadim Jacobi
-*  License Agreement: http://www.ajax-zoom.com/index.php?cid=download
-*  Version: 1.4.2
-*  Date: 2018-05-28
-*  Review: 2018-05-28
-*  URL: http://www.ajax-zoom.com
-*  Documentation: http://www.ajax-zoom.com/index.php?cid=modules&module=magento
-*
-*  @author    AJAX-ZOOM <support@ajax-zoom.com>
-*  @copyright 2010-2018 AJAX-ZOOM, Vadim Jacobi
-*  @license   http://www.ajax-zoom.com/index.php?cid=download
-*/
+ *  Module: jQuery AJAX-ZOOM for Magento, /app/code/local/Ax/Zoom/AzMouseoverConfig.php
+ *  Copyright: Copyright (c) 2010-2018 Vadim Jacobi
+ *  License Agreement: http://www.ajax-zoom.com/index.php?cid=download
+ *  Version: 1.4.2
+ *  Date: 2018-05-28
+ *  Review: 2018-05-28
+ *  URL: http://www.ajax-zoom.com
+ *  Documentation: http://www.ajax-zoom.com/index.php?cid=modules&module=magento
+ *
+ * @author    AJAX-ZOOM <support@ajax-zoom.com>
+ * @copyright 2010-2018 AJAX-ZOOM, Vadim Jacobi
+ * @license   http://www.ajax-zoom.com/index.php?cid=download
+ */
 
-$az_mouseover_config_magento = array(
+$az_mouseover_config_magento = [
     'vendor' => 'Magento',
-    'exclude_opt_vendor' => array(
+    'exclude_opt_vendor' => [
         'axZmPath',
         'lang',
         'images',
@@ -31,18 +31,18 @@ $az_mouseover_config_magento = array(
         'defaultVideoVimeoSettings',
         'defaultVideoDailymotionSettings',
         'defaultVideoVideojsSettings'
-    ),
-    'exclude_cat_vendor' => array('contents_settings'),
-    'config_vendor' => array(
+    ],
+    'exclude_cat_vendor' => ['contents_settings'],
+    'config_vendor' => [
         'oneSrcImg' => true,
         'heightRatioOneImg' => 1.0,
         'zoomWidth' => '.product-shop|+1',
         'zoomHeight' => '.product-essential',
         'width' => 800,
         'height' => 800
-    ),
-    'config_extend' => array(
-        'displayInSelector' => array(
+    ],
+    'config_extend' => [
+        'displayInSelector' => [
             'prefix' => 'AJAXZOOM',
             'important' => true,
             'type' => 'string',
@@ -52,7 +52,7 @@ $az_mouseover_config_magento = array(
             'height' => null,
             'default' => '',
             'options' => null,
-            'comment' => array(
+            'comment' => [
                 'EN' => '
                     Display only 360 player in jQuery selector defined in this field, 
                     e.g. .tab-content:eq(0) 
@@ -63,9 +63,9 @@ $az_mouseover_config_magento = array(
                     e.g. .tab-content:eq(0) 
                     Keep empty to display 360 and images in one player.
                 '
-            )
-        ),
-        'displayInSelectorAppend' => array(
+            ]
+        ],
+        'displayInSelectorAppend' => [
             'prefix' => 'AJAXZOOM',
             'important' => false,
             'type' => 'bool',
@@ -75,7 +75,7 @@ $az_mouseover_config_magento = array(
             'height' => null,
             'default' => true,
             'options' => null,
-            'comment' => array(
+            'comment' => [
                 'EN' => '
                     If displayInSelector is set and this option is enabled, 
                     the 360 player will be appended to the container defined 
@@ -88,9 +88,9 @@ $az_mouseover_config_magento = array(
                     in displayInSelector option. If this option is disabled, 
                     the 360 player will be appended.
                 '
-            )
-        ),
-        'displayInAzOpt' => array(
+            ]
+        ],
+        'displayInAzOpt' => [
             'prefix' => 'AJAXZOOM',
             'important' => false,
             'type' => 'string',
@@ -106,7 +106,7 @@ $az_mouseover_config_magento = array(
     }
 }',
             'options' => null,
-            'comment' => array(
+            'comment' => [
                 'EN' => '
                     Set AJAX-ZOOM options if "displayInSelector" or "displayInTab" options are enabled. 
                     For more details on how to set it, please see "azOptions360" option.
@@ -115,9 +115,9 @@ $az_mouseover_config_magento = array(
                     Set AJAX-ZOOM options if "displayInSelector" or "displayInTab" options are enabled. 
                     For more details on how to set it, please see "azOptions360" option.
                 '
-            )
-        ),
-        'magentoAllImages' => array(
+            ]
+        ],
+        'magentoAllImages' => [
             'prefix' => 'AJAXZOOM',
             'important' => false,
             'type' => 'bool',
@@ -127,7 +127,7 @@ $az_mouseover_config_magento = array(
             'height' => null,
             'default' => false,
             'options' => null,
-            'comment' => array(
+            'comment' => [
                 'EN' => '
                     Load all images independent on label (color), 
                     also from "Simple Products" which are bind 
@@ -138,9 +138,9 @@ $az_mouseover_config_magento = array(
                     also from "Simple Products" which are bind 
                     to Configurable Product on start.
                 '
-            )
-        ),
-        'magentoNoImage' => array(
+            ]
+        ],
+        'magentoNoImage' => [
             'prefix' => 'AJAXZOOM',
             'important' => false,
             'type' => 'bool',
@@ -150,7 +150,7 @@ $az_mouseover_config_magento = array(
             'height' => null,
             'default' => false,
             'options' => null,
-            'comment' => array(
+            'comment' => [
                 'EN' => '
                     Show magento no image available, 
                     if no AJAX-ZOOM no image available will be shown.
@@ -159,9 +159,9 @@ $az_mouseover_config_magento = array(
                     Show magento no image available, 
                     if no AJAX-ZOOM no image available will be shown.
                 '
-            )
-        ),
-        'magentoAdminThumb' => array(
+            ]
+        ],
+        'magentoAdminThumb' => [
             'prefix' => 'AJAXZOOM',
             'important' => false,
             'type' => 'bool',
@@ -171,14 +171,14 @@ $az_mouseover_config_magento = array(
             'height' => null,
             'default' => false,
             'options' => null,
-            'comment' => array(
+            'comment' => [
                 'EN' => '
                     Replace normal images in admin area with dynamically generated thumbs of these images
                 ',
                 'DE' => '
                     Replace normal images in admin area with dynamically generated thumbs of these images
                 '
-            )
-        )
-    )
-);
+            ]
+        ]
+    ]
+];

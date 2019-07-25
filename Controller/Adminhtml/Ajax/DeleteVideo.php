@@ -3,34 +3,33 @@ namespace Ax\Zoom\Controller\Adminhtml\Ajax;
 
 class DeleteVideo extends \Magento\Backend\App\Action
 {
-	protected $messageManager;
-	protected $_objectManager;
-	protected $Axvideo;
+    protected $messageManager;
+    protected $_objectManager;
+    protected $Axvideo;
 
-	public function __construct(
-		\Magento\Backend\App\Action\Context $context,
-		\Magento\Framework\ObjectManagerInterface $objectManager,
-		\Ax\Zoom\Model\Axvideo $Axvideo
-	)
-	{
-		$this->messageManager = $context->getMessageManager();
-		$this->_objectManager = $objectManager;
-		$this->Axvideo = $Axvideo;
-		parent::__construct($context);
-	}
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Ax\Zoom\Model\Axvideo $Axvideo
+    ) {
+        $this->messageManager = $context->getMessageManager();
+        $this->_objectManager = $objectManager;
+        $this->Axvideo = $Axvideo;
+        parent::__construct($context);
+    }
 
-	public function execute()
-	{
+    public function execute()
+    {
         $get = $this->getRequest();
         $productId = $get->getParam('id_product');
         $id_video  = $get->getParam('id_video');
 
         $this->Axvideo->setId($id_video)->delete();
         
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode(array(
+        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
             'id_video' => $id_video,
             'removed' => ($this->Axvideo->load($id_video)->getName() ? 0 : 1),
-            'confirmations' => array('The video was successfully removed.')
-            )));
-	}
+            'confirmations' => ['The video was successfully removed.']
+            ]));
+    }
 }

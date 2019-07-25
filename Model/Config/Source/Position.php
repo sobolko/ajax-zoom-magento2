@@ -9,12 +9,12 @@ class Position implements \Magento\Framework\Option\ArrayInterface
      */
     public function toOptionArray()
     {
-        return array(
-            array('value' => 'inside', 'label' => __('inside')),
-            array('value' => 'top',    'label' => __('top')),
-            array('value' => 'right',  'label' => __('right')),
-            array('value' => 'bottom', 'label' => __('bottom')),
-            array('value' => 'left',   'label' => __('left'))
-        );
+        return [
+            ['value' => 'inside', 'label' => __('inside')],
+            ['value' => 'top',    'label' => __('top')],
+            ['value' => 'right',  'label' => __('right')],
+            ['value' => 'bottom', 'label' => __('bottom')],
+            ['value' => 'left',   'label' => __('left')]
+        ];
     }
 }

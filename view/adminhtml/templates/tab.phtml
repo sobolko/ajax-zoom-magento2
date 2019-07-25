@@ -1,32 +1,32 @@
-<?php 
+<?php
 $productId = $this->getProductId();
 $ax = $this->getAxModel();
 ?>
 
 <script type="text/javascript">
 jQuery(function ($) {
-	$('.ajax-zoom .ax-tab-title').click(function (e) {
-		$(this).closest('.ax-tab').find('.ax-tab-content').toggle();
-	});
+    $('.ajax-zoom .ax-tab-title').click(function (e) {
+        $(this).closest('.ax-tab').find('.ax-tab-content').toggle();
+    });
 
 
-	$('body').on('change', 'input[name=az_active]', function(e) { 
-		e.preventDefault();
-		var az_active = $(this).val();
+    $('body').on('change', 'input[name=az_active]', function(e) { 
+        e.preventDefault();
+        var az_active = $(this).val();
 
-		doAdminAjax360('<?php echo $this->getUrlAjax('setProductStatus'); ?>', {
-				"id_product" : <?php echo $productId ?>,
-				"az_active" : az_active}, afterUpdateProductStatus
-		);
-		
-	});	
+        doAdminAjax360('<?php echo $this->getUrlAjax('setProductStatus'); ?>', {
+                "id_product" : <?php echo $productId ?>,
+                "az_active" : az_active}, afterUpdateProductStatus
+        );
+        
+    });    
 
 
-	function afterUpdateProductStatus(data) { 
-		var data = $.parseJSON(data);
+    function afterUpdateProductStatus(data) { 
+        var data = $.parseJSON(data);
 
-		az_showSuccessMessage(data.confirmations);
-	} 	
+        az_showSuccessMessage(data.confirmations);
+    }     
 });
 
 function az_addBodyMessageContainer()
@@ -70,78 +70,78 @@ function az_showErrorMessage(message)
 
 function showSuccessMessage(message)
 {
-	//console.log(message);
+    //console.log(message);
 }
 
 function doAdminAjax360(url, data, success_func, error_func)
 {
-	jQuery.ajax(
-	{
-		url : url,
-		data : data,
-		type : 'GET',
-		success : function(data){
-			if (success_func)
-				return success_func(data);
+    jQuery.ajax(
+    {
+        url : url,
+        data : data,
+        type : 'GET',
+        success : function(data){
+            if (success_func)
+                return success_func(data);
 
-			data = jQuery.parseJSON(data);
-			if (data.confirmations.length != 0)
-				showSuccessMessage(data.confirmations);
-			else
-				showErrorMessage(data.error);
-		},
-		error : function(data){
-			if (error_func)
-				return error_func(data);
+            data = jQuery.parseJSON(data);
+            if (data.confirmations.length != 0)
+                showSuccessMessage(data.confirmations);
+            else
+                showErrorMessage(data.error);
+        },
+        error : function(data){
+            if (error_func)
+                return error_func(data);
 
-			alert("[TECHNICAL ERROR]");
-		}
-	});
+            alert("[TECHNICAL ERROR]");
+        }
+    });
 }
 </script>
 
 <style type="text/css">
-	.ajax-zoom .fieldset-wrapper-title {
-	    border-bottom: 1px solid #f0f0f0 !important;
-	    padding: 10px !important;
-	    background: #fbfbfb;
-	    cursor: pointer;		
-	}
+    .ajax-zoom .fieldset-wrapper-title {
+        border-bottom: 1px solid #f0f0f0 !important;
+        padding: 10px !important;
+        background: #fbfbfb;
+        cursor: pointer;        
+    }
 
-	.ajax-zoom .fieldset-wrapper {
-		padding-bottom: 10px !important;
-    	padding-top: 0px !important;
-	}
+    .ajax-zoom .fieldset-wrapper {
+        padding-bottom: 10px !important;
+        padding-top: 0px !important;
+    }
 
-	.ajax-zoom .entry-edit .fieldset {
-		padding: 10px !important;
-	}
+    .ajax-zoom .entry-edit .fieldset {
+        padding: 10px !important;
+    }
 
-	.ax-tab-content {
-		display: none;
-	}
+    .ax-tab-content {
+        display: none;
+    }
 
-	#az_body_message_container {
-		position: fixed;
-	    top: 77px;
-	    right: 0px;
-	}
-	.az_success_message {
-	    background: green;
-	    padding: 10px;
-	    color: #fff;
-	    border: 1px solid green;
-	    border-radius: 5px; 
+    #az_body_message_container {
+        position: fixed;
+        top: 77px;
+        right: 0px;
+    }
+    .az_success_message {
+        background: green;
+        padding: 10px;
+        color: #fff;
+        border: 1px solid green;
+        border-radius: 5px; 
 
-	}
+    }
 </style>
 
 
 <div class="ajax-zoom">
-	<?php require 'tab360-settings.phtml'; ?>
-	<?php require 'tab360-sets.phtml'; ?>
-	<?php require 'tab-video.phtml'; ?>
-	<?php require 'tab-hotspot.phtml'; ?>
+    <?php require 'tab360-settings.phtml'; ?>
+    <?php require 'tab360-sets.phtml'; ?>
+    <?php require 'tab-video.phtml'; ?>
+    <?php require 'tab-hotspot.phtml'; ?>
 </div>
 
 

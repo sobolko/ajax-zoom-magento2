@@ -3,25 +3,23 @@ namespace Ax\Zoom\Controller\Adminhtml\Ajax;
 
 class ActionUpdate extends \Magento\Backend\App\Action
 {
-	protected $messageManager;
-	protected $_objectManager;
-	protected $Ax360set;
+    protected $messageManager;
+    protected $_objectManager;
+    protected $Ax360set;
 
-	public function __construct(
-		\Magento\Backend\App\Action\Context $context,
-		\Magento\Framework\ObjectManagerInterface $objectManager,
-		\Ax\Zoom\Model\Ax360set $Ax360set
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Ax\Zoom\Model\Ax360set $Ax360set
+    ) {
+        $this->messageManager = $context->getMessageManager();
+        $this->_objectManager = $objectManager;
+        $this->Ax360set = $Ax360set;
+        parent::__construct($context);
+    }
 
-	)
-	{
-		$this->messageManager = $context->getMessageManager();
-		$this->_objectManager = $objectManager;
-		$this->Ax360set = $Ax360set;
-		parent::__construct($context);
-	}
-
-	public function execute()
-	{
+    public function execute()
+    {
         $get = $this->getRequest();
         
         
@@ -50,13 +48,13 @@ class ActionUpdate extends \Magento\Backend\App\Action
             }
         }
 
-        $return_arr = array(
+        $return_arr = [
             'version' => $version,
             'date' => $date,
             'review' => $review
-        );
+        ];
         
         
         die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode($return_arr));
-	}
+    }
 }

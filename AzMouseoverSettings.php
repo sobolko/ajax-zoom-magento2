@@ -22,13 +22,13 @@ if (!class_exists('AzMouseoverSettings', false)) {
     {
         public $vendor = '';
         public $last_updated = '2018-08-26';
-        public $config = array();
-        public $items = array();
-        public $config_vendor = array();
-        public $config_extend = array();
-        public $categories = array();
-        public $exclude_opt_vendor = array('axZmPath', 'lang', 'images', 'images360', 'videos');
-        public $exclude_cat_vendor = array();
+        public $config = [];
+        public $items = [];
+        public $config_vendor = [];
+        public $config_extend = [];
+        public $categories = [];
+        public $exclude_opt_vendor = ['axZmPath', 'lang', 'images', 'images360', 'videos'];
+        public $exclude_cat_vendor = [];
 
         public function __construct()
         {
@@ -49,71 +49,71 @@ if (!class_exists('AzMouseoverSettings', false)) {
 
         public function cleanComment($comment)
         {
-            $comment = str_replace(array("\r\n", "\r", "\n", "\t"), ' ', $comment);
+            $comment = str_replace(["\r\n", "\r", "\n", "\t"], ' ', $comment);
             $comment = preg_replace('!\s+!', ' ', $comment);
             return trim($comment);
         }
 
         public function defineCategories()
         {
-            $this->categories = array(
-                'plugin_settings' => array(
+            $this->categories = [
+                'plugin_settings' => [
                     'prefix' => 'AZ_CAT',
-                    'title' => array(
+                    'title' => [
                         'EN' => 'Plugin settings for '.$this->vendor,
                         'DE' => 'Plugin Einstellungen für '.$this->vendor
-                    )
-                ),
-                'contents_settings' => array(
+                    ]
+                ],
+                'contents_settings' => [
                     'prefix' => 'AZ_CAT',
-                    'title' => array(
+                    'title' => [
                         'EN' => 'Contents settings',
                         'DE' => 'Inhalts Einstellungen'
-                    )
-                ),
-                'general_settings' => array(
+                    ]
+                ],
+                'general_settings' => [
                     'prefix' => 'AZ_CAT',
-                    'title' => array(
+                    'title' => [
                         'EN' => 'General settings',
                         'DE' => 'Allgemeine Einstellungen'
-                    )
-                ),
-                'product_tour' => array(
+                    ]
+                ],
+                'product_tour' => [
                     'prefix' => 'AZ_CAT',
-                    'title' => array(
+                    'title' => [
                         'EN' => '360 "Product tour"',
                         'DE' => '360 "Produkt Tour"'
-                    )
-                ),
-                'fullscreen_gallery' => array(
+                    ]
+                ],
+                'fullscreen_gallery' => [
                     'prefix' => 'AZ_CAT',
-                    'title' => array(
+                    'title' => [
                         'EN' => 'Fullscreen gallery',
                         'DE' => 'Vollbild Galerie'
-                    )
-                ),
-                'mouseover' => array(
+                    ]
+                ],
+                'mouseover' => [
                     'prefix' => 'AZ_CAT',
-                    'title' => array(
+                    'title' => [
                         'EN' => 'Specific options for the mouseover zoom',
                         'DE' => 'Spezifische optionen für mousever zoom'
-                    )
-                ),
-                'video_settings' => array(
+                    ]
+                ],
+                'video_settings' => [
                     'prefix' => 'AZ_CAT',
-                    'title' => array(
+                    'title' => [
                         'EN' => 'Video settings',
                         'DE' => 'Videos Einstellungen'
-                    )
-                )
+                    ]
+                ]
 
-            );
+            ];
         }
 
         public function defineItemes()
         {
-            $this->items = array(
-                'images' => array(
+            $this->items = [
+                'images' => [
                     'prefix' => '',
                     'category' => 'contents_settings',
                     'important' => true,
@@ -124,7 +124,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
     Object containing absolute paths to the master images, optional with titles. Start with 1, not 0. 
     Your master image "img" can be as big as you want, it never loads into cache 
@@ -211,10 +211,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
 
                         ',
                         'DE' => ''
-                    )
-                ),
+                    ]
+                ],
 
-                'images360' => array(
+                'images360' => [
                     'prefix' => '',
                     'category' => 'contents_settings',
                     'important' => true,
@@ -225,7 +225,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
     Object or an array with paths to the folders which contain 360 degree images; 
     mostly you would want to add only one 360 spin but the "images360" object can contain as many as you like; 
@@ -273,9 +273,9 @@ if (!class_exists('AzMouseoverSettings', false)) {
     </ul>
                         ',
                         'DE' => ''
-                    )
-                ),
-                'videos' => array(
+                    ]
+                ],
+                'videos' => [
                     'prefix' => '',
                     'category' => 'contents_settings',
                     'important' => true,
@@ -286,7 +286,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
     Object containing videos configuration. Start with 1, not 0. 
 
@@ -321,10 +321,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
     </ul>
                         ',
                         'DE' => ''
-                    )
-                )
+                    ]
+                ]
 
-            );
+            ];
         }
 
         public function defineConfig()
@@ -354,10 +354,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
             )
             */
 
-            $this->config = array(
+            $this->config = [
 
                 // plugin_settings
-                'enableInFrontDetail' =>  array(
+                'enableInFrontDetail' =>  [
                     'prefix' => 'AJAXZOOM', // prefix AJAXZOOM OR AZ
                     'category' => 'plugin_settings', // key $this->categories
                     'important' => false, // true / false
@@ -368,17 +368,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null, // height of textarea if applied
                     'default' => true, // default value
                     'options' => null, // array for select
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Eneable / disable AJAX-ZOOM output in product detail view.
                         ',
                         'DE' => '
                             Aktivieren / deaktivieren AJAX-ZOOM Output in Produktdetailansicht.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'enableCssInOtherPages' =>  array(
+                'enableCssInOtherPages' =>  [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'important' => false,
@@ -389,7 +389,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Add a small css file to frontend for embedding AJAX-ZOOM in responsive iframe.
                         ',
@@ -397,13 +397,13 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Eine kleine css Datei weiteren Shopbereichen hinzufügen, um AJAX-ZOOM 360 Player 
                             im responsiven iframe einzubetten.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'enableNativeSlider' => array(
+                'enableNativeSlider' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
-                    'vendor' => array('Shopware 5'),
+                    'vendor' => ['Shopware 5'],
                     'important' => true,
                     'type' => 'bool',
                     'isJsObject' => false,
@@ -412,7 +412,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Eneable native '.$this->vendor.' slider for all products 
                             instead of AJAX-ZOOM mouseover gallery. 
@@ -426,13 +426,13 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Bitte beachten Sie, dass Sie eventuell den Shop-Teplate-Cache löschen müssen, 
                             um die Ergebnisse zu sehen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'enableInTab' => array(
+                'enableInTab' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
-                    'vendor' => array('Shopware 5'),
+                    'vendor' => ['Shopware 5'],
                     'important' => true,
                     'type' => 'bool',
                     'isJsObject' => false,
@@ -441,7 +441,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Display 360 / 3D / videos in tab contant. 
                             Please note that you might need to clear shop teplate cache to see the results.
@@ -451,13 +451,13 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Bitte beachten Sie, dass Sie eventuell den Shop-Teplate-Cache löschen müssen, 
                             um die Ergebnisse zu sehen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'enableInTabOpt' => array(
+                'enableInTabOpt' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
-                    'vendor' => array('Shopware 5'),
+                    'vendor' => ['Shopware 5'],
                     'important' => false,
                     'type' => 'string',
                     'isJsObject' => true,
@@ -482,7 +482,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     }
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Override default options if "enableInTab" is activated 
                             globally or set for particular product.
@@ -491,10 +491,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Überschreiben der Standardoptionen, wenn "enableInTab" global aktiviert ist 
                             oder für ein bestimmtes Produkt gesetzt ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'displayOnlyForThisProductID' => array(
+                'displayOnlyForThisProductID' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -505,7 +505,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => '',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             CSV with product IDs for which AJAX-ZOOM will be <b>only</b> enabled. 
                             Leave blank to have it enabled for all products! 
@@ -519,10 +519,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Diese Option ist nützlich z.B. wenn Sie A / B - Tests durchführen wollen, 
                             z.B. 7,15 würde AJAX-ZOOM nur für Produkte mit ID 7 und 15 freischalten.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'default360settings' => array(
+                'default360settings' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -538,17 +538,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "spinDemoTime": "4500"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Default configuration settings when importing / creating new 360 over backend.
                         ',
                         'DE' => '
                             Die Standardeinstellungen beim Import / Erstellen neuer 360 über das Backend.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'default360settingsEmbed' => array(
+                'default360settingsEmbed' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -563,7 +563,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "mouseScrollEnable": "true"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Default 360 degree configuration settings settings when embedded into 
                             CMS / Blog and simmilar 
@@ -573,10 +573,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Die Standardeinstellungen für das Einbetten der 360 Grad Animationen in CMS / Blog  
                             oder ähnlich (nicht Produkt Detailseite). 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'defaultVideoYoutubeSettings' => array(
+                'defaultVideoYoutubeSettings' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -586,17 +586,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 50,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Default configuration settings for new YouTube video.
                         ',
                         'DE' => '
                             Standard-Konfigurationseinstellungen für neues YouTube Video.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'defaultVideoVimeoSettings' => array(
+                'defaultVideoVimeoSettings' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -606,17 +606,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 50,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Default configuration settings for new Vimeo video.
                         ',
                         'DE' => '
                             Standard-Konfigurationseinstellungen für neues Vimeo Video.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'defaultVideoDailymotionSettings' => array(
+                'defaultVideoDailymotionSettings' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -626,17 +626,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 50,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Default configuration settings for new Dailymotion video.
                         ',
                         'DE' => '
                             Standard-Konfigurationseinstellungen für neues Dailymotion Video.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'defaultVideoVideojsSettings' => array(
+                'defaultVideoVideojsSettings' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -646,17 +646,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 50,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Default configuration settings for new HTML5 (videojs) video.
                         ',
                         'DE' => '
                             Standard-Konfigurationseinstellungen für neues HTML5 (videojs) Video.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'defaultVideoVideojsJS' => array(
+                'defaultVideoVideojsJS' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'string',
@@ -672,17 +672,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "js3": ""
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Sources for videojs CSS and JS which will be included in frontend template.
                         ',
                         'DE' => '
                             Quellen für Videojs CSS und JS Dateien, die in der Frontend-Vorlage enthalten sein werden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'pngModeCssFix' => array(
+                'pngModeCssFix' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'plugin_settings',
                     'type' => 'bool',
@@ -692,7 +692,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Include CSS file for making 
                             some areas of the player transparent which only makes sense 
@@ -704,11 +704,11 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             was nur Sinn macht, wenn pngMode eingeschaltet ist (auto, true) und Sie im Shop 
                             tatsächlich fast ausschließlich PNG Bilder mit transparenten Bereichen verwenden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
                 // general_settings
-                'axZmPath' => array(
+                'axZmPath' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -718,7 +718,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'auto',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Path to AJAX-ZOOM, e.g. "/zoomTest/axZm/". 
                             The default "auto" value might not always work so if you experience any difficulties 
@@ -731,10 +731,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             kann unter Umständen nicht funktionieren! 
                             Definieren Sie diesen Pfad daher manuell in jedem Fall!
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'axZmMode' => array(
+                'axZmMode' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -744,7 +744,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enabling "axZmMode" option will let the mouseover 
                             extension act as most other AJAX-ZOOM examples: 
@@ -768,10 +768,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             E-Commerce-Plugins / Module implementiert ist und es einfach ist, 
                             wenn Sie AJAX-ZOOM auf diese Art anzeigen möchten.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'maxZoomMode' => array(
+                'maxZoomMode' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -781,7 +781,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Set AJAX-ZOOM settings the way, that the user has only the possibility 
                             to spin at not zoomed state; zoom on click goes down to 100%; 
@@ -792,10 +792,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             bei 360 nur im nicht gezoomten Zustand zu drehen; beim Klick zoomt der Player auf 100%. 
                             Beim weiteren Klick im voll gezoomten Zustand wird wieder verkleinert.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'maxZoomSetBtn' => array(
+                'maxZoomSetBtn' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -805,7 +805,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             If "maxZoomMode" is activated, enable a single button, 
                             which will fully zoom out when clicked on it. 
@@ -816,10 +816,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             bei der beim Anklicken der Player vollständig verkleinert. 
                             Die Schaltfläche erscheint nur im gezoomten Zustand.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'divID' => array(
+                'divID' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -829,17 +829,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'az_mouseOverZoomContainer',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             DIV (container) ID for mouseover zoom :-)
                         ',
                         'DE' => '
                             DIV (Container) ID für Mouseover Zoom.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'galleryDivID' => array(
+                'galleryDivID' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string, bool',
@@ -849,17 +849,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'az_mouseOverZoomGallery',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             DIV (container) id of the gallery, set to false to disable gallery.
                         ',
                         'DE' => '
                             DIV (Container) ID für die Galerie, mit false wird die Galerie abgeschaltet.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'lang' => array(
+                'lang' => [
                     'prefix' => '',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -869,7 +869,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Language, e.g. "en", "fr" or "de". 
                             On default, when not defined / empty, the language is browser or system language.
@@ -878,10 +878,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Sprache, z.B. "en", "fr" oder "de". 
                             Wenn nicht definiert / leer, wird die Sprache des Browsers bzw. des Systems ermittelt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'disableAllMsg' => array(
+                'disableAllMsg' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -892,7 +892,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             AJAX-ZOOM produces some notifications within the player 
                             telling that image tiles or other files are generating and returns the result. 
@@ -907,10 +907,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             und auch der Grund, weshalb beim ersten Laden das Vorladen spührbar länger dauert. 
                             Über diese Einstellung können Sie diese Benachrichtigungen abschalten.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'dotNavigation' => array(
+                'dotNavigation' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -920,7 +920,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 400,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enable dot navigation if browser / device resolution is less than this value. 
                             See also "thumbSliderMinSize" option. Setting both 
@@ -935,10 +935,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             gleichen Wert eingestellt sind, dann ersetzt "dotNavigation" die Galerie 
                             auf Geräten mit geringer Auflösung. Mit 0 wird die Punktnavigation abgeschaltet.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'floorWidth' => array(
+                'floorWidth' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -948,17 +948,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Prevent browser computed width with decimals for AJAX-ZOOM containers.
                         ',
                         'DE' => '
                             Verhindert die Browser berechnete Breite mit Dezimalstellen für AJAX-ZOOM-Container.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'pngMode' => array(
+                'pngMode' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool, string',
@@ -968,13 +968,13 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => null,
-                    'options' => array(
-                        array('null', 'null'),
-                        array('auto', 'auto'),
-                        array('true', 'true'),
-                        array('false', 'false')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['null', 'null'],
+                        ['auto', 'auto'],
+                        ['true', 'true'],
+                        ['false', 'false']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Enable PNG mode in different ways: 
                             null will not change the configuration set in zoomConfig.inc.php or 
@@ -997,10 +997,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             auch wenn die Quellbilder JPG sind.
                             Wenn false, werden alle zwischengespeicherten Bilder in JPG konvertiert.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'hideGalleryOneImage' => array(
+                'hideGalleryOneImage' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1010,17 +1010,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Instantly hide gallery if there is only one image, one video or one 360/3D.
                         ',
                         'DE' => '
                             Galerie automatisch ausblenden, wenn nur ein Bild bzw. nur ein 360/3D vorhanden sind.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'hideGalleryAddClass' => array(
+                'hideGalleryAddClass' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -1030,7 +1030,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'axZm_mouseOverNoMargin',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             This option is mainly for the layout with vertical gallery 
                             which is located next (left or right) to mouseover area. 
@@ -1052,10 +1052,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                              diese CSS Klasse dem Container automatisch hinzugefügt. 
                              Bei false wird keine CSS Klasse hinzugefügt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'galleryHover' => array(
+                'galleryHover' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int, bool',
@@ -1066,7 +1066,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Use mouseenter (mouseover) for switching between images. 
                             You can specify an integer which will represent the time in ms to wait 
@@ -1079,10 +1079,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Dies wäre dann die Zeit in ms bei der abgewartet wird, 
                             ehe der Umschaltvorgang startet; true setzt den Standardwert von 200 (ms).
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'gallerySwitchSlide' => array(
+                'gallerySwitchSlide' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1092,17 +1092,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Placeholder, not finished yet (todo).
                         ',
                         'DE' => '
                             Placeholder, not finished yet (todo).
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'galleryAxZmThumbSlider' => array(
+                'galleryAxZmThumbSlider' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1113,17 +1113,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Use $.axZmThumbSlider on gallery thumbnails or not.
                         ',
                         'DE' => '
                             Den AJAX-ZOOM $.axZmThumbSlider für die Galerie verwenden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'galleryAxZmThumbSliderParamHorz' => array(
+                'galleryAxZmThumbSliderParamHorz' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object',
@@ -1144,7 +1144,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
 }',
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             $.axZmThumbSlider options if "galleryAxZmThumbSlider" is enabled 
                             and gallery is horizontal. For full list of options see under: 
@@ -1155,10 +1155,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             aktiviert ist und die Galerie horizontal ist. Für die komplette Liste der Optionen 
                             siehe http://www.ajax-zoom.com/axZm/extensions/axZmThumbSlider
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'galleryAxZmThumbSliderParamVert' => array(
+                'galleryAxZmThumbSliderParamVert' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object',
@@ -1179,7 +1179,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
 }',
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             $.axZmThumbSlider options if "galleryAxZmThumbSlider" is enabled 
                             and gallery is vertical. For full list of options see under: 
@@ -1190,10 +1190,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             aktiviert ist und die Galerie vertikal ist. Für die komplette Liste der Optionen 
                             siehe http://www.ajax-zoom.com/axZm/extensions/axZmThumbSlider
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderPosition' => array(
+                'thumbSliderPosition' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -1203,25 +1203,25 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'left-bottom',
-                    'options' => array(
-                        array('left-bottom', 'left-bottom'),
-                        array('left-top', 'left-top'),
-                        array('right-bottom', 'right-bottom'),
-                        array('right-top', 'right-top'),
-                        array('top-left', 'top-left'),
-                        array('top-right', 'top-right'),
-                        array('bottom-left', 'bottom-left'),
-                        array('bottom-right', 'bottom-right'),
-                        array('top', 'top (fixed)'),
-                        array('right', 'right (fixed)'),
-                        array('bottom', 'bottom (fixed)'),
-                        array('left', 'left (fixed)'),
-                        array('left-right', 'left-right'),
-                        array('right-left', 'right-left'),
-                        array('bottom-top', 'bottom-top'),
-                        array('top-bottom', 'top-bottom')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['left-bottom', 'left-bottom'],
+                        ['left-top', 'left-top'],
+                        ['right-bottom', 'right-bottom'],
+                        ['right-top', 'right-top'],
+                        ['top-left', 'top-left'],
+                        ['top-right', 'top-right'],
+                        ['bottom-left', 'bottom-left'],
+                        ['bottom-right', 'bottom-right'],
+                        ['top', 'top (fixed)'],
+                        ['right', 'right (fixed)'],
+                        ['bottom', 'bottom (fixed)'],
+                        ['left', 'left (fixed)'],
+                        ['left-right', 'left-right'],
+                        ['right-left', 'right-left'],
+                        ['bottom-top', 'bottom-top'],
+                        ['top-bottom', 'top-bottom']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Position of the thumb slider. Possible values are 
                             left, top, right, bottom, as well as any combination of these separated 
@@ -1232,10 +1232,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             sowie jegliche Kombination aus den obigen getrennt mit einem Strich, 
                             also z.B. left-bottom.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderPositionSwitch' => array(
+                'thumbSliderPositionSwitch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int, string',
@@ -1245,7 +1245,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'auto',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Possible values: "auto" as string or integer. 
                             Auto means depending on whether the screen is in portrait or 
@@ -1263,10 +1263,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Position aus "thumbSliderPosition" genommen, wenn die Bildschirmbreite 
                             kleiner ist als diese Zahl und die Position passt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderMinSize' => array(
+                'thumbSliderMinSize' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1276,7 +1276,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 400,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Minimal browser width for the gallery to be displayed. 
                             See also "dotNavigation" option!
@@ -1285,10 +1285,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Minimale Breite des Browserfensters, damit die Galerie angezeigt wird. 
                             Siehe auch "dotNavigation" Option.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderDimensionHorz' => array(
+                'thumbSliderDimensionHorz' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1298,17 +1298,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 80,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Height of the container for the gallery when placed horizontally.
                         ',
                         'DE' => '
                             Höhe des Containers für Galerie, wenn sie horizontal erscheint.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderDimensionVert' => array(
+                'thumbSliderDimensionVert' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1318,17 +1318,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 80,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Width of the container for the gallery when placed vertically.
                         ',
                         'DE' => '
                             Breite des Containers für Galerie, wenn sie vertikal erscheint.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderAutoSizeHorz' => array(
+                'thumbSliderAutoSizeHorz' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1338,7 +1338,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Thumb CSS size will be set instantly depending on 
                             "thumbSliderDimensionHorz" and other options.
@@ -1348,10 +1348,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             "thumbSliderDimensionHorz" und anderen Optionen ein, 
                              wenn Galerie horizontal erscheint.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderAutoSizeVert' => array(
+                'thumbSliderAutoSizeVert' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1361,7 +1361,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Thumb CSS size will be set instantly depending on 
                             "thumbSliderDimensionVert" and other options.
@@ -1371,10 +1371,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             "thumbSliderDimensionVert" und anderen Optionen ein, 
                              wenn Galerie horizontal erscheint.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderAutoMarginHorz' => array(
+                'thumbSliderAutoMarginHorz' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1384,7 +1384,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 7,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Thumb margin when set instantly for horizontal gallery.
                         ',
@@ -1392,10 +1392,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Abstand der Miniaturansichten in horizontalen Galerie, wenn 
                             "thumbSliderAutoSizeHorz" eingeschaltet ist.
                         '
-                    )
-                ),
+                    ]
+                ],
                 
-                'thumbSliderAutoMarginVert' => array(
+                'thumbSliderAutoMarginVert' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1405,7 +1405,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 7,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Thumb margin when set instantly for vertical gallery.
                         ',
@@ -1413,10 +1413,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Abstand der Miniaturansichten in vertikallen Galerie, wenn 
                             "thumbSliderAutoSizeHorz" eingeschaltet ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderAutoExtendHorz' => array(
+                'thumbSliderAutoExtendHorz' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1426,7 +1426,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Extend slider height by a fixed value 
                             when set instantly for horizontal gallery - "thumbSliderAutoSizeHorz".
@@ -1435,10 +1435,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Erweitern die Höhe des Sliders um einen festen Wert, wenn diese für horizontale Galerie 
                             automatisch eingestellt wird - "thumbSliderAutoSizeHorz"
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderAutoExtendVert' => array(
+                'thumbSliderAutoExtendVert' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1448,7 +1448,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Extend slider width by a fixed value 
                             when set instantly for vertical gallery - "thumbSliderAutoSizeVert"
@@ -1457,10 +1457,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Erweitern die Breite des Sliders um einen festen Wert, wenn diese für vertikale Galerie 
                             automatisch eingestellt wird - "thumbSliderAutoSizeVert"
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbSliderHorzMargin' => array(
+                'thumbSliderHorzMargin' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1470,17 +1470,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 10,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Horizontal margin of the vertical gallery to mouseover container.
                         ',
                         'DE' => '
                             Margin bzw. Abstand der vertikalen Galerie zu mouseover Container.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbsFadeIn' => array(
+                'thumbsFadeIn' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1490,17 +1490,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 200,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Fadein duration / speed of the thumbnails added to the gallery.
                         ',
                         'DE' => '
                             Einblenddauer für neu geladene Miniaturansichten in der Galerie.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbW' => array(
+                'thumbW' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1511,7 +1511,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 64,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Gallery image thumb width. Please note that when "galleryAxZmThumbSlider" is enabled, 
                             the final thumbnail width and height are determined by CSS 
@@ -1523,10 +1523,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             dann wird die finale Thumbnail Breite und Höhe auch über CSS 
                             in "galleryAxZmThumbSliderParam" bestimmt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbH' => array(
+                'thumbH' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1537,7 +1537,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 64,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Gallery image thumb height. Please note that when "galleryAxZmThumbSlider" is enabled, 
                             the final thumbnail width and height are determined by CSS 
@@ -1549,10 +1549,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             dann wird die finale Thumbnail Breite und Höhe auch über CSS 
                             in "galleryAxZmThumbSliderParam" bestimmt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbRetina' => array(
+                'thumbRetina' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1562,17 +1562,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Double resolution of the thumb image.
                         ',
                         'DE' => '
                             Doppelte Auflösung für Galeriebild.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbMode' => array(
+                'thumbMode' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool, string',
@@ -1581,22 +1581,22 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => false,
-                    'options' => array(
-                        array('false', 'false'),
-                        array('cover', 'cover'),
-                        array('contain', 'contain')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['false', 'false'],
+                        ['cover', 'cover'],
+                        ['contain', 'contain']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Create thumbnails in a way similar to css background values cover and contain.
                         ',
                         'DE' => '
                             Miniatursichen ähnlich der CSS background Werten cover und contain erstellen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'qualityThumb' => array(
+                'qualityThumb' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1606,17 +1606,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 100,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Jpeg quality of the gallery thumbs.
                         ',
                         'DE' => '
                             Jpeg Qualität der Galerie Bilder.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbIcon' => array(
+                'thumbIcon' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1626,7 +1626,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Place an icon over gallery thumbnail depending on media type. 
                             The icon has CSS class axZmThumbSliderIcon and the source is defined in 
@@ -1637,10 +1637,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Das Symbol hat die CSS-Klasse axZmThumbSliderIcon. Die Quelle des Symbols wird in 
                             "thumbIconFile" Option definiert.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbIconFile' => array(
+                'thumbIconFile' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object',
@@ -1657,7 +1657,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "html5": "video_icon-30.png"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Source for icons placed over the thumbnails in the gallery. 
                             If only filename without path is defined the path presumed to be the 
@@ -1670,10 +1670,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             werden die Pfade im /axZm/icons Ordner vermutet. 
                             Sie können stattdessen auch komplett andere Pfade inklusive der Bilddatei definieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbWfs' => array(
+                'thumbWfs' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1683,17 +1683,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 64,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Fullscreen gallery image thumb width.
                         ',
                         'DE' => '
                             Physische Breite des Galeriebildes in Vollbild Galerie.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbHfs' => array(
+                'thumbHfs' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1703,17 +1703,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 64,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Fullscreen gallery image thumb height.
                         ',
                         'DE' => '
                             Physische Höhe des Galeriebildes in Vollbild Galerie.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbRetinaFs' => array(
+                'thumbRetinaFs' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1723,17 +1723,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Double the resolution of fullscreen gallery image thumbs.
                         ',
                         'DE' => '
                             Doppelte Auflösung für Vollbild Galeriebild.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'thumbModeFs' => array(
+                'thumbModeFs' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string, bool',
@@ -1742,22 +1742,22 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => false,
-                    'options' => array(
-                        array('false', 'false'),
-                        array('cover', 'cover'),
-                        array('contain', 'contain')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['false', 'false'],
+                        ['cover', 'cover'],
+                        ['contain', 'contain']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Create thumbnails in a way similar to css background values cover and contain.
                         ',
                         'DE' => '
                             Miniatursichen ähnlich der CSS background Werten cover und contain erstellen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'qualityThumbFs' => array(
+                'qualityThumbFs' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1767,17 +1767,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 100,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Jpeg Quality of the thumbnails in fullscreen gallery.
                         ',
                         'DE' => '
                             Jpeg Qualität der Vollbild Galerie Bilder.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'quality' => array(
+                'quality' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1787,17 +1787,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 90,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Jpeg quality of the preview image.
                         ',
                         'DE' => '
                             Jpeg Qualität der Voransicht Bilder.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'qualityZoom' => array(
+                'qualityZoom' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1807,17 +1807,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 80,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Jpeg quality of the zoom image shown in the flyout window.
                         ',
                         'DE' => '
                             Jpeg Qualität der Bilder im Mouseover Fenster.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'firstImageToLoad' => array(
+                'firstImageToLoad' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -1827,7 +1827,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 1,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Image from "images" option which should be loaded at first. 
                             See also "images360firstToLoad" option below. 
@@ -1842,10 +1842,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             in AJAX-ZOOM-Modulen / Plugins für E-Commerce-Systeme, 
                             weil offensichtlich der Zweck der Module ist, es automatisch einzustellen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'images360firstToLoad' => array(
+                'images360firstToLoad' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'important' => true,
@@ -1856,17 +1856,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             In case present load 360 from "images360" first and not an image from "images".
                         ',
                         'DE' => '
                             Wenn 360 präsent ist, dann wird die 360 animation zuerst geladen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'images360Thumb' => array(
+                'images360Thumb' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1876,17 +1876,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Show first image of the spin as thumb.
                         ',
                         'DE' => '
                             Als Galerie Bild wird automatisch das erste Bild eines 360 / 3D angezeigt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'images360ThumbDefaultPostion' => array(
+                'images360ThumbDefaultPostion' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -1895,12 +1895,12 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'first',
-                    'options' => array(
-                        array('first', 'first'),
-                        array('afterfirst', 'afterfirst'),
-                        array('last', 'last')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['first', 'first'],
+                        ['afterfirst', 'afterfirst'],
+                        ['last', 'last']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Default position of the thumbnail representing a 360/3D in the gallery. 
                             The position can be also defined for each thumb individually. 
@@ -1913,10 +1913,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mögliche Werte sind: "first", "afterfirst" und "last".
                             Siehe auch "videoThumbDefaultPostion" Option.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'images360ThumbBeforeVideo' => array(
+                'images360ThumbBeforeVideo' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1926,7 +1926,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             If activated thumbnails in the gallery representing a 360/3D will be 
                             appended before thumbnails representing videos.
@@ -1935,10 +1935,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wenn aktiviert, werden Miniaturbilder, die eine 360 / 3D darstellen, 
                             vor Miniaturbildern, die Videos darstellen, der Galerie hinzugefügt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'images360Overlay' => array(
+                'images360Overlay' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -1948,7 +1948,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Add a div with class "spinOverlImg" or "spinOverl" over the gallery thumb. 
                             On default it has a 360 icon as background.
@@ -1958,10 +1958,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             über das Galerie Bild hinzugefügt. 
                             Es enthält ein 360 Icon als Hintergrund.
                         '
-                    )
-                ),
+                    ]
+                ],
                 
-                'images360Small' => array(
+                'images360Small' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -1971,7 +1971,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-360-600.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Placeholder image when 360 is slided. 
                             If only filename without path is defined the path presumed to be the 
@@ -1984,10 +1984,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             werden die Pfade im /axZm/icons Ordner vermutet. 
                             Sie können stattdessen auch komplett andere Pfade inklusive der Bilddatei definieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'images360Big' => array(
+                'images360Big' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -1997,7 +1997,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-360-1200.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Placeholder image when 360 is slided. 
                             If only filename without path is defined the path presumed to be the 
@@ -2010,10 +2010,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             werden die Pfade im /axZm/icons Ordner vermutet. 
                             Sie können stattdessen auch komplett andere Pfade inklusive der Bilddatei definieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'images360example' => array(
+                'images360example' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -2023,7 +2023,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'mouseOverExtension360Ver5',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Configuration set which is passed to ajax-zoom when opening a 360/3D. 
                             The configuration set can be found in /axZm/zoomConfigCustom.inc.php
@@ -2033,10 +2033,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Die configuration des Sets kann in /axZm/zoomConfigCustom.inc.php 
                             gefunden / erweitert werden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomMsg360' => array(
+                'zoomMsg360' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object, string',
@@ -2051,7 +2051,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Arrastrar para girar en 360º, Rueda del ratón para utilizar el Zoom, botón derecho para mover la imagen"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Message displayed under mouse over zoom when 360 is loaded, 
                             e.g. "Drag to spin 360, scroll to zoom". 
@@ -2063,10 +2063,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomMsg360_touch' => array(
+                'zoomMsg360_touch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object, string',
@@ -2081,7 +2081,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Arrastrar para girar en 360º, pellizcar para ampliar y reducir"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Message displayed under mouse over zoom when 360 is loaded on touch devices. 
                             For more than one language define a js object, 
@@ -2093,10 +2093,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomMsg' => array(
+                'zoomMsg' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object, string',
@@ -2111,7 +2111,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Arrastrar para girar en 360º, Rueda del ratón para utilizar el Zoom, botón derecho para mover la imagen"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Message displayed under the Player only, when "axZmMode" is enabled and an image is loaded. 
                             For more than one language define a js object, e.g. 
@@ -2122,10 +2122,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             und ein Bild darin angezeigt wird. Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomMsg_touch' => array(
+                'zoomMsg_touch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object, string',
@@ -2140,7 +2140,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Arrastrar para girar en 360º, pellizcar para ampliar y reducir"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Message displayed under the player, when "axZmMode" is enabled 
                             and an image is loaded on touch devices. 
@@ -2153,10 +2153,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'preloadMouseOverImages' => array(
+                'preloadMouseOverImages' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string, bool',
@@ -2165,12 +2165,12 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => true,
-                    'options' => array(
-                        array('false', 'false'),
-                        array('true', 'true'),
-                        array('oneByOne', 'oneByOne')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['false', 'false'],
+                        ['true', 'true'],
+                        ['oneByOne', 'oneByOne']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Preload all preview and mouseover images, possible values: false, true oder "oneByOne".
                         ',
@@ -2178,10 +2178,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Alle Bilder für das Mouseover vorladen. Mögliche Werte sind 
                             false, true oder "oneByOne".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'noImageAvailableClass' => array(
+                'noImageAvailableClass' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object, string',
@@ -2191,7 +2191,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 50,
                     'default' => 'axZm_mouseOverNoImage',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             In case there are no images in "images", nor there are any in "images360", 
                             a div with some image as background can be appended to the 
@@ -2206,10 +2206,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "axZm_mouseOverNoImage_en", "de": "axZm_mouseOverNoImage_de"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'width' => array(
+                'width' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int, string',
@@ -2219,7 +2219,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'auto',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Width of the preview image or "auto" 
                             (depending on parent container size - "divID", see above). 
@@ -2235,10 +2235,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             dann werden beide Werte auf 50% des Wertes von "mouseOverZoomWidth" eingestellt, 
                             also standardmäßig sind es 600px.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'height' => array(
+                'height' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int, string',
@@ -2248,7 +2248,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'auto',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Height of the preview image or "auto" 
                             (depending on parent container size - "divID", see above). 
@@ -2264,10 +2264,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             dann werden beide Werte auf 50% des Wertes von "mouseOverZoomWidth" eingestellt, 
                             also standardmäßig sind es 600px.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'oneSrcImg' => array(
+                'oneSrcImg' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2277,7 +2277,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Use same image for "preview image" - 
                             the image which is hovered and the big "flyout image".
@@ -2285,10 +2285,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                         'DE' => '
                             Das gleiche Bild in der Voransicht, als auch Mouseover Fenster verwenden. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'heightRatio' => array(
+                'heightRatio' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'float, string',
@@ -2299,7 +2299,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 1.0,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             "heightRatio" with instantly adjust the height of mouseover 
                             container depending on width calculated by the browser, e.g. 1.0 will always 
@@ -2322,10 +2322,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Der Container wird jedoch bei Bildern, mit unterschiedlichen Proportionen 
                             beim Wechsel in der Höhe "springen".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'heightRatioOneImg' => array(
+                'heightRatioOneImg' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string, int',
@@ -2335,7 +2335,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'same',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Overwrites "heightRatio" if only one image / 360 is present and 
                             e.g. gallery is instantly disabled. Set to 
@@ -2347,10 +2347,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Sie können als Wert aber auch "same" angeben. 
                             Dadurch wird jegliche Auswirkung dieses Wertes auf "heightRatio" vermieden. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'heightMaxWidthRatio' => array(
+                'heightMaxWidthRatio' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'array, string, bool',
@@ -2360,7 +2360,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '[]',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Similar as you would set max-width: someValue @media only screen condition 
                             you can define "heightRatio" 
@@ -2372,10 +2372,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             kann hier der Wert des "heightRatio" abhängig von Browser Fenster Breite 
                             gesetzt werden, z.B. ["960|0.8", "700|0.7"]
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'widthRatio' => array(
+                'widthRatio' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'array, string, bool',
@@ -2385,17 +2385,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Oposit of "heightRatio".
                         ',
                         'DE' => '
                             Gegenteil von "heightRatio".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'widthMaxHeightRatio' => array(
+                'widthMaxHeightRatio' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'array, string, bool',
@@ -2405,17 +2405,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '[]',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Oposit of "heightMaxWidthRatio"
                         ',
                         'DE' => '
                             Gegenteil von "heightMaxWidthRatio".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'maxSizePrc' => array(
+                'maxSizePrc' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string, float',
@@ -2426,7 +2426,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '1.0|-120|-25',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Limit the actual height if "heightRatio" option is set. 
                             Setting "heightRatio" option may result in that the height of the mouseover zoom 
@@ -2458,10 +2458,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Der vierte Wert kann ein jQuery-Selektor für HTML-Elemente sein, wessen Höhe 
                             von der berechneten Höhe subtrahiert werden sollte, z.B \'1.0|-120|-25|#header_top\'
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'mouseOverZoomWidth' => array(
+                'mouseOverZoomWidth' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -2472,7 +2472,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 1200,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Max width of the image that will be shown in the zoom window; 
                             this is the value which will be passed to your AJAX-ZOOM imaging server 
@@ -2491,10 +2491,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             bzw. in \'zoomConfigCustomAZ.inc.php\' verändert werden kann. 
                             Die Breite des Fensters wird über "zoomWidth" in "mouseOverZoomParam" definiert. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'mouseOverZoomHeight' => array(
+                'mouseOverZoomHeight' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -2505,7 +2505,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 1200,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Max height of the image that will be shown in the zoom window; 
                             this is the value which will be passed to your AJAX-ZOOM imaging server 
@@ -2523,10 +2523,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             \'/axZm/zoomConfig.inc.php\' bzw. in \'zoomConfigCustomAZ.inc.php\' verändert werden kann. 
                             Die Breite des Fensters wird über "zoomWidth" in "mouseOverZoomParam" definiert.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'mouseOverContain' => array(
+                'mouseOverContain' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2536,7 +2536,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Create preview and the image, which is shown in the zoom window, 
                             with the same size / proportion 
@@ -2549,10 +2549,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             der in "mouseOverZoomWidth" und "mouseOverZoomHeight" gesetzten Werten erstellen. 
                             Leere Bereiche werden dabei mit weißer Farbe bzw. bei PNG mit transparent gefüllt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'ajaxZoomOpenMode' => array(
+                'ajaxZoomOpenMode' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -2562,11 +2562,11 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'fancyboxFullscreen',
-                    'options' => array(
-                        array('fullscreen', 'fullscreen (browser window or screen) '),
-                        array('fancyboxFullscreen', 'fancyboxFullscreen (responsive fancybox)')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['fullscreen', 'fullscreen (browser window or screen) '],
+                        ['fancyboxFullscreen', 'fancyboxFullscreen (responsive fancybox)']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Determines how AJAX-ZOOM is opened when the user clicks on preview images / lens, 
                             possible values: \'fullscreen\' (see also "fullScreenApi" option below) 
@@ -2578,10 +2578,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mögliche Werte sind: \'fullscreen\' (siehe auch "fullScreenApi" Option) 
                             oder \'fancyboxFullscreen\'
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'ajaxZoomOpenModeTouch' => array(
+                'ajaxZoomOpenModeTouch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -2590,11 +2590,11 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'fullscreen',
-                    'options' => array(
-                        array('fullscreen', 'fullscreen (browser window or screen) '),
-                        array('fancyboxFullscreen', 'fancyboxFullscreen (responsive fancybox)')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['fullscreen', 'fullscreen (browser window or screen) '],
+                        ['fancyboxFullscreen', 'fancyboxFullscreen (responsive fancybox)']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Determines how AJAX-ZOOM is opened when the user touch - clicks on 
                             preview images / lens, possible values: \'fullscreen\' and \'fancyboxFullscreen\'.
@@ -2604,10 +2604,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             der Nutzer auf die Voransicht / Linse mit touch event klickt. 
                             Mögliche Werte sind: \'fullscreen\' und \'fancyboxFullscreen\'.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fancyBoxFullscreenParam' => array(
+                'fancyBoxFullscreenParam' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -2633,7 +2633,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "boxOnComplete": function(){}
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             If fancyboxFullscreen is used in "ajaxZoomOpenMode" option, Fancybox options. 
                             Prefixed with box and capitalized first letter!
@@ -2642,10 +2642,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wenn fancybox in "ajaxZoomOpenMode" gesetzt ist, sind dies die Fancybox Optionen. 
                             Dabei ist der Präfix box und erster Buchstabe wird großgeschrieben.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'example' => array(
+                'example' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -2655,7 +2655,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'mouseOverExtension360Ver5',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Configuration set which is passed to ajax-zoom when opening a 2D image. 
                             The configuration set can be found in /axZm/zoomConfigCustom.inc.php
@@ -2666,10 +2666,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Die configuration des Sets kann in /axZm/zoomConfigCustom.inc.php gefunden 
                             / erweitert werden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'exampleFancyboxFullscreen' => array(
+                'exampleFancyboxFullscreen' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'string',
@@ -2679,7 +2679,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'mouseOverExtension360Ver5',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Configuration set which is passed to ajax-zoom when ajaxZoomOpenMode 
                             is \'fancyboxFullscreen\'.
@@ -2688,10 +2688,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wert des Konfiguration Sets, welches an AJAX-ZOOM übergeben wird, 
                             wenn ajaxZoomOpenMode auf \'fancyboxFullscreen\' gesetzt ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'enforceFullScreenRes' => array(
+                'enforceFullScreenRes' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -2701,7 +2701,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 768,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enforce "ajaxZoomOpenMode" to be "fullscreen" if screen width is less than this value.
                         ',
@@ -2709,10 +2709,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Erzwingen / setzen "ajaxZoomOpenMode" auf "fullscreen", 
                             wenn Breite des Browser Fensters kleiner ist, als dieser Wert.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'prevNextArrows' => array(
+                'prevNextArrows' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2722,7 +2722,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Put prev / next buttons over mouseover zoom. CSS: .axZm_mouseOverPrevNextArrows;
                         ',
@@ -2730,10 +2730,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Prev / next Pfeile über Mouseover Zoom / Voransicht anzeigen, 
                             CSS: .axZm_mouseOverPrevNextArrows;
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'prevNextArrowsTouch' => array(
+                'prevNextArrowsTouch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2743,7 +2743,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Put prev / next buttons over mouseover zoom for touch devices. 
                             CSS: .axZm_mouseOverPrevNextArrows;
@@ -2752,10 +2752,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Prev / next Pfeile über Mouseover Zoom / Voransicht für touch Geräte anzeigen, 
                             CSS: .axZm_mouseOverPrevNextArrows;
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'prevNextArrowsSlide' => array(
+                'prevNextArrowsSlide' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2765,7 +2765,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Slide images to right or left when clicked on the prev / next buttons.
                         ',
@@ -2773,10 +2773,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Das Bild jeweils nach rechts oder links "sliden", wenn 
                             auf die prev / next Pfeile geklickt wird.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'prevNextArrowsOver' => array(
+                'prevNextArrowsOver' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'int',
@@ -2786,7 +2786,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 1500,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Hide prev / next buttons when mouse is not over the player. 
                             The value determines the delay after which the event is fired. 
@@ -2797,10 +2797,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Der Wert bestimmt die Verzögerung, nach der das Ereignis ausgelöst wird. 
                             Auf 0 stellen, um zu deaktivieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'disableScrollAnm' => array(
+                'disableScrollAnm' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2810,17 +2810,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Disable animation while zooming with AJAX-ZOOM and using mousewheel.
                         ',
                         'DE' => '
                             Deaktivieren der Animation während mit AJAX-ZOOM und dem Mausrad gezoomt wird.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fullScreenApi' => array(
+                'fullScreenApi' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2830,7 +2830,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Try to open AJAX-ZOOM at browsers fullscreen mode, 
                             possible on modern browsers except IE < 10 and mobile.
@@ -2839,10 +2839,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             AJAX-ZOOM im Browser als Vollbild öffnen, 
                             möglich in modernen Browsern außer IE <10 und mobil;
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'axZmCallBacks' => array(
+                'axZmCallBacks' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object',
@@ -2852,7 +2852,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             AJAX-ZOOM has several callbacks / hooks, 
                             http://www.ajax-zoom.com/index.php?cid=docs#onBeforeStart
@@ -2861,10 +2861,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             AJAX-ZOOM kann mit zahlreichen Callbacks bzw. Hooks erweitert werden. 
                             Docu: http://www.ajax-zoom.com/index.php?cid=docs#onBeforeStart
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'azOptions' => array(
+                'azOptions' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object',
@@ -2874,7 +2874,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Some AJAX-ZOOM options can be set with JS when AJAX-ZOOM is inited. 
                             Normally you would be defining them in /axZm/zoomConfig.inc.php 
@@ -2890,10 +2890,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             {"fullScreenCornerButton": false} - 
                             dies würde die Schaltfläche für Vollbild deaktivieren. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'azOptions360' => array(
+                'azOptions360' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'object',
@@ -2903,7 +2903,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Same as above but specifically for 360/3D. 
                             In AJAX-ZOOM modules for ecommerce systems you can also set these options 
@@ -2921,10 +2921,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             "mNavi": {"enabled": true, "gravity": "bottomLeft", 
                             "order": {"mZoomOut": 5, "mZoomIn": 15}}}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'postMode' => array(
+                'postMode' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'general_settings',
                     'type' => 'bool',
@@ -2934,17 +2934,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Set AJAX-ZOOM to use POST instead of GET.
                         ',
                         'DE' => '
                             AJAX-ZOOM mit POST anstatt GET nutzen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropAxZmThumbSliderParam' => array(
+                'cropAxZmThumbSliderParam' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'object',
@@ -2962,7 +2962,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
 }',
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Slider settings for 360° "Product Tour". Can be kept empty. 
                             See also "galleryAxZmThumbSliderParam" option for more info.
@@ -2971,10 +2971,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Slider Einstellungen für 360° "Produkt Tour". 
                             Kann leer bleiben. Für mehr Info siehe "galleryAxZmThumbSliderParam" Option.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderPosition' => array(
+                'cropSliderPosition' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'string',
@@ -2984,25 +2984,25 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'bottom',
-                    'options' => array(
-                        array('left-bottom', 'left-bottom'),
-                        array('left-top', 'left-top'),
-                        array('right-bottom', 'right-bottom'),
-                        array('right-top', 'right-top'),
-                        array('top-left', 'top-left'),
-                        array('top-right', 'top-right'),
-                        array('bottom-left', 'bottom-left'),
-                        array('bottom-right', 'bottom-right'),
-                        array('top', 'top (fixed)'),
-                        array('right', 'right (fixed)'),
-                        array('bottom', 'bottom (fixed)'),
-                        array('left', 'left (fixed)'),
-                        array('left-right', 'left-right'),
-                        array('right-left', 'right-left'),
-                        array('bottom-top', 'bottom-top'),
-                        array('top-bottom', 'top-bottom')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['left-bottom', 'left-bottom'],
+                        ['left-top', 'left-top'],
+                        ['right-bottom', 'right-bottom'],
+                        ['right-top', 'right-top'],
+                        ['top-left', 'top-left'],
+                        ['top-right', 'top-right'],
+                        ['bottom-left', 'bottom-left'],
+                        ['bottom-right', 'bottom-right'],
+                        ['top', 'top (fixed)'],
+                        ['right', 'right (fixed)'],
+                        ['bottom', 'bottom (fixed)'],
+                        ['left', 'left (fixed)'],
+                        ['left-right', 'left-right'],
+                        ['right-left', 'right-left'],
+                        ['bottom-top', 'bottom-top'],
+                        ['top-bottom', 'top-bottom']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Position of the 360° "Product Tour" slider, 
                             possible values: "top", "right", "bottom", "left" and any combination 
@@ -3013,10 +3013,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             mögliche Werte sind: "top", "right", "bottom", "left", sowie 
                             jegliche Kombination getrennt durch einen Strich.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderPositionSwitch' => array(
+                'cropSliderPositionSwitch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'string, int',
@@ -3026,7 +3026,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'auto',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Possible values: "auto" as string or integer. 
                             Auto means depending on whether the screen is in portrait or 
@@ -3044,10 +3044,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Position aus "cropSliderPosition" genommen, wenn die Bildschirmbreite 
                             kleiner ist als diese Zahl und die Position passt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderPosPriority' => array(
+                'cropSliderPosPriority' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'bool',
@@ -3057,7 +3057,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Prioritize placing 360° "Product Tour" slider, 
                             defined in "cropSliderPosition", before positioning fullscreen thumbnail slider, 
@@ -3068,10 +3068,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             definiert in "cropSliderPosition", vor Positionierung des 
                             Vollbild Miniaturansichten Sliders, definiert in "fsSliderPosition".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderReposition' => array(
+                'cropSliderReposition' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'string',
@@ -3080,14 +3080,14 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'right-bottom',
-                    'options' => array(
-                        array('left-bottom', 'left-bottom'),
-                        array('left-top', 'left-top'),
-                        array('right-bottom', 'right-bottom'),
-                        array('right-top', 'right-top'),
-                        array('opposite', 'opposite')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['left-bottom', 'left-bottom'],
+                        ['left-top', 'left-top'],
+                        ['right-bottom', 'right-bottom'],
+                        ['right-top', 'right-top'],
+                        ['opposite', 'opposite']
+                    ],
+                    'comment' => [
                         'EN' => '
                             In case the positions of the gallery slider and the slider for 360 Product tour collude, 
                             the alternative position. 
@@ -3099,10 +3099,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mögliche Werte sind: "left-bottom", "left-top", 
                             "right-bottom", "right-top" und "opposite".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderDimension' => array(
+                'cropSliderDimension' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'int',
@@ -3112,7 +3112,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 86,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Width or height (depending on position) of the instantly 
                             created container for the 360° "Product Tour" thumb slider.
@@ -3121,10 +3121,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Breite oder Höhe (je nach Position) des Containers in dem 
                             der 360° "Product Tour" Galerie angezeigt wird. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderThumbAutoSize' => array(
+                'cropSliderThumbAutoSize' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'bool',
@@ -3134,7 +3134,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Thumb CSS size will be set instantly depending on "cropSliderDimension" option.
                         ',
@@ -3142,10 +3142,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             CSS Werte für die 360° "Product Tour" 
                             automatisch in Abhängigkeit von "cropSliderDimension" setzen. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderThumbAutoMargin' => array(
+                'cropSliderThumbAutoMargin' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'int',
@@ -3155,17 +3155,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 10,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Thumb margin when set instantly.
                         ',
                         'DE' => '
                             Anstand der Bilder wenn "cropSliderThumbAutoSize" eingeschaltet ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderThumbDescr' => array(
+                'cropSliderThumbDescr' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'bool',
@@ -3175,17 +3175,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enable descriptions for the thumbs in the slider for 360° "Product Tour".
                         ',
                         'DE' => '
                             Beschreibungen in der 360° "Produkt Tour" Galerie aktivieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderThumbDescrMargin' => array(
+                'cropSliderThumbDescrMargin' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'int',
@@ -3195,17 +3195,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Extend margin under the thumbs for thumb descriptions.
                         ',
                         'DE' => '
                             Abstand unter den Miniaturansichten für Beschreibungen erweitern.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderMinSize' => array(
+                'cropSliderMinSize' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'int',
@@ -3215,7 +3215,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 400,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Minimal size of the player (width or height) for 360° "Product Tour" gallery 
                             (if present) to be shown.
@@ -3223,10 +3223,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                         'DE' => '
                             Minimale Größe des Players um die 360° "Product Tour" sichtbar zu machen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropSliderNotParent' => array(
+                'cropSliderNotParent' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'string',
@@ -3236,7 +3236,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Prevent showing 360° "Product Tour" gallery when the parent container 
                             matches the id or CSS class represented as string in this option value, 
@@ -3250,10 +3250,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Werte können diese mit einem vertikalen Strich 
                             in einem String getrennt werden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cropAxZmEbOpt' => array(
+                'cropAxZmEbOpt' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'product_tour',
                     'type' => 'obejct',
@@ -3284,7 +3284,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     ]
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Options for $.axZmEb function which is used for descriptions for 
                             360° "Product Tour". Documentation to be updated...
@@ -3293,10 +3293,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Einstellungen für die $.axZmEb Funktion, welche für die Beschreibungen der 
                             360° "Product Tour" genutzt werden. Dokumentation muss noch geschrieben werden...
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsAxZmThumbSliderParam' => array(
+                'fsAxZmThumbSliderParam' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'obejct',
@@ -3319,7 +3319,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
 }',
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             $.axZmThumbSlider options for fullscreen gallery. 
                             For full list of options see under: 
@@ -3330,10 +3330,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für die komplette Liste der Optionen siehe 
                             http://www.ajax-zoom.com/axZm/extensions/axZmThumbSlider/
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderPosition' => array(
+                'fsSliderPosition' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'string',
@@ -3342,25 +3342,25 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'right-bottom',
-                    'options' => array(
-                        array('left-bottom', 'left-bottom'),
-                        array('left-top', 'left-top'),
-                        array('right-bottom', 'right-bottom'),
-                        array('right-top', 'right-top'),
-                        array('top-left', 'top-left'),
-                        array('top-right', 'top-right'),
-                        array('bottom-left', 'bottom-left'),
-                        array('bottom-right', 'bottom-right'),
-                        array('top', 'top (fixed)'),
-                        array('right', 'right (fixed)'),
-                        array('bottom', 'bottom (fixed)'),
-                        array('left', 'left (fixed)'),
-                        array('left-right', 'left-right'),
-                        array('right-left', 'right-left'),
-                        array('bottom-top', 'bottom-top'),
-                        array('top-bottom', 'top-bottom')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['left-bottom', 'left-bottom'],
+                        ['left-top', 'left-top'],
+                        ['right-bottom', 'right-bottom'],
+                        ['right-top', 'right-top'],
+                        ['top-left', 'top-left'],
+                        ['top-right', 'top-right'],
+                        ['bottom-left', 'bottom-left'],
+                        ['bottom-right', 'bottom-right'],
+                        ['top', 'top (fixed)'],
+                        ['right', 'right (fixed)'],
+                        ['bottom', 'bottom (fixed)'],
+                        ['left', 'left (fixed)'],
+                        ['left-right', 'left-right'],
+                        ['right-left', 'right-left'],
+                        ['bottom-top', 'bottom-top'],
+                        ['top-bottom', 'top-bottom']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Position of the fullscreen thumbnail slider. 
                             Possible values are: 
@@ -3376,10 +3376,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             einstellbaren Logik, beschrieben in "fsSliderPositionSwitch" Option, 
                             die Position sich dynamisch verändern kann.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderReposition' => array(
+                'fsSliderReposition' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'string',
@@ -3388,14 +3388,14 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'right-bottom',
-                    'options' => array(
-                        array('left-bottom', 'left-bottom'),
-                        array('left-top', 'left-top'),
-                        array('right-bottom', 'right-bottom'),
-                        array('right-top', 'right-top'),
-                        array('opposite', 'opposite')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['left-bottom', 'left-bottom'],
+                        ['left-top', 'left-top'],
+                        ['right-bottom', 'right-bottom'],
+                        ['right-top', 'right-top'],
+                        ['opposite', 'opposite']
+                    ],
+                    'comment' => [
                         'EN' => '
                             In case sliders position collude, the alternative position. 
                             Possible values: "left-bottom", "left-top", "right-bottom", "right-top", "opposite".
@@ -3406,10 +3406,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mögliche Werte sind: "left-bottom", "left-top", 
                             "right-bottom", "right-top" und "opposite".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderPositionSwitch' => array(
+                'fsSliderPositionSwitch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'string, int',
@@ -3419,7 +3419,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'auto',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Switch fsSliderPosition instantly depending on certain conditions. 
                             This switch is only applied when fsSliderPosition value is 
@@ -3439,10 +3439,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Position aus "fsSliderReposition" genommen, wenn die Bildschirmbreite 
                             kleiner ist als diese Zahl und die Position passt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderDimension' => array(
+                'fsSliderDimension' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'int',
@@ -3452,7 +3452,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 80,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Width or height of the container for fullscreen slider 
                             (depends on if it is vertical or horizontal).
@@ -3461,10 +3461,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Breite oder Höhe (je nach Position) des Containers in dem 
                             der Vollbild Galerie angezeigt wird.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderThumbAutoSize' => array(
+                'fsSliderThumbAutoSize' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'bool',
@@ -3474,7 +3474,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Adjust fsSliderDimension depending on 
                             fsAxZmThumbSliderParam instantly (to be improved).
@@ -3483,10 +3483,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             CSS werte für Vollbild Galerie Miniaturansichten 
                             automatisch in Abhängigkeit von "fsSliderDimension" setzen. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderThumbAutoMargin' => array(
+                'fsSliderThumbAutoMargin' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'int',
@@ -3496,17 +3496,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 7,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Thumbnails margin when fsSliderThumbAutoSize is enabled.
                         ',
                         'DE' => '
                             Anstand der Miniaturansichten wenn "fsSliderThumbAutoSize" eingeschaltet ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderThumbAutoExtend' => array(
+                'fsSliderThumbAutoExtend' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'int',
@@ -3516,7 +3516,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Extend slider width / height by this pixel value when set instantly.
                         ',
@@ -3524,10 +3524,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Erweitern die Breite bzw. Höhe der Vollbild Galerie um einen festen Wert, 
                             wenn "fsSliderThumbAutoSize" eingeschaltet ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderThumbDescr' => array(
+                'fsSliderThumbDescr' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'bool',
@@ -3537,17 +3537,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Dummy for future implementation (todo).
                         ',
                         'DE' => '
                             Dummy für künftige Implementierung (todo).
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderMinSize' => array(
+                'fsSliderMinSize' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'int',
@@ -3557,17 +3557,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 400,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Minimal size of the player for fullscreen gallery to be shown.
                         ',
                         'DE' => '
                             Minimale Größe des Players, damit die Vollbild Galerie angezeigt wird.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderGalleryFadeInAnm' => array(
+                'fsSliderGalleryFadeInAnm' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'string',
@@ -3576,20 +3576,20 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'Center',
-                    'options' => array(
-                        array('Center', 'Center'),
-                        array('Top', 'Top'),
-                        array('Right', 'Right'),
-                        array('Bottom', 'Bottom'),
-                        array('Left', 'Left'),
-                        array('StretchVert', 'StretchVert'),
-                        array('StretchHorz', 'StretchHorz'),
-                        array('SwipeHorz', 'SwipeHorz'),
-                        array('SwipeVert', 'SwipeVert'),
-                        array('Vert', 'Vert'),
-                        array('Horz', 'Horz')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['Center', 'Center'],
+                        ['Top', 'Top'],
+                        ['Right', 'Right'],
+                        ['Bottom', 'Bottom'],
+                        ['Left', 'Left'],
+                        ['StretchVert', 'StretchVert'],
+                        ['StretchHorz', 'StretchHorz'],
+                        ['SwipeHorz', 'SwipeHorz'],
+                        ['SwipeVert', 'SwipeVert'],
+                        ['Vert', 'Vert'],
+                        ['Horz', 'Horz']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Switching animation between images in fullscreen mode. 
                             Possible values: "Center", "Top", "Right", "Bottom", "Left", 
@@ -3600,10 +3600,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mögliche Werte sind: "Center", "Top", "Right", "Bottom", "Left", 
                             "StretchVert", "StretchHorz", "SwipeHorz", "SwipeVert", "Vert", "Horz".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'fsSliderNotParent' => array(
+                'fsSliderNotParent' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'string',
@@ -3613,7 +3613,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'axZm_mouseOverSpinWrapper',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Prevent showing fullscreen gallery when the parent container 
                             matches the id or CSS class represented as string in this option value, 
@@ -3627,10 +3627,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Werte können diese mit einem vertikalen Strich 
                             in einem String getrennt werden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'onGallerySwitch' => array(
+                'onGallerySwitch' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'fullscreen_gallery',
                     'type' => 'function',
@@ -3640,7 +3640,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => null,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Callback function triggered every time an item is switched. 
                             The function receives 4 argumets: index of the item, item information as object, 
@@ -3655,11 +3655,11 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             In AJAX-ZOOM Modulen meiden Sie es die Funktion selbst zu schreiben, 
                             stattdessen referenzieren Sie einfach, z.B. window.myCustomFunc
                         '
-                    )
-                ),
+                    ]
+                ],
                 
                 // mouseover settings
-                'position' => array(
+                'position' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'important' => true,
@@ -3670,14 +3670,14 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'right',
-                    'options' => array(
-                        array('inside', 'inside'),
-                        array('top', 'top'),
-                        array('right', 'right'),
-                        array('bottom', 'bottom'),
-                        array('left', 'left')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['inside', 'inside'],
+                        ['top', 'top'],
+                        ['right', 'right'],
+                        ['bottom', 'bottom'],
+                        ['left', 'left']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Position of the flyout zoom window, possible values: 
                             "inside", "top", "right", "bottom", "left".
@@ -3686,10 +3686,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Position des mouseover Zoom Fensters, 
                             mögliche Werte: "inside", "top", "right", "bottom", "left".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'posAutoInside' => array(
+                'posAutoInside' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -3699,7 +3699,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 150,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Applies when width (left, right) or height (top, bottom) 
                             of zoom window are less than this px value 
@@ -3715,10 +3715,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             wird diese Unschaltung angewandt, wenn das Zoom Fenster 
                             nicht ganz zu sehen wäre. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'touchScroll' => array(
+                'touchScroll' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -3728,7 +3728,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.8,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             If width of the mouseover zoom container is more than 80% (0.8) of the window width, 
                             then for touch devises the inner zoom will be not 
@@ -3743,10 +3743,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wenn dieser Wert 0 ist, dann wird diese Funktion 
                             des Sliders nur für Touch-Geräte Aktiviert.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'noMouseOverZoom' => array(
+                'noMouseOverZoom' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -3756,7 +3756,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Disable mouseover zoom for all devices.
                         ',
@@ -3765,10 +3765,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wenn Sie dies nur für touch Devices aktivieren wollen, dann setzen Sie 
                             "touchScroll" Option auf 0.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'noMouseOverZoomTouch' => array(
+                'noMouseOverZoomTouch' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -3778,7 +3778,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enable "noMouseOverZoom" only for touch devices 
                             (mouseover zoom works for touch devices too but is not very convenient 
@@ -3790,10 +3790,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             es ist aber nicht sehr bequem, so dass diese Option 
                             jetzt standardmäßig aktiviert ist).
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'noMouseOverZoomInside' => array(
+                'noMouseOverZoomInside' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -3803,17 +3803,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Disable mouseover zoom if it is \'inside\' (inner zoom).
                         ',
                         'DE' => '
                             Mouseover-Zoom deaktivieren, wenn es "inside" ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'noMouseOverZoomInsideTouch' => array(
+                'noMouseOverZoomInsideTouch' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -3823,7 +3823,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Disable mouseover zoom if it is inside (inner zoom) and touch event.
                         ',
@@ -3831,10 +3831,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mouseover-Zoom deaktivieren, 
                             wenn es "inside" ist und es sich um Touch-Geräte handelt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'mouseOverZoomHybrid' => array(
+                'mouseOverZoomHybrid' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'important' => true,
@@ -3845,7 +3845,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enable mouseover zoom and slider at the same time for not touch devices.
                         ',
@@ -3853,10 +3853,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Aktivieren des Mouseover-Zoom und Sliders für Vorschaubilder 
                             gleichzeitig für nicht Touch-Geräte.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideTouchTime' => array(
+                'slideTouchTime' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -3866,17 +3866,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 200,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Slide time in ms after touch and drag.
                         ',
                         'DE' => '
                             Slide Zeit in ms nach Berühren und ziehen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideTime' => array(
+                'slideTime' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -3886,17 +3886,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 300,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Slide time after clicked on prev / next buttons.
                         ',
                         'DE' => '
                             Slide Zeit in ms nach klicken auf prev / next Tasten.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'posInsideArea' => array(
+                'posInsideArea' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -3906,7 +3906,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.2,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             When "posAutoInside" is enabled and inner zoom fires or "position" 
                             option is set to \'inside\' right away - there is no lens. 
@@ -3925,10 +3925,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mit dieser Option kann dem entgegengewirkt werden. 
                             Der Wertebereich liegt zwischen 0 und 0.5;
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'posInsideScaleAnm' => array(
+                'posInsideScaleAnm' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -3938,7 +3938,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 20,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             When inner zoom fires there will be a zoom 
                             animation. This value determines the smoothness of this zoom animation. 
@@ -3950,10 +3950,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Je größer der Wert, desto länger wird die Animation dauern. 
                             Auf 0 setzen, um zu deaktivieren
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'autoFlip' => array(
+                'autoFlip' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -3963,7 +3963,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 200,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Flip right to left and bottom to top if less than int px value or false to disable.
                         ',
@@ -3972,10 +3972,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Breite bzw. Höhe kleiner als dieser Wert sind. Setzen Sie diese Option auf false um 
                             sie auszuschalten.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'biggestSpace' => array(
+                'biggestSpace' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -3985,7 +3985,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Overrides position option and instantly chooses the direction, 
                             disables autoFlip; plays nicely when zoomWidth and zoomHeight are set to \'auto\'.
@@ -3995,10 +3995,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             wo am meisten Platz ist. Funktioniert gut, wenn "zoomWidth" und "zoomHeight" auf 
                             \'auto\' gesetzt sind. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomFullSpace' => array(
+                'zoomFullSpace' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -4008,7 +4008,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Uses full screen height (does not align to the map / disables adjustY) 
                             if position is right or left || uses full screen width 
@@ -4020,10 +4020,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             wenn "position" right oder left ist. Wenn "position" top oder bottom ist, 
                             dann wird volle Höhe ausgenutzt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomWidth' => array(
+                'zoomWidth' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int, string',
@@ -4034,7 +4034,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 530,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Width of the zoom window e.g. 540 or \'auto\' or 
                             jQuery selector|correction value, e.g. \'#refWidthTest|+20\'; 
@@ -4064,10 +4064,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Die Abstände zwischen den beiden Containern werden nicht mitberechnet, 
                             können aber meist über Korrekturwert ausgeglichen werden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomHeight' => array(
+                'zoomHeight' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int, string',
@@ -4078,7 +4078,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 450,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Height of the zoom window e.g. 375, or \'auto\' or jQuery selector|correction value, 
                             e.g. \'#refWidthTest|+20\'; if your selector matches more than one element, 
@@ -4092,10 +4092,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wenn der Selector mehr als ein Element umfasst, dann wird anderes als bei "zoomWidth" 
                             der höchste Höhenwert genommen. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'autoMargin' => array(
+                'autoMargin' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4105,7 +4105,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 15,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             If zoomWidth or zoomHeight are set to \'auto\', the margin to the edge of the screen.
                         ',
@@ -4113,10 +4113,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wenn "zoomWidth" oder "zoomHeight" auf \'auto\' gesetzt sind, 
                             ist dieser Wert der automatische Abstand vom Rand des Browser Fensters.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'adjustX' => array(
+                'adjustX' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4126,17 +4126,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 15,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Horizontal margin of the zoom window.
                         ',
                         'DE' => '
                             Horizontaler Versatz zwischen Voransicht und Zoom Fenster.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'adjustY' => array(
+                'adjustY' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4146,17 +4146,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => -1,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Vertical margin of the zoom window.
                         ',
                         'DE' => '
                             Vertikaler Versatz zwischen Voransicht und Zoom Fenster.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'lensOpacity' => array(
+                'lensOpacity' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -4166,17 +4166,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 1.0,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Opacity of the selector lens.
                         ',
                         'DE' => '
                             Durchsichtigkeit der Zoom Linse.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'lensStyle' => array(
+                'lensStyle' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'object',
@@ -4186,17 +4186,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 50,
                     'default' => '{}',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Quickly override CSS of the lens.
                         ',
                         'DE' => '
                             Hier kann man schnell Inline CSS reinschreiben.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'lensClass' => array(
+                'lensClass' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4206,17 +4206,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Define CSS class for the lens.
                         ',
                         'DE' => '
                             Name der CSS Klasse für die Zoom Linse.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'lensMessage' => array(
+                'lensMessage' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'object, string',
@@ -4231,7 +4231,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es": "Pantalla completa"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Text string on the lens. 
                             For more than one language define a js object, 
@@ -4242,10 +4242,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomAreaBorderWidth' => array(
+                'zoomAreaBorderWidth' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4255,17 +4255,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 1,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Border thickness of the zoom window.
                         ',
                         'DE' => '
                             Breite des Randes (Border) für das Zoom Fenster.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'galleryFade' => array(
+                'galleryFade' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int, bool',
@@ -4275,7 +4275,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 300,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Speed of inner fade or false.
                         ',
@@ -4283,10 +4283,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Die Geschwindigkeit des Blendvorganges in ms 
                             beim Wechsel zwischen den Bildern oder false.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'shutterSpeed' => array(
+                'shutterSpeed' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int, bool',
@@ -4296,7 +4296,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 150,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Speed of shutter fadein or false; applies only 
                             if image proportions are different from container.
@@ -4305,10 +4305,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Die Geschwindigkeit der Anpassung von Proportionen 
                             während des Überblendvorgangs in ms oder false.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'showFade' => array(
+                'showFade' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4318,17 +4318,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 300,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Speed of fade in for mouse over.
                         ',
                         'DE' => '
                             Geschwindigkeit des Einblendens von Zoom Fenster.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'hideFade' => array(
+                'hideFade' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4338,17 +4338,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 300,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Speed of fade out for mouse over.
                         ',
                         'DE' => '
                             Geschwindigkeit des Ausblendens von Zoom Fenster.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'flyOutSpeed' => array(
+                'flyOutSpeed' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int, bool',
@@ -4358,7 +4358,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Speed for flyout or false to disable.
                         ',
@@ -4366,10 +4366,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Geschwindigkeit des "Ausfliegens" des Zoom Fensters in ms 
                             oder false zum Deaktivieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'flyOutTransition' => array(
+                'flyOutTransition' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4379,17 +4379,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'linear',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Transition of the flyout.
                         ',
                         'DE' => '
                             Typ der Transition für das "Ausfliegen" des Zoom Fensters.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'flyOutOpacity' => array(
+                'flyOutOpacity' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -4399,17 +4399,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.6,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Initial opacity for flyout.
                         ',
                         'DE' => '
                             Anfängliche Durchsichtigkeit des Zoom Fensters beim "Ausfliegen".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'flyBackSpeed' => array(
+                'flyBackSpeed' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int, bool',
@@ -4419,7 +4419,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Speed for fly back or false to disable.
                         ',
@@ -4427,10 +4427,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Geschwindigkeit des "Zurückfliegens" des Zoom Fensters in ms 
                             oder false zum Deaktivieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'flyBackTransition' => array(
+                'flyBackTransition' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4440,17 +4440,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'linear',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Transition type of the fly back.
                         ',
                         'DE' => '
                             Typ der Transition für das "Zurückfliegen" des Zoom Fensters.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'flyBackOpacity' => array(
+                'flyBackOpacity' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -4460,17 +4460,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.2,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Final opacity of fly back.
                         ',
                         'DE' => '
                             Finale Durchsichtigkeit nach dem "Zurückfliegen".
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'autoScroll' => array(
+                'autoScroll' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -4480,7 +4480,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Scroll page when clicked on the thumb and the mouse over preview image 
                             is not fully visible.
@@ -4491,10 +4491,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Bei aktivieren dieser Option wird automatisch dorthin gescrollt, 
                             wo die Voransicht gänzlich sichtbar ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'smoothMove' => array(
+                'smoothMove' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4505,7 +4505,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 6,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Integer bigger than 1 indicates smoother movements. Set 0 to disable.
                         ',
@@ -4514,10 +4514,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Zahl größer als 1 bedeutet mehr Geschmeidigkeit.  
                             Beim 0 wird die Geschmeidigkeit abgeschaltet.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'tint' => array(
+                'tint' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string, bool',
@@ -4527,17 +4527,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Color value around the lens or false.
                         ',
                         'DE' => '
                             Farbwert um die Linse herum oder false zum Deaktivieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'tintOpacity' => array(
+                'tintOpacity' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -4547,7 +4547,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.3,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Opacity of the area around the lens when "tint" option is set to some color value.
                         ',
@@ -4555,10 +4555,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Durchsichtigkeit der Fläche um die Linse herum, wenn 
                             "tint" Option einen Wert hat. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'tintFilter' => array(
+                'tintFilter' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string, bool',
@@ -4568,7 +4568,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Apply filter to the image, 
                             e.g. "blur", "grayscale", "sepia", "lighten", "darken", "invert", "saturate"; 
@@ -4579,10 +4579,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             z.B. "blur", "grayscale", "sepia", "lighten", "darken", "invert", "saturate"; 
                             siehe auch .axZm_mouseOverEffect>img CSS.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'tintFilterBack' => array(
+                'tintFilterBack' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4592,17 +4592,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'none',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Background-color if some "tintFilter" is enabled, e.g. #FFF
                         ',
                         'DE' => '
                             Background-color wenn ein "tintFilter" eiingeschaltet ist, z.B. #FFF
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'tintLensBack' => array(
+                'tintLensBack' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -4612,17 +4612,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Show background image in the lens.
                         ',
                         'DE' => '
                             Hintergrundbild in der Linse anzeigen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'showTitle' => array(
+                'showTitle' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -4632,17 +4632,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enable / disable title on zoom window
                         ',
                         'DE' => '
                             Titel im Zoom Fenster anzeigen.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'titlePosition' => array(
+                'titlePosition' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4651,12 +4651,12 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'top',
-                    'options' => array(
-                        array('top', 'top'),
-                        array('bottom', 'bottom'),
-                        array('above', 'above')
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['top', 'top'],
+                        ['bottom', 'bottom'],
+                        ['above', 'above']
+                    ],
+                    'comment' => [
                         'EN' => '
                             Position of the title, possible values are: \'top\', \'bottom\' or \'above\'.
                         ',
@@ -4664,10 +4664,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Position des Titels, mögliche Werte sind \'top\', \'bottom\' (im Zoom Fenster) 
                             oder \'above\'.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'titleParentContainer' => array(
+                'titleParentContainer' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4677,7 +4677,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => '',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             jQuery selector, e.g. #abc_title, 
                             as parent container for title other than inside the lense, 
@@ -4687,10 +4687,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             jQuery selector, z.B. #abc_title, als Übergeordneten Container für den Titel / Text, 
                             welches sich nicht innerhalb des zoom Fensters befindet.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'titlePermanent' => array(
+                'titlePermanent' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -4700,7 +4700,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             When "titleParentContainer" is defined, title (text) will be set after loading / 
                             switch of the image.
@@ -4709,10 +4709,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wenn "titleParentContainer" definiert ist, wird nach dem Laden / Umschalten 
                             des Bildes der Titel (Text) sofort gesetzt.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cursorPositionX' => array(
+                'cursorPositionX' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -4722,17 +4722,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.5,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Cursor over lens horizontal offset, 0.5 is middle
                         ',
                         'DE' => '
                             Horizontaler Versatz des Maus Zeigers in der Linse. 0.5 ist Mitte.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'cursorPositionY' => array(
+                'cursorPositionY' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -4742,17 +4742,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.55,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Cursor over lens vertical offset, 0.5 is middle.
                         ',
                         'DE' => '
                             Vertikaler Versatz des Maus Zeigers in der Linse. 0.5 ist Mitte.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'loading' => array(
+                'loading' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -4762,7 +4762,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Display loading information, CSS class: .mouseOverLoading;
                             See also "spinner" option.
@@ -4771,10 +4771,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Zeige "loading" Information, CSS .mouseOverLoading; 
                             Siehe auch "spinner" option.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'loadingMessage' => array(
+                'loadingMessage' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'object, string',
@@ -4789,17 +4789,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es": "Loading..."
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Loading message, not needed, can be just the "spinner" - see below.
                         ',
                         'DE' => '
                             Loading Nachricht, nicht unbedingt notwendig, kann auch nur der "spinner" sein.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomHintEnable' => array(
+                'zoomHintEnable' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -4809,7 +4809,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enable zoom icon which disappears on mouse hover; 
                             CSS class: .axZm_mouseOverZoomHint; 
@@ -4820,10 +4820,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             CSS Klasse: .axZm_mouseOverZoomHint; 
                             Wenn Sie eine andere Position wünschen, dann solltet Sie die CSS Klasse überschreiben.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomHintText' => array(
+                'zoomHintText' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'object, string',
@@ -4838,7 +4838,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Zoom"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Text which will be appended next to the icon enabled by "zoomHintEnable". 
                             For more than one language define a js object, 
@@ -4849,10 +4849,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomMsgHover' => array(
+                'zoomMsgHover' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'object, string',
@@ -4867,7 +4867,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Pase el cursor sbore la imagen para hacer zoom con la rueda del ratón"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Message which can appear under the mouse over zoom, CSS class: .axZm_mouseOverZoomMsg; 
                             For more than one language define a js object, 
@@ -4878,10 +4878,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomMsgHoverTouch' => array(
+                'zoomMsgHoverTouch' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'object, string',
@@ -4896,7 +4896,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Haga clic para ampliar la imagen"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Message which can appear under the mouse over zoom for touch devices, 
                             CSS class: .axZm_mouseOverZoomMsg;
@@ -4908,10 +4908,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'zoomMsgClick' => array(
+                'zoomMsgClick' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'object, string',
@@ -4926,7 +4926,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "es" : "Haga clic para ampliar la imagen"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Message which can appear under the mouse over zoom when the mouse enters it, 
                             CSS class: .axZm_mouseOverZoomMsg; 
@@ -4940,10 +4940,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Für mehrere Sprachen können Sie ein js Objekt definieren, 
                             z.B. {"en": "english text", "de": "german text"}
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideInTime' => array(
+                'slideInTime' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'int',
@@ -4953,7 +4953,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 200,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Slide in time if "noMouseOverZoom" is enabled 
                             or "touchScroll" option enables for touch devices.
@@ -4962,10 +4962,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Geschwindigkeit des Slideanimation, wenn "noMouseOverZoom" aktiviert ist 
                             oder durch "touchScroll" Option dies einschaltet.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideInEasingCSS3' => array(
+                'slideInEasingCSS3' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4975,7 +4975,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'easeOutExpo',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             jQuery equivalent of easing or own function (string), 
                             e.g. "cubic-bezier(0.21,0.51,0.4,2.02)", see also cubic-bezier.com
@@ -4984,10 +4984,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             jQuery Äquivalent für easing oder eigene Funktion, 
                             z.B. "cubic-bezier(0.21,0.51,0.4,2.02)", siehe auch cubic-bezier.com
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideInEasing' => array(
+                'slideInEasing' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'string',
@@ -4997,17 +4997,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'easeOutExpo',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             jQuery easing function for sliding in (fallback if CSS3 animation is not supported).
                         ',
                         'DE' => '
                             jQuery easing Funktion für Slide in (Fallback für CSS3 Animationen).
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideInScale' => array(
+                'slideInScale' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -5017,17 +5017,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.8,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Scale initial size (goes eventually to 1.0 while animation).
                         ',
                         'DE' => '
                             Anfängliche Skalierung (geht dann während der Animation bis 1.0).
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideOutScale' => array(
+                'slideOutScale' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -5037,17 +5037,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0.8,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Scale slideout size.
                         ',
                         'DE' => '
                             Ziel Skalierung.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideOutOpacity' => array(
+                'slideOutOpacity' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'float',
@@ -5057,17 +5057,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 0,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Slideout opacity.
                         ',
                         'DE' => '
                             Slideout Durchsichtigkeit.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'slideOutDest' => array(
+                'slideOutDest' => [
                     'prefix' => 'AJAXZOOM_MOZP',
                     'category' => 'mouseover',
                     'type' => 'integer',
@@ -5076,23 +5076,23 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 4,
-                    'options' => array(
-                        array('1', '1'),
-                        array('2', '2'),
-                        array('3', '3'),
-                        array('4', '4'),
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['1', '1'],
+                        ['2', '2'],
+                        ['3', '3'],
+                        ['4', '4'],
+                    ],
+                    'comment' => [
                         'EN' => '
                             Target slideout position, possible values: 1, 2, 3 or 4;
                         ',
                         'DE' => '
                             Ziel slideout Position. Mögliche Werte sind: 1, 2, 3 oder 4;
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'onInit' => array(
+                'onInit' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'mouseover',
                     'type' => 'function',
@@ -5102,17 +5102,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Callback JS function or reference ot it.
                         ',
                         'DE' => '
                             Callback JS Funktion oder Referenz.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'onLoad' => array(
+                'onLoad' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'mouseover',
                     'type' => 'function, null',
@@ -5122,17 +5122,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Callback JS function or reference ot it.
                         ',
                         'DE' => '
                             Callback JS Funktion oder Referenz.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'onImageChange' => array(
+                'onImageChange' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'mouseover',
                     'type' => 'function, null',
@@ -5142,17 +5142,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Callback JS function or reference ot it.
                         ',
                         'DE' => '
                             Callback JS Funktion oder Referenz.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'onMouseOver' => array(
+                'onMouseOver' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'mouseover',
                     'type' => 'function, null',
@@ -5162,17 +5162,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Callback JS function or reference ot it.
                         ',
                         'DE' => '
                             Callback JS Funktion oder Referenz.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'onMouseOut' => array(
+                'onMouseOut' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'mouseover',
                     'type' => 'function, null',
@@ -5182,17 +5182,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => 100,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Callback JS function or reference ot it.
                         ',
                         'DE' => '
                             Callback JS Funktion oder Referenz.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'spinner' => array(
+                'spinner' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'mouseover',
                     'type' => 'bool',
@@ -5202,7 +5202,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Use ajax loading spinner without gif files etc. 
                             Set to false to disable. 
@@ -5210,10 +5210,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                         'DE' => '
                             CSS / JS Spinner für Loading Animation verwenden.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'spinnerParam' => array(
+                'spinnerParam' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'mouseover',
                     'type' => 'object',
@@ -5239,7 +5239,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "left": 1 
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Spinner options, for more info see: 
                             http://fgnass.github.com/spin.js/ 
@@ -5247,10 +5247,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                         'DE' => '
                             Optionen für den Spinner, siehe auch http://fgnass.github.com/spin.js/
                         '
-                    )
-                ),
+                    ]
+                ],
                 
-                'imagesVideoFirstToLoad' => array(
+                'imagesVideoFirstToLoad' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'bool',
@@ -5260,17 +5260,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Load video first if present. See also "images360firstToLoad" option.
                         ',
                         'DE' => '
                             Videos, wenn vorhanden, zuerst laden. Siehe auch "images360firstToLoad" Option.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'imagesVideoImg' => array(
+                'imagesVideoImg' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5280,7 +5280,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-play-256.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Used as replacement if "imagesVideoThumb" 
                             is enabled and poster image is missing.
@@ -5289,10 +5289,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Wird als Ersatz für das nicht Vorhandene Posterbild des Videos genutzt, 
                             wenn "imagesVideoThumb" aktiviert ist.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'imagesVideoBroken' => array(
+                'imagesVideoBroken' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5302,7 +5302,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-play-256.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Replacement thumbnail image if instant loading of the poster image 
                             from youtube, vimeo etc. fails.
@@ -5311,10 +5311,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Ersatz für Posterbild, wenn das Laden von YouTube, Vimeo etc. 
                             nicht funktioniert. 
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'imagesVideoOverlay' => array(
+                'imagesVideoOverlay' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'bool',
@@ -5324,7 +5324,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => false,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Add a div with class "videoOverlImg" or "videoOverl" over the gallery thumb.
                         ',
@@ -5332,10 +5332,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Fügt einen div Container mit Klasse "videoOverlImg" oder "videoOverl" 
                             über die Galerie Miniaturansicht.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'imagesVideoThumb' => array(
+                'imagesVideoThumb' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'bool',
@@ -5345,17 +5345,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Show real poster image as thumb in the gallery if defined.
                         ',
                         'DE' => '
                             Zeigt reales Posterbild als Miniaturansicht in der Galerie, falls definiert.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'imagesVideoBig' => array(
+                'imagesVideoBig' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5365,17 +5365,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-play-1200.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Placeholder image for videos in mouseover.
                         ',
                         'DE' => '
                             Platzhalter Bild für Videos in Mouseover.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'imagesVideoSmall' => array(
+                'imagesVideoSmall' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5385,17 +5385,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-play-600.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Placeholder image for videos in mouseover.
                         ',
                         'DE' => '
                             Platzhalter Bild für Videos in Mouseover.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoThumb' => array(
+                'videoThumb' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'object',
@@ -5418,7 +5418,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
     }
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Settings including sources for poster images for 
                             YouTube, Vimeo and Dailymotion.
@@ -5427,10 +5427,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Einstellungen für Quellen, sowie Größe für Posterbilder aus 
                             YouTube, Vimeo und Dailymotion.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoThumbDefaultPostion' => array(
+                'videoThumbDefaultPostion' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5439,12 +5439,12 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'display' => 'select',
                     'height' => null,
                     'default' => 'last',
-                    'options' => array(
-                        array('first', 'first'),
-                        array('afterfirst', 'afterfirst'),
-                        array('last', 'last'),
-                    ),
-                    'comment' => array(
+                    'options' => [
+                        ['first', 'first'],
+                        ['afterfirst', 'afterfirst'],
+                        ['last', 'last'],
+                    ],
+                    'comment' => [
                         'EN' => '
                             Default position of the thumbnail representing a video in the gallery. 
                             The position can be also defined for each thumb individually. 
@@ -5457,10 +5457,10 @@ if (!class_exists('AzMouseoverSettings', false)) {
                             Mögliche Werte sind: "first", "afterfirst" und "last".
                             Siehe auch "images360ThumbDefaultPostion" Option.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoUrl' => array(
+                'videoUrl' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'object',
@@ -5474,17 +5474,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "dailymotion": "//www.dailymotion.com/embed/video/"
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Url of the external players.
                         ',
                         'DE' => '
                             URL für die externen Player.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoSettings' => array(
+                'videoSettings' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'object',
@@ -5530,17 +5530,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
     }
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Api / default parameters for the players.
                         ',
                         'DE' => '
                             API / Standardeinstellungen für die Video Player.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoHtml5ClickPlay' => array(
+                'videoHtml5ClickPlay' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'bool',
@@ -5550,17 +5550,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Toggle play/pause for HTML5 players when clicked anywhere on the player.
                         ',
                         'DE' => '
                               Toggle Play / Pause für HTML5-Player, wenn irgendwo auf dem Player geklickt wird.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoHtml5Poster' => array(
+                'videoHtml5Poster' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5570,17 +5570,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-play-1200.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Specific default poster image for HTML5 player.
                         ',
                         'DE' => '
                             Standard Ersatzposter für HTML5 Videos.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoHtml5VideoJs' => array(
+                'videoHtml5VideoJs' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'bool',
@@ -5590,17 +5590,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => true,
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Enable Videojs player for html5 videos.
                         ',
                         'DE' => '
                             Videojs Player für HTML5 Videos aktivieren.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoHtml5VideoJsSkin' => array(
+                'videoHtml5VideoJsSkin' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5610,17 +5610,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'vjs-default-skin',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Skin for Videojs player.
                         ',
                         'DE' => '
                             Skin für Videojs Player.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoHtml5VideoJsPoster' => array(
+                'videoHtml5VideoJsPoster' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'string',
@@ -5630,17 +5630,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
                     'height' => null,
                     'default' => 'media-video-1200.png',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Specific default poster image for HTML5 Videojs player.
                         ',
                         'DE' => '
                             Standard Ersatzposter für HTML5 - Videojs Players.
                         '
-                    )
-                ),
+                    ]
+                ],
 
-                'videoHtml5VideoJsOpt' => array(
+                'videoHtml5VideoJsOpt' => [
                     'prefix' => 'AJAXZOOM',
                     'category' => 'video_settings',
                     'type' => 'object',
@@ -5655,17 +5655,17 @@ if (!class_exists('AzMouseoverSettings', false)) {
     "techOrder": ["html5", "flash", "other supported tech"]
 }',
                     'options' => null,
-                    'comment' => array(
+                    'comment' => [
                         'EN' => '
                             Options for Videojs player.
                         ',
                         'DE' => '
                             Standard Optionen für Videojs Player.
                         '
-                    )
-                )
+                    ]
+                ]
 
-            );
+            ];
         }
 
         public function extendConfig($after = 'pngModeCssFix')
@@ -5679,7 +5679,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
                         $v['category'] = 'plugin_settings';
                         $this->config = array_merge(
                             array_slice($this->config, 0, $idx),
-                            array($k => $v),
+                            [$k => $v],
                             array_slice($this->config, $idx)
                         );
                         $after = $k;
@@ -5696,7 +5696,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
         public function getOptionsList()
         {
             $cnf = $this->config;
-            $ret = array();
+            $ret = [];
 
             foreach ($cnf as $k => $v) {
                 if (in_array($v['category'], $this->exclude_cat_vendor)
@@ -5811,18 +5811,18 @@ if (!class_exists('AzMouseoverSettings', false)) {
         }
 
         /* generate init parameters based on passed cfg options */
-        public function getInitJs($c = array())
+        public function getInitJs($c = [])
         {
-            $cd = array(
-                'cfg' => array(),
+            $cd = [
+                'cfg' => [],
                 'holder_object' => 'jQuery.axZm_psh',
-                'exclude_opt' => array(),
-                'exclude_cat' => array(),
+                'exclude_opt' => [],
+                'exclude_cat' => [],
                 'defaults' => false,
                 'differ' => false,
                 'ovrprefix' => false,
                 'min' => false
-            );
+            ];
 
             foreach ($cd as $k => $v) {
                 if (isset($c[$k])) {
@@ -5836,8 +5836,8 @@ if (!class_exists('AzMouseoverSettings', false)) {
                 $ovrprefix = false;
             }
 
-            $mouseover_param = array();
-            $param = array();
+            $mouseover_param = [];
+            $param = [];
             $return = '';
 //echo '<table border="1">';
             foreach ($this->getConfig(true) as $k => $v) {
@@ -5877,9 +5877,9 @@ if (!class_exists('AzMouseoverSettings', false)) {
                 } else {
                     $param[$k] = $this->jsKeyVal($k, $value);
                 }
-//echo '</tr>';                
+//echo '</tr>';
             }
-//echo '</table>';            
+//echo '</table>';
 
             if (!$defaults) {
                 $param['lang'] = $this->jsKeyVal('lang', $holder_object.'.shopLang.substr(0, 2)', false);
@@ -5915,20 +5915,20 @@ if (!class_exists('AzMouseoverSettings', false)) {
         {
             $pattern = '/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/';
             $return = preg_replace($pattern, '', $return);
-            $return = trim(str_replace(array("\r", "\n", "\t"), array(' ', ' ', ''), $return));
+            $return = trim(str_replace(["\r", "\n", "\t"], [' ', ' ', ''], $return));
             $return = preg_replace('/( )+/', ' ', $return);
             return $return;
         }
 
-        public function getConfigFrontJs($c = array())
+        public function getConfigFrontJs($c = [])
         {
-            $cd = array(
+            $cd = [
                 'window' => 'window.',
                 'holder_object' => 'jQuery.axZm_psh',
-                'exclude_opt' => array(),
+                'exclude_opt' => [],
                 'ovrprefix' => false,
-                'exclude_cat' => array()
-            );
+                'exclude_cat' => []
+            ];
 
             foreach ($cd as $k => $v) {
                 if (isset($c[$k])) {
@@ -5942,8 +5942,8 @@ if (!class_exists('AzMouseoverSettings', false)) {
                 $ovrprefix = false;
             }
 
-            $js = array();
-            $js['mouseOverZoomParam'] = array();
+            $js = [];
+            $js['mouseOverZoomParam'] = [];
 
             foreach ($this->config as $k => $v) {
                 $cat = $v['category'];
@@ -5983,7 +5983,7 @@ if (!class_exists('AzMouseoverSettings', false)) {
         public function docuLine($l, $k, $v)
         {
             $ret = '';
-            $example = array('EN' => 'Example', 'DE' => 'Beispiel');
+            $example = ['EN' => 'Example', 'DE' => 'Beispiel'];
             $longdefault = strlen($v['default']) > 30 ? true : false;
 
             $ret .= '<tr data-az_opt_name="'.$k.'" data-az_opt_cat="'.$v['category'].'"><td>'.$k.'</td><td>';
@@ -6025,23 +6025,23 @@ if (!class_exists('AzMouseoverSettings', false)) {
             . '</th></tr></tbody>';
         }
 
-        public function getDocu($c = array())
+        public function getDocu($c = [])
         {
-            $mouse_over_zoom_param = array(
+            $mouse_over_zoom_param = [
                 'EN' => 'All specific options for the mouseover zoom 
                     are keys of mouseOverZoomParam object!',
                 'DE' => 'Alle spezifische optionen für mousever zoom 
                     sind Schlüßel des mouseOverZoomParam Objektes!'
-            );
+            ];
 
-            $cd = array(
+            $cd = [
                 'l' => 'EN',
                 'cls' => 'optionsTable',
-                'skip_cat' => array(),
-                'skip_options' => array(),
+                'skip_cat' => [],
+                'skip_options' => [],
                 'contents' => true,
                 'plugin_settings' => true
-            );
+            ];
 
             foreach ($cd as $k => $v) {
                 if (isset($c[$k])) {
@@ -6098,13 +6098,13 @@ if (!class_exists('AzMouseoverSettings', false)) {
             return $ret;
         }
 
-        public function docuJS($c = array())
+        public function docuJS($c = [])
         {
-            $cd = array(
+            $cd = [
                 'cls' => 'optionsTable',
                 'l' => 'EN',
                 'tag' => false
-            );
+            ];
 
             foreach ($cd as $k => $v) {
                 if (isset($c[$k])) {
@@ -6263,13 +6263,13 @@ EOT;
             return $js;
         }
 
-        public function docuCss($c = array())
+        public function docuCss($c = [])
         {
-            $cd = array(
+            $cd = [
                 'cls' => 'optionsTable',
                 'l' => 'EN',
                 'tag' => false
-            );
+            ];
 
             foreach ($cd as $k => $v) {
                 if (isset($c[$k])) {
@@ -6279,10 +6279,10 @@ EOT;
                 }
             }
 
-            $description = array(
+            $description = [
                 'EN' => 'Description',
                 'DE' => 'Beschreibung'
-            );
+            ];
 
             $css = '';
 
@@ -6390,13 +6390,13 @@ EOT;
 
         public function magento_xml_config()
         {
-            $data = array();
+            $data = [];
             foreach ($this->categories as $k => $v) {
                 if (!empty($this->exclude_cat_vendor) && in_array($k, $this->exclude_cat_vendor)) {
                     continue;
                 }
 
-                $data[$k] = array();
+                $data[$k] = [];
             }
 
             $cnf = $this->getConfig();
@@ -6418,12 +6418,12 @@ EOT;
         public function magento_xml_system()
         {
             $l = 'EN';
-            $data = array();
+            $data = [];
 
-            $data['general'] = array(
-                'attributes' => array(
+            $data['general'] = [
+                'attributes' => [
                     'translate' => 'label'
-                ),
+                ],
                 'label' => 'About ',
                 'frontend_type' => 'text',
                 'sort_order' => 10,
@@ -6467,19 +6467,19 @@ EOT;
                         </p>
                     ]]>
                 '
-            );
-            $data['actions'] = array(
-                'attributes' => array(
+            ];
+            $data['actions'] = [
+                'attributes' => [
                     'translate' => 'label'
-                ),
+                ],
                 'label' => 'Actions',
                 'frontend_type' => 'text',
                 'sort_order' => 20,
                 'show_in_default' => 1,
                 'show_in_website' => 1,
                 'show_in_store' => 1,
-                'fields' => array(
-                    'resetbutton' => array(
+                'fields' => [
+                    'resetbutton' => [
                         'label' => 'Reset all options to default values',
                         'comment' => '<![CDATA[
                             No data will be replaced or removed! 
@@ -6492,8 +6492,8 @@ EOT;
                         'show_in_default' => 1,
                         'show_in_website' => 1,
                         'show_in_store' => 1
-                    ),
-                    'updatedatabase' => array(
+                    ],
+                    'updatedatabase' => [
                         'label' => 'Update database tables',
                         'comment' => '<![CDATA[
                             Reset all options except licenses to their default values
@@ -6503,8 +6503,8 @@ EOT;
                         'show_in_default' => 1,
                         'show_in_website' => 1,
                         'show_in_store' => 1
-                    ),
-                    'numberimages' => array(
+                    ],
+                    'numberimages' => [
                         'label' => 'Get number images',
                         'comment' => '<![CDATA[
                             Request total number of images
@@ -6514,8 +6514,8 @@ EOT;
                         'show_in_default' => 1,
                         'show_in_website' => 1,
                         'show_in_store' => 1
-                    ),
-                    'batchtool' => array(
+                    ],
+                    'batchtool' => [
                         'label' => 'Batch tool',
                         'comment' => '<![CDATA[
                             You do not necessarily need to use the AJAX-ZOOM batch tool, 
@@ -6531,8 +6531,8 @@ EOT;
                         'show_in_default' => 1,
                         'show_in_website' => 1,
                         'show_in_store' => 1
-                    ),
-                    'updateaz' => array(
+                    ],
+                    'updateaz' => [
                         'label' => 'Update AJAX-ZOOM',
                         'comment' => '<![CDATA[
                             Check if new AJAX-ZOOM (core files) version is available. 
@@ -6543,21 +6543,21 @@ EOT;
                         'show_in_default' => 1,
                         'show_in_website' => 1,
                         'show_in_store' => 1
-                    )
-                )
-            );
-            $data['license'] = array(
-                'attributes' => array(
+                    ]
+                ]
+            ];
+            $data['license'] = [
+                'attributes' => [
                     'translate' => 'label'
-                ),
+                ],
                 'label' => 'AJAX-ZOOM license(s)',
                 'frontend_type' => 'text',
                 'sort_order' => 30,
                 'show_in_default' => 1,
                 'show_in_website' => 1,
                 'show_in_store' => 1,
-                'fields' => array(
-                    'lic' => array(
+                'fields' => [
+                    'lic' => [
                         'label' => 'License',
                         'comment' => '<![CDATA[
                             <a href="http://www.ajax-zoom.com/index.php?cid=contact" target="_blank">
@@ -6585,9 +6585,9 @@ EOT;
                         'show_in_default' => 1,
                         'show_in_website' => 1,
                         'show_in_store' => 1
-                    )
-                )
-            );
+                    ]
+                ]
+            ];
 
             $n = 0;
             $cat_sort_start = 40;
@@ -6595,17 +6595,17 @@ EOT;
                 if (!empty($this->exclude_cat_vendor) && in_array($k, $this->exclude_cat_vendor)) {
                     continue;
                 }
-                $data[$k] = array();
-                $data[$k]['attributes'] = array(
+                $data[$k] = [];
+                $data[$k]['attributes'] = [
                     'translate' => 'label'
-                );
+                ];
                 $data[$k]['label'] = $v['title'][$l];
                 $data[$k]['frontend_type'] = 'text';
                 $data[$k]['sort_order'] = $cat_sort_start + 10 * $n;
                 $data[$k]['show_in_default'] = 1;
                 $data[$k]['show_in_website'] = 1;
                 $data[$k]['show_in_store'] = 1;
-                $data[$k]['fields'] = array();
+                $data[$k]['fields'] = [];
                 $n++;
             }
 
@@ -6624,7 +6624,7 @@ EOT;
                     $n = 0;
                 }
 
-                $arr = array();
+                $arr = [];
                 if (isset($v['important']) && $v['important'] === true) {
                     $arr['label'] = '<![CDATA[<div class="notice-msg importantAZoption">'.$k.'</div>]]>';
                 } else {
@@ -6680,7 +6680,7 @@ EOT;
         public function magento2_config()
         {
             $l = 'EN';
-            $data = array();
+            $data = [];
 
 
             $n = 0;
@@ -6689,7 +6689,7 @@ EOT;
                 if (!empty($this->exclude_cat_vendor) && in_array($k, $this->exclude_cat_vendor)) {
                     continue;
                 }
-                $data[$k] = array();
+                $data[$k] = [];
                 //$data[$k]['attributes'] = array(
                 //    'translate' => 'label'
                 //);
@@ -6700,7 +6700,7 @@ EOT;
                 $data[$k]['showInDefault'] = 1;
                 $data[$k]['showInWebsite'] = 1;
                 $data[$k]['showInStore'] = 1;
-                $data[$k]['children'] = array();
+                $data[$k]['children'] = [];
                 $n++;
             }
 
@@ -6719,7 +6719,7 @@ EOT;
                     $n = 0;
                 }
 
-                $arr = array();
+                $arr = [];
                 $arr['id'] = $k;
 
                 if (isset($v['important']) && $v['important'] === true) {
@@ -6777,13 +6777,13 @@ EOT;
 
         public function magento2_values()
         {
-            $data = array();
+            $data = [];
             foreach ($this->categories as $k => $v) {
                 if (!empty($this->exclude_cat_vendor) && in_array($k, $this->exclude_cat_vendor)) {
                     continue;
                 }
 
-                $data[$k] = array();
+                $data[$k] = [];
             }
 
             $cnf = $this->getConfig();
@@ -6798,7 +6798,7 @@ EOT;
             }
 
             return $data;
-        }        
+        }
 
         public function magento2_options($options)
         {
@@ -6809,6 +6809,5 @@ EOT;
 
             return $result;
         }
-
     }
 }

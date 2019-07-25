@@ -29,8 +29,7 @@ class Section
         \Magento\Framework\App\Config\ConfigResource\ConfigInterface $configInterface,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList
-    )
-    {
+    ) {
         $this->_configInterface = $configInterface;
         $this->_scopeConfig = $scopeConfig;
         $this->_cacheTypeList = $cacheTypeList;
@@ -44,11 +43,11 @@ class Section
         
         // set default values only once
         $check_value = $this->_scopeConfig->getValue('axzoom_options/general_settings/divID');
-        if(empty($check_value)) {
+        if (empty($check_value)) {
             $values = $object->magento2_values();
             foreach ($values as $category => $fields) {
                 foreach ($fields as $key => $value) {
-                    $this->_configInterface->saveConfig("axzoom_options/$category/$key", $value, 'default', 0);                
+                    $this->_configInterface->saveConfig("axzoom_options/$category/$key", $value, 'default', 0);
                 }
             }
             $this->_cacheTypeList->cleanType('config');
@@ -67,19 +66,19 @@ class Section
      * @param $scope
      * @return mixed
      */
-    public function aroundSetData(OriginalSection $subject, callable $proceed, array $data, $scope) {
+    public function aroundSetData(OriginalSection $subject, callable $proceed, array $data, $scope)
+    {
 
         // This method runs for every section.
         // Add a condition to check for the one to which we're
         // interested in adding groups.
 
-        if($data['id'] == 'axzoom_options') {
+        if ($data['id'] == 'axzoom_options') {
             $data['children'] += $this->config;
         }
 
         $res = $proceed($data, $scope);
 
         return $res;
-
     }
 }

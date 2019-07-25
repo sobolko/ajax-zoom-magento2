@@ -95,4 +95,3 @@ class Update extends Field
         return $button->toHtml();
     }
 }
-?>

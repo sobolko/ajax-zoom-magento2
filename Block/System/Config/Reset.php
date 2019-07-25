@@ -75,4 +75,3 @@ class Reset extends Field
         return $button->toHtml();
     }
 }
-?>

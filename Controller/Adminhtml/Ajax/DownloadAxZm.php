@@ -3,36 +3,34 @@ namespace Ax\Zoom\Controller\Adminhtml\Ajax;
 
 class DownloadAxZm extends \Magento\Backend\App\Action
 {
-	protected $messageManager;
-	protected $_objectManager;
-	protected $Ax360set;
+    protected $messageManager;
+    protected $_objectManager;
+    protected $Ax360set;
 
-	public function __construct(
-		\Magento\Backend\App\Action\Context $context,
-		\Magento\Framework\ObjectManagerInterface $objectManager,
-		\Ax\Zoom\Model\Ax360set $Ax360set
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Ax\Zoom\Model\Ax360set $Ax360set
+    ) {
+        $this->messageManager = $context->getMessageManager();
+        $this->_objectManager = $objectManager;
+        $this->Ax360set = $Ax360set;
+        parent::__construct($context);
+    }
 
-	)
-	{
-		$this->messageManager = $context->getMessageManager();
-		$this->_objectManager = $objectManager;
-		$this->Ax360set = $Ax360set;
-		parent::__construct($context);
-	}
-
-	public function execute()
-	{
-        $return_arr = array();
+    public function execute()
+    {
+        $return_arr = [];
         $update = true;
         $dir = $this->Ax360set->getBaseDir() . '/axzoom/';
         $backups_dir = $dir.'backups';
 
-        $arrContextOptions=array(
-            "ssl"=>array(
+        $arrContextOptions=[
+            "ssl"=>[
                 "verify_peer"=>false,
                 "verify_peer_name"=>false,
-            ),
-        );
+            ],
+        ];
 
         if ($update !== true) {
             $update = false;
@@ -44,9 +42,9 @@ class DownloadAxZm extends \Magento\Backend\App\Action
             }
 
             if (!is_writable($backups_dir)) {
-                $return_arr = array(
+                $return_arr = [
                     'error' => $backups_dir.' is not writable by PHP'
-                );
+                ];
             }
         }
 
@@ -84,15 +82,15 @@ class DownloadAxZm extends \Magento\Backend\App\Action
                 unlink($localFilePath);
 
                 if ($update) {
-                    $return_arr = array(
+                    $return_arr = [
                         'success' => 1,
                         'backupdir' => $target_bck_dir
-                    );
+                    ];
                 }
                 
             }
         }
         
         die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode($return_arr));
-	}
+    }
 }

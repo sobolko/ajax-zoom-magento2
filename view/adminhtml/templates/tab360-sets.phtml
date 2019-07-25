@@ -5,399 +5,399 @@ $files      = $this->getArcList();
 ?>
 
 <style type="text/css">
-	.hide {
-		display: none !important;
-	}
-	#imageTableSetsRows .active td {
-		background-color: #FFFFE0 !important;
-	}
-	.col-action a {
-		display: inline-block;
-		padding: 3px;
-	}
-	.admin__scope-old .fieldset-wrapper, .admin__scope-old .fieldset {
-		padding-bottom: 0px;
-		padding-top: 10px;
-	}
-	.form-list .label {
-		min-width: 200px;
-		vertical-align: top;
-		font-weight: bold;
-	}
-	p.note {
-		font-style: italic;
-		font-size: 12px;
-	}
+    .hide {
+        display: none !important;
+    }
+    #imageTableSetsRows .active td {
+        background-color: #FFFFE0 !important;
+    }
+    .col-action a {
+        display: inline-block;
+        padding: 3px;
+    }
+    .admin__scope-old .fieldset-wrapper, .admin__scope-old .fieldset {
+        padding-bottom: 0px;
+        padding-top: 10px;
+    }
+    .form-list .label {
+        min-width: 200px;
+        vertical-align: top;
+        font-weight: bold;
+    }
+    p.note {
+        font-style: italic;
+        font-size: 12px;
+    }
 </style>
 
 <div id="product-images360sets" class="entry-edit ax-tab">
-	<div class="fieldset-wrapper">
-		<div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-			<strong class="title"><?php echo __('360/3D Views') ?></strong>
-		</div>
-	</div>
-	<div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
-		<div class="hor-scroll">
-			<div>
-				<a class="link_add" href="#"> <i class="icon-plus"></i> <?php echo __('Add a new 360/3D view') ?></a>
-			</div>
-			
+    <div class="fieldset-wrapper">
+        <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
+            <strong class="title"><?php echo __('360/3D Views') ?></strong>
+        </div>
+    </div>
+    <div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
+        <div class="hor-scroll">
+            <div>
+                <a class="link_add" href="#"> <i class="icon-plus"></i> <?php echo __('Add a new 360/3D view') ?></a>
+            </div>
+            
 
-			<div class="row" id="newForm" style="display:none; padding:10px 0px;">
-				<table cellspacing="0" class="form-list">
-					<tbody>
-						<tr>
-							<td class="label"><label for="set_name"><?php echo __('Create a new') ?></label></td>
-							<td class="value">
-								<input type="text" id="set_name" name="set_name" value="" />
-								<p class="note"><?php echo __('Please enter any name') ?></p>
-							</td>
-							<td class="scope-label"><span class="nobr"></span></td>
-						</tr>
-						<?php if ($setsGroups): ?>
-						<tr>
-							<td colspan="3"><b><?php echo __('OR') ?></b></td>
-						</tr>
-						<tr>
-							<td class="label"><label for="existing"><?php echo __('Add to existing 3D as next row') ?></label></td>
-							<td class="value">
-								<select name="existing" id="existing">
-									<option value="" style="min-width: 100px"><?php echo __('Select') ?></option>
-									<?php foreach ($setsGroups as $group): ?>
-									<option value="<?php echo $group['id_360'] ?>"><?php echo $group['name'] ?></option>
-									<?php endforeach ?>
-								</select>
-								<p class="note"><?php echo __('You should not select anything here unless you want to create 3D (not 360) which contains more than one row!') ?></p>
-							</td>
-							<td class="scope-label"><span class="nobr"></span></td>
-						</tr>
-						<?php endif; ?>
-						
-						<tr>
-							<td class="label"><label for="zip"><?php echo __('Add images from ZIP archive') ?></label></td>
-							<td class="value">
-								<input type="checkbox" id="zip" name="zip" value="1" />
-								<p class="note"><?php echo __('This is the most easy and quick way of adding 360 views to your product! Upload over FTP your 360\'s zipped (each images set in one zip file) to /pub/ajaxzoom/zip/ directory. After you did so these zip files will instantly appear in the select field below. All you have to do then is select one of the zip files and press \'add\' button. Images from the selected zip file will be instantly imported.') ?></p>
-							</td>
-							<td class="scope-label"><span class="nobr"></span></td>
-						</tr>
-						<tr class="field-arcfile" style="display:none;">
-							<td class="label"><label for="arcfile"><?php echo __('Select ZIP archive or folder') ?></label></td>
-							<td class="value">
-								<?php if (isset($files) && count($files) > 0): ?>
-								<select name="arcfile" id="arcfile">
-									<option value=""><?php echo __('Select') ?></option>
-									<?php foreach ($files as $file): ?>
-									<option value="<?php echo $file ?>"><?php echo $file ?></option>
-									<?php endforeach; ?>
-								</select>
-								<?php else: ?>
-								<p><b><?php echo __('There are no files found in the "pub/axzoom/zip" folder') ?></b></p>
-								<?php endif; ?>
-							</td>
-							<td class="scope-label"><span class="nobr"></span></td>
-						</tr>
-						<tr class="field-arcfile" style="display:none;">
-							<td class="label"><label for="zip"><?php echo __('Delete Zip/Dir after import') ?></label></td>
-							<td class="value">
-								<input type="checkbox" id="delete" name="delete" value="1" />
-								<p class="note"><?php echo __('') ?></p>
-							</td>
-							<td class="scope-label"><span class="nobr"></span></td>
-						</tr>
+            <div class="row" id="newForm" style="display:none; padding:10px 0px;">
+                <table cellspacing="0" class="form-list">
+                    <tbody>
+                        <tr>
+                            <td class="label"><label for="set_name"><?php echo __('Create a new') ?></label></td>
+                            <td class="value">
+                                <input type="text" id="set_name" name="set_name" value="" />
+                                <p class="note"><?php echo __('Please enter any name') ?></p>
+                            </td>
+                            <td class="scope-label"><span class="nobr"></span></td>
+                        </tr>
+                        <?php if ($setsGroups) : ?>
+                        <tr>
+                            <td colspan="3"><b><?php echo __('OR') ?></b></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><label for="existing"><?php echo __('Add to existing 3D as next row') ?></label></td>
+                            <td class="value">
+                                <select name="existing" id="existing">
+                                    <option value="" style="min-width: 100px"><?php echo __('Select') ?></option>
+                                    <?php foreach ($setsGroups as $group) : ?>
+                                    <option value="<?php echo $group['id_360'] ?>"><?php echo $group['name'] ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                                <p class="note"><?php echo __('You should not select anything here unless you want to create 3D (not 360) which contains more than one row!') ?></p>
+                            </td>
+                            <td class="scope-label"><span class="nobr"></span></td>
+                        </tr>
+                        <?php endif; ?>
+                        
+                        <tr>
+                            <td class="label"><label for="zip"><?php echo __('Add images from ZIP archive') ?></label></td>
+                            <td class="value">
+                                <input type="checkbox" id="zip" name="zip" value="1" />
+                                <p class="note"><?php echo __('This is the most easy and quick way of adding 360 views to your product! Upload over FTP your 360\'s zipped (each images set in one zip file) to /pub/ajaxzoom/zip/ directory. After you did so these zip files will instantly appear in the select field below. All you have to do then is select one of the zip files and press \'add\' button. Images from the selected zip file will be instantly imported.') ?></p>
+                            </td>
+                            <td class="scope-label"><span class="nobr"></span></td>
+                        </tr>
+                        <tr class="field-arcfile" style="display:none;">
+                            <td class="label"><label for="arcfile"><?php echo __('Select ZIP archive or folder') ?></label></td>
+                            <td class="value">
+                                <?php if (isset($files) && count($files) > 0) : ?>
+                                <select name="arcfile" id="arcfile">
+                                    <option value=""><?php echo __('Select') ?></option>
+                                    <?php foreach ($files as $file) : ?>
+                                    <option value="<?php echo $file ?>"><?php echo $file ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <?php else : ?>
+                                <p><b><?php echo __('There are no files found in the "pub/axzoom/zip" folder') ?></b></p>
+                                <?php endif; ?>
+                            </td>
+                            <td class="scope-label"><span class="nobr"></span></td>
+                        </tr>
+                        <tr class="field-arcfile" style="display:none;">
+                            <td class="label"><label for="zip"><?php echo __('Delete Zip/Dir after import') ?></label></td>
+                            <td class="value">
+                                <input type="checkbox" id="delete" name="delete" value="1" />
+                                <p class="note"><?php echo __('') ?></p>
+                            </td>
+                            <td class="scope-label"><span class="nobr"></span></td>
+                        </tr>
 
-						<tr>
-							<td></td>
-							<td>
-								<button type="button" class="scalable save save_set" >
-									<span><span><span><?php echo __('Add') ?></span></span></span>
-								</button>
-							</td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button type="button" class="scalable save save_set" >
+                                    <span><span><span><?php echo __('Add') ?></span></span></span>
+                                </button>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
 
-			<div class="row">
-				<div class="grid">
-					<table class="data border data-grid" id="imageTableSets" >
-						<thead>
-							<tr class="headings">
-								<th class="data-grid-th"><?php echo __('Cover Image') ?></th>
-								<th class="data-grid-th"><?php echo __('Name') ?></th>
-								<th class="data-grid-th"><?php echo __('Active') ?></th>
-								<th class="data-grid-th last" style="width:240px;"><?php echo __('Actions') ?></th>
-							</tr>
-						</thead>
-						<tbody id="imageTableSetsRows">
-						</tbody>
-					</table>
-				</div>
+            <div class="row">
+                <div class="grid">
+                    <table class="data border data-grid" id="imageTableSets" >
+                        <thead>
+                            <tr class="headings">
+                                <th class="data-grid-th"><?php echo __('Cover Image') ?></th>
+                                <th class="data-grid-th"><?php echo __('Name') ?></th>
+                                <th class="data-grid-th"><?php echo __('Active') ?></th>
+                                <th class="data-grid-th last" style="width:240px;"><?php echo __('Actions') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody id="imageTableSetsRows">
+                        </tbody>
+                    </table>
+                </div>
 
-				<table id="lineSet" style="display:none;">
-					<tr id="set_id" data-group="group_id">
-						<td><img src="<?php echo $this->rootFolder() ?>axzoom/image_path.gif" alt="legend" title="legend" class="img-thumbnail" /></td>
-						<td>legend</td>
-						<td>
-							<span class="switch prestashop-switch fixed-width-lg hide_class switch-status">
-								<input type="radio" name="status_field" id="status_field_on" value="1" checked_on />
-								<label class="t" for="status_field_on"><?php echo __('Yes') ?></label>
-								<input type="radio" name="status_field" id="status_field_off" value="0" checked_off />
-								<label class="t" for="status_field_off"><?php echo __('No') ?></label>
-								<a class="slide-button btn"></a>
-							</span>
-						</td>
-						<td class="col-action">
-							<a class="delete_set scalable delete" href=""><?php echo __('Delete') ?></a>
-							<a class="images_set scalable" href=""><?php echo __('Images') ?></a>
-							<a class="scalable preview_set hide_class" href=""><?php echo __('Preview') ?></a>
-							<a class="az_hotspot_set scalable hide_class" href=""><?php echo __('Hotspots'); ?></a>
+                <table id="lineSet" style="display:none;">
+                    <tr id="set_id" data-group="group_id">
+                        <td><img src="<?php echo $this->rootFolder() ?>axzoom/image_path.gif" alt="legend" title="legend" class="img-thumbnail" /></td>
+                        <td>legend</td>
+                        <td>
+                            <span class="switch prestashop-switch fixed-width-lg hide_class switch-status">
+                                <input type="radio" name="status_field" id="status_field_on" value="1" checked_on />
+                                <label class="t" for="status_field_on"><?php echo __('Yes') ?></label>
+                                <input type="radio" name="status_field" id="status_field_off" value="0" checked_off />
+                                <label class="t" for="status_field_off"><?php echo __('No') ?></label>
+                                <a class="slide-button btn"></a>
+                            </span>
+                        </td>
+                        <td class="col-action">
+                            <a class="delete_set scalable delete" href=""><?php echo __('Delete') ?></a>
+                            <a class="images_set scalable" href=""><?php echo __('Images') ?></a>
+                            <a class="scalable preview_set hide_class" href=""><?php echo __('Preview') ?></a>
+                            <a class="az_hotspot_set scalable hide_class" href=""><?php echo __('Hotspots'); ?></a>
                             <a class="az_crop_set scalable hide_class" href=""><?php echo __('360° Product Tour'); ?></a>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
-	<?php require 'tab360.phtml'; ?>
+    <?php require 'tab360.phtml'; ?>
 
 </div>
 
 
 
 <script>
-	var id_product = '<?php echo $productId ?>';
-	require([
-		"jquery", 
-		"<?php echo $this->getBaseUrl() ?>axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js", 
-		"<?php echo $this->getBaseUrl() ?>axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js"
-		], function($){
-		
-		function setLine(id, path, position, legend, status, group_id)
-		{
-			line = $("#lineSet").html();
-			line = line.replace(/set_id/g, id);
-			line = line.replace(/group_id/g, group_id);
-			line = line.replace(/legend/g, legend);
-			line = line.replace(/status_field/g, 'status_' + id);
-			line = line.replace(/".*?image_path\.gif"/g, path);
-			line = line.replace(/<tbody>/gi, "");
-			line = line.replace(/<\/tbody>/gi, "");
+    var id_product = '<?php echo $productId ?>';
+    require([
+        "jquery", 
+        "<?php echo $this->getBaseUrl() ?>axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js", 
+        "<?php echo $this->getBaseUrl() ?>axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js"
+        ], function($){
+        
+        function setLine(id, path, position, legend, status, group_id)
+        {
+            line = $("#lineSet").html();
+            line = line.replace(/set_id/g, id);
+            line = line.replace(/group_id/g, group_id);
+            line = line.replace(/legend/g, legend);
+            line = line.replace(/status_field/g, 'status_' + id);
+            line = line.replace(/".*?image_path\.gif"/g, path);
+            line = line.replace(/<tbody>/gi, "");
+            line = line.replace(/<\/tbody>/gi, "");
 
-			if(status == '1') {
-				line = line.replace(/checked_on/g, 'checked');
-				line = line.replace(/checked_off/g, '');
-			} else {
-				line = line.replace(/checked_on/g, '');
-				line = line.replace(/checked_off/g, 'checked');
-			}
+            if(status == '1') {
+                line = line.replace(/checked_on/g, 'checked');
+                line = line.replace(/checked_off/g, '');
+            } else {
+                line = line.replace(/checked_on/g, '');
+                line = line.replace(/checked_off/g, 'checked');
+            }
 
-			if($('tr[data-group=' + group_id + ']').length) {
-				line = line.replace(/hide_class/g, 'hide');
-			}
+            if($('tr[data-group=' + group_id + ']').length) {
+                line = line.replace(/hide_class/g, 'hide');
+            }
 
-			$("#imageTableSetsRows").append(line);
-		}
+            $("#imageTableSetsRows").append(line);
+        }
 
-		function afterUpdateStatus(data) {
-			data = $.parseJSON(data);
-			showSuccessMessage(data.confirmations);
-		}
+        function afterUpdateStatus(data) {
+            data = $.parseJSON(data);
+            showSuccessMessage(data.confirmations);
+        }
 
-		function afterDeleteSet(data) {
-			var data = $.parseJSON(data);
-			$('tr#' + data.id_360set).remove();
-			showSuccessMessage(data.confirmations);
+        function afterDeleteSet(data) {
+            var data = $.parseJSON(data);
+            $('tr#' + data.id_360set).remove();
+            showSuccessMessage(data.confirmations);
 
-			// remove set option from the dropdowns
-			if(data.removed == '1') {
-				$("select#id_360 option[value='" + data.id_360 + "']").remove();
-				$("select#existing option[value='" + data.id_360 + "']").remove();
-			}
-		}
+            // remove set option from the dropdowns
+            if(data.removed == '1') {
+                $("select#id_360 option[value='" + data.id_360 + "']").remove();
+                $("select#existing option[value='" + data.id_360 + "']").remove();
+            }
+        }
 
-		function afterAddSet(data) {
-			var data = $.parseJSON(data);
+        function afterAddSet(data) {
+            var data = $.parseJSON(data);
 
-			if(data.sets.length > 0) {
-				for (var i = 0; i < data.sets.length; i++) {
-					var set = data.sets[i];
-					setLine(set.id_360set, set.path, "", set.name, set.status, set.id_360);
-				};
-			} else {
-				setLine(data.id_360set, data.path, "", data.name, data.status, data.id_360);
-			}
+            if(data.sets.length > 0) {
+                for (var i = 0; i < data.sets.length; i++) {
+                    var set = data.sets[i];
+                    setLine(set.id_360set, set.path, "", set.name, set.status, set.id_360);
+                };
+            } else {
+                setLine(data.id_360set, data.path, "", data.name, data.status, data.id_360);
+            }
 
-			$('.link_add').find('i').removeClass('icon-minus').addClass('icon-plus');
-			$('#newForm').hide();
-			$('#set_name').val('');
-			$('#existing').val('');
+            $('.link_add').find('i').removeClass('icon-minus').addClass('icon-plus');
+            $('#newForm').hide();
+            $('#set_name').val('');
+            $('#existing').val('');
 
-			if(data.new_id != '') {
-				$('select#id_360')
-					.append($("<option></option>")
-					.attr("value", data.new_id)
-					.attr('data-settings', data.new_settings)
-					.attr('data-combinations', '[]')
-					.text(data.new_name)); 
-				$('select#existing').append($("<option></option>").attr("value", data.new_id).text(data.new_name)); 
-			}
+            if(data.new_id != '') {
+                $('select#id_360')
+                    .append($("<option></option>")
+                    .attr("value", data.new_id)
+                    .attr('data-settings', data.new_settings)
+                    .attr('data-combinations', '[]')
+                    .text(data.new_name)); 
+                $('select#existing').append($("<option></option>").attr("value", data.new_id).text(data.new_name)); 
+            }
 
-			$('#az_hidden_values').append('<input type="hidden" name="settings[' + data.id_360 + ']" id="settings_' + data.id_360 + '" value="' + data.new_settings + '"><input type="hidden" name="comb[' + data.id_360 + ']" id="settings_comb_' + data.id_360 + '" value="">');
+            $('#az_hidden_values').append('<input type="hidden" name="settings[' + data.id_360 + ']" id="settings_' + data.id_360 + '" value="' + data.new_settings + '"><input type="hidden" name="comb[' + data.id_360 + ']" id="settings_comb_' + data.id_360 + '" value="">');
 
-			showSuccessMessage(data.confirmations);
-		}
+            showSuccessMessage(data.confirmations);
+        }
 
-		function afterGetImages(data) {
-			var data = $.parseJSON(data);
-			
-			for (var i = 0; i < data.images.length; i++) {
-				imageLine360(data.images[i]['id'], data.images[i]['thumb'], '', "", "", "");
-			};
-			
-		}
-
-
-		$('#zip').change(function () {
-			if($(this).is(':checked')) {
-				$('.field-arcfile').show();
-			} else {
-				$('.field-arcfile').hide();
-			}
-		});
-
-		$('.link_add').click(function (e) {
-			e.preventDefault();
-
-			var icon = $(this).find('i');
-
-			if(icon.hasClass('icon-plus')) {
-				icon.removeClass('icon-plus').addClass('icon-minus');
-				$('#newForm').show();
-			} else {
-				icon.removeClass('icon-minus').addClass('icon-plus');
-				$('#newForm').hide();
-			}
-		});
-
-		$('body').on('change', '.switch-status input', function(e) { 
-			e.preventDefault();
-			var status = $(this).val();
-			var group_id = $(this).parent().parent().parent().data('group');
-
-			doAdminAjax360('<?php echo $this->getUrlAjax('set360Status'); ?>', {
-					"id_product" : <?php echo $productId ?>,
-					"id_360" : group_id,
-					"status" : status}, afterUpdateStatus
-			);
-			
-		});
-
-		$('body').on('click', '.preview_set', function(e) {
-			e.preventDefault();
-
-			var id360 = $(this).parent().parent().data('group');
-			var id360set = $(this).parent().parent().attr('id');
-
-			$.openAjaxZoomInFancyBox({href: '<?php echo $this->getBaseUrl() ?>axzoom/preview/preview.php?3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360+'&group='+id360+'&id='+id360set, iframe: true});
-		});
-
-		$('body').on('click', '.images_set', function(e) { 
-			e.preventDefault();
-			
-			$('#imageTableSetsRows').find('tr').removeClass('active');
-			$(this).parent().parent().addClass('active');
-			$('#imageList360').html('');
-			$('#file360-success').parent().hide();
-
-			var id = $(this).parent().parent().attr('id');
-
-			doAdminAjax360('<?php echo $this->getUrlAjax('getImages'); ?>', {
-					"id_product" : <?php echo $productId ?>,
-					"id_360set" : id}, afterGetImages
-			);
-			
-			$('#id_360set').val(id);
-			$('#product-images360').show();
-		});
+        function afterGetImages(data) {
+            var data = $.parseJSON(data);
+            
+            for (var i = 0; i < data.images.length; i++) {
+                imageLine360(data.images[i]['id'], data.images[i]['thumb'], '', "", "", "");
+            };
+            
+        }
 
 
-	    $('body').on('click','.az_crop_set', function(e) {
-	        e.preventDefault();
+        $('#zip').change(function () {
+            if($(this).is(':checked')) {
+                $('.field-arcfile').show();
+            } else {
+                $('.field-arcfile').hide();
+            }
+        });
 
-	        var id360 = $(this).parent().parent().data('group');
-	        var id360set = $(this).parent().parent().attr('id');
-	        var qty = $('tr[data-group=' + id360 + ']').length;
+        $('.link_add').click(function (e) {
+            e.preventDefault();
 
-	        var cropHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/cropeditor.php?';
-	            cropHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
-	            if (qty < 2) {
-	                cropHref += '/' + id360set;
-	            }
-	            cropHref += '&group='+id360+'&id='+id360set;
-	            cropHref += '&url_get=<?php echo $this->getUrlAjax('GetCropJson'); ?>';
-	            cropHref += '&url_set=<?php echo $this->getUrlAjax('SetCropJson'); ?>';
-	            cropHref += '&form_key=<?php echo $this->getFormKey(); ?>';
-	            cropHref += '&hs_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
+            var icon = $(this).find('i');
 
-	        $.openAjaxZoomInFancyBox({href: cropHref, iframe: true, scrolling: 1});
-	    });
+            if(icon.hasClass('icon-plus')) {
+                icon.removeClass('icon-plus').addClass('icon-minus');
+                $('#newForm').show();
+            } else {
+                icon.removeClass('icon-minus').addClass('icon-plus');
+                $('#newForm').hide();
+            }
+        });
 
-	    $('body').on('click','.az_hotspot_set', function(e) {
-	        e.preventDefault();
+        $('body').on('change', '.switch-status input', function(e) { 
+            e.preventDefault();
+            var status = $(this).val();
+            var group_id = $(this).parent().parent().parent().data('group');
 
-	        var id360 = $(this).closest('tr').data('group');
-	        var id360set = $(this).closest('tr').attr('id');
-	        var qty = $('tr[data-group=' + id360 + ']').length;
+            doAdminAjax360('<?php echo $this->getUrlAjax('set360Status'); ?>', {
+                    "id_product" : <?php echo $productId ?>,
+                    "id_360" : group_id,
+                    "status" : status}, afterUpdateStatus
+            );
+            
+        });
 
-	        var hotspotHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/hotspoteditor.php?';
-	            hotspotHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
-	            if (qty < 2) {
-	                hotspotHref += '/' + id360set;
-	            }
-	            hotspotHref += '&group='+id360+'&id='+id360set;
-	            hotspotHref += '&url_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
-	            hotspotHref += '&url_set=<?php echo $this->getUrlAjax('SetHotspotJson'); ?>';
-	            hotspotHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+        $('body').on('click', '.preview_set', function(e) {
+            e.preventDefault();
 
-	        $.openAjaxZoomInFancyBox({href: hotspotHref, iframe: true, scrolling: 1});
-	    });
+            var id360 = $(this).parent().parent().data('group');
+            var id360set = $(this).parent().parent().attr('id');
+
+            $.openAjaxZoomInFancyBox({href: '<?php echo $this->getBaseUrl() ?>axzoom/preview/preview.php?3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360+'&group='+id360+'&id='+id360set, iframe: true});
+        });
+
+        $('body').on('click', '.images_set', function(e) { 
+            e.preventDefault();
+            
+            $('#imageTableSetsRows').find('tr').removeClass('active');
+            $(this).parent().parent().addClass('active');
+            $('#imageList360').html('');
+            $('#file360-success').parent().hide();
+
+            var id = $(this).parent().parent().attr('id');
+
+            doAdminAjax360('<?php echo $this->getUrlAjax('getImages'); ?>', {
+                    "id_product" : <?php echo $productId ?>,
+                    "id_360set" : id}, afterGetImages
+            );
+            
+            $('#id_360set').val(id);
+            $('#product-images360').show();
+        });
 
 
-		$('.save_set').click(function (e) {
-			e.preventDefault();	
-			
-			doAdminAjax360('<?php echo $this->getUrlAjax('addSet'); ?>', {
-					"name":$('#set_name').val(),
-					"existing":$('#existing').val(),
-					"zip":$('#zip').is(':checked'),
-					"arcfile":$('#arcfile').val(),
-					"id_product" : <?php echo $productId ?>}, afterAddSet
-			);
-		});
+        $('body').on('click','.az_crop_set', function(e) {
+            e.preventDefault();
+
+            var id360 = $(this).parent().parent().data('group');
+            var id360set = $(this).parent().parent().attr('id');
+            var qty = $('tr[data-group=' + id360 + ']').length;
+
+            var cropHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/cropeditor.php?';
+                cropHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
+                if (qty < 2) {
+                    cropHref += '/' + id360set;
+                }
+                cropHref += '&group='+id360+'&id='+id360set;
+                cropHref += '&url_get=<?php echo $this->getUrlAjax('GetCropJson'); ?>';
+                cropHref += '&url_set=<?php echo $this->getUrlAjax('SetCropJson'); ?>';
+                cropHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+                cropHref += '&hs_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
+
+            $.openAjaxZoomInFancyBox({href: cropHref, iframe: true, scrolling: 1});
+        });
+
+        $('body').on('click','.az_hotspot_set', function(e) {
+            e.preventDefault();
+
+            var id360 = $(this).closest('tr').data('group');
+            var id360set = $(this).closest('tr').attr('id');
+            var qty = $('tr[data-group=' + id360 + ']').length;
+
+            var hotspotHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/hotspoteditor.php?';
+                hotspotHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
+                if (qty < 2) {
+                    hotspotHref += '/' + id360set;
+                }
+                hotspotHref += '&group='+id360+'&id='+id360set;
+                hotspotHref += '&url_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
+                hotspotHref += '&url_set=<?php echo $this->getUrlAjax('SetHotspotJson'); ?>';
+                hotspotHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+
+            $.openAjaxZoomInFancyBox({href: hotspotHref, iframe: true, scrolling: 1});
+        });
 
 
-		$('body').on('click', '.delete_set', function(e) {
-		
-			e.preventDefault();
+        $('.save_set').click(function (e) {
+            e.preventDefault();    
+            
+            doAdminAjax360('<?php echo $this->getUrlAjax('addSet'); ?>', {
+                    "name":$('#set_name').val(),
+                    "existing":$('#existing').val(),
+                    "zip":$('#zip').is(':checked'),
+                    "arcfile":$('#arcfile').val(),
+                    "id_product" : <?php echo $productId ?>}, afterAddSet
+            );
+        });
 
-			$('#product-images360').hide();
-			$('#imageList360').html('');
 
-			var id = $(this).parent().parent().attr('id');
-			if (confirm("<?php echo __('Are you sure?') ?>"))
-			doAdminAjax360('<?php echo $this->getUrlAjax('deleteSet'); ?>', {
-					"id_360set":id,
-					"id_product" : <?php echo $productId ?>}, afterDeleteSet
-			);
-		});
+        $('body').on('click', '.delete_set', function(e) {
+        
+            e.preventDefault();
 
-		<?php foreach ($sets as $set): ?>
-			setLine("<?php echo $set['id_360set'] ?>", "<?php echo $set['path'] ?>", "", "<?php echo $set['name'] ?>", "<?php echo $set['status'] ?>", "<?php echo $set['id_360'] ?>");
-		<?php endforeach; ?>
-	});
+            $('#product-images360').hide();
+            $('#imageList360').html('');
+
+            var id = $(this).parent().parent().attr('id');
+            if (confirm("<?php echo __('Are you sure?') ?>"))
+            doAdminAjax360('<?php echo $this->getUrlAjax('deleteSet'); ?>', {
+                    "id_360set":id,
+                    "id_product" : <?php echo $productId ?>}, afterDeleteSet
+            );
+        });
+
+        <?php foreach ($sets as $set) : ?>
+            setLine("<?php echo $set['id_360set'] ?>", "<?php echo $set['path'] ?>", "", "<?php echo $set['name'] ?>", "<?php echo $set['status'] ?>", "<?php echo $set['id_360'] ?>");
+        <?php endforeach; ?>
+    });
 </script>

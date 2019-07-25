@@ -3,29 +3,28 @@ namespace Ax\Zoom\Controller\Adminhtml\Ajax;
 
 class ActionReset extends \Magento\Backend\App\Action
 {
-	protected $messageManager;
-	protected $_objectManager;
-	protected $_cacheTypeList;
+    protected $messageManager;
+    protected $_objectManager;
+    protected $_cacheTypeList;
 
-	public function __construct(
-		\Magento\Backend\App\Action\Context $context,
-		\Magento\Framework\ObjectManagerInterface $objectManager,
-		\Magento\Framework\App\Cache\TypeListInterface $cacheTypeList
-	)
-	{
-		$this->messageManager = $context->getMessageManager();
-		$this->_objectManager = $objectManager;
-		$this->_cacheTypeList = $cacheTypeList;
-		parent::__construct($context);
-	}
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList
+    ) {
+        $this->messageManager = $context->getMessageManager();
+        $this->_objectManager = $objectManager;
+        $this->_cacheTypeList = $cacheTypeList;
+        parent::__construct($context);
+    }
 
-	public function execute()
-	{
+    public function execute()
+    {
         $get = $this->getRequest();
 
-		
-		/*
-	    $db = Mage::getSingleton('core/resource')->getConnection('core_write');
+        
+        /*
+        $db = Mage::getSingleton('core/resource')->getConnection('core_write');
         $db_prefix = (string)Mage::getConfig()->getTablePrefix();
         $db->query('DELETE FROM `'.$db_prefix.'core_config_data` WHERE `path` LIKE \'axzoom_options/%\' AND path != \'axzoom_options/license/lic\'');
 
@@ -43,8 +42,8 @@ class ActionReset extends \Magento\Backend\App\Action
         $this->_cacheTypeList->cleanType('config');
         
         
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode(array(
+        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
             'status' => 'ok'
-            )));
-	}
+            ]));
+    }
 }

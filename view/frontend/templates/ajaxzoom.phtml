@@ -91,63 +91,63 @@ require(["jquery", "jquery/ui"], function() {
 
         require(["<?php echo implode('","', $this->_loadJS())?>"], function($) {
 
-	        var AXZMPATH = '<?php echo $axZmPath; ?>';
-	        var IMAGES_JSON = <?php echo $imagesJson ?>;
-	        var IMAGES_360_JSON = <?php echo $images360Json?>;
+            var AXZMPATH = '<?php echo $axZmPath; ?>';
+            var IMAGES_JSON = <?php echo $imagesJson ?>;
+            var IMAGES_360_JSON = <?php echo $images360Json?>;
 
-	        
+            
 
-	        window.initAxzoom = function() {
-	            if (!jQuery.axZm_psh) {
-	                jQuery.axZm_psh = { };
-	            }
+            window.initAxzoom = function() {
+                if (!jQuery.axZm_psh) {
+                    jQuery.axZm_psh = { };
+                }
 
-	            // Default plain images
-	            jQuery.axZm_psh.IMAGES_JSON = IMAGES_JSON;
-	            
+                // Default plain images
+                jQuery.axZm_psh.IMAGES_JSON = IMAGES_JSON;
+                
 
-	            // Default 360
-	            jQuery.axZm_psh.IMAGES_360_JSON = IMAGES_360_JSON;
-	            jQuery.axZm_psh.VIDEOS_JSON = <?php echo $videosJson; ?>;
-	            jQuery.axZm_psh.IMAGES_HOTSPOTS = <?php echo json_encode($az_img_hotspots, JSON_FORCE_OBJECT); ?>;
+                // Default 360
+                jQuery.axZm_psh.IMAGES_360_JSON = IMAGES_360_JSON;
+                jQuery.axZm_psh.VIDEOS_JSON = <?php echo $videosJson; ?>;
+                jQuery.axZm_psh.IMAGES_HOTSPOTS = <?php echo json_encode($az_img_hotspots, JSON_FORCE_OBJECT); ?>;
 
-	            jQuery.axZm_psh.axZmPath = '<?php echo $axZmPath; ?>';
-	            jQuery.axZm_psh.shopLang = '<?php echo substr($this->_store->getLocale(), 0, 2); ?>';
-	            jQuery.axZm_psh.initParam = <?php echo  $ajaxzoom_initParam; ?>;
-
-
-
-	            jQuery.axZm_psh.divID = jQuery.axZm_psh.initParam.divID;
-	            jQuery.axZm_psh.galleryDivID = jQuery.axZm_psh.initParam.galleryDivID;
-	            jQuery.axZm_psh.displayInSelector = '<?php echo $ajaxzoom_displayInSelector; ?>';
-	            jQuery.axZm_psh.displayInSelectorAppend = <?php echo $ajaxzoom_displayInSelectorAppend ? 'true' : 'false'; ?>;
-	            jQuery.axZm_psh.containerId = '<?php echo $ajaxzoom_containerId; ?>';
-	            jQuery.axZm_psh.headSelector = '<?php echo __('360° / Video'); ?>';
-	            jQuery.axZm_psh.displayInAzOpt = <?php echo $conf['plugin_settings']['displayInAzOpt']; ?>;
-
-	            // Colors / attributes
-	            jQuery.axZm_psh.axAssociated = {};
-	            window.preRenderAxzoom();
-
-
-	        };
-
-	        window.triggerAxzoom = function() {
-
-	            if (window.jQuery === undefined || window.renderAxzoom === undefined) {
-	                setTimeout(window.triggerAxzoom, 100);
-	                return false;
-	            } else {
-	                window.initAxzoom();
-	            }
-	        }
-
-	        window.triggerAxzoom();
+                jQuery.axZm_psh.axZmPath = '<?php echo $axZmPath; ?>';
+                jQuery.axZm_psh.shopLang = '<?php echo substr($this->_store->getLocale(), 0, 2); ?>';
+                jQuery.axZm_psh.initParam = <?php echo  $ajaxzoom_initParam; ?>;
 
 
 
+                jQuery.axZm_psh.divID = jQuery.axZm_psh.initParam.divID;
+                jQuery.axZm_psh.galleryDivID = jQuery.axZm_psh.initParam.galleryDivID;
+                jQuery.axZm_psh.displayInSelector = '<?php echo $ajaxzoom_displayInSelector; ?>';
+                jQuery.axZm_psh.displayInSelectorAppend = <?php echo $ajaxzoom_displayInSelectorAppend ? 'true' : 'false'; ?>;
+                jQuery.axZm_psh.containerId = '<?php echo $ajaxzoom_containerId; ?>';
+                jQuery.axZm_psh.headSelector = '<?php echo __('360° / Video'); ?>';
+                jQuery.axZm_psh.displayInAzOpt = <?php echo $conf['plugin_settings']['displayInAzOpt']; ?>;
 
-	        $('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
+                // Colors / attributes
+                jQuery.axZm_psh.axAssociated = {};
+                window.preRenderAxzoom();
+
+
+            };
+
+            window.triggerAxzoom = function() {
+
+                if (window.jQuery === undefined || window.renderAxzoom === undefined) {
+                    setTimeout(window.triggerAxzoom, 100);
+                    return false;
+                } else {
+                    window.initAxzoom();
+                }
+            }
+
+            window.triggerAxzoom();
+
+
+
+
+            $('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
         });
     };
 
