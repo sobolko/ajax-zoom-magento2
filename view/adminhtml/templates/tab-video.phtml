@@ -1,6 +1,6 @@
 <?php
-$az_videos         = $this->getVideos();
-$az_languages     = $this->getStoreLanguages();
+$az_videos         = $block->getVideos();
+$az_languages     = $block->getStoreLanguages();
 
 // associated products !!! AZ: get associated
 $associated = [];
@@ -8,33 +8,31 @@ $associated = [];
 <div id="" class="entry-edit ax-tab">
     <div class="fieldset-wrapper">
         <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-            <strong class="title"><?php echo __('Videos: YouTube, Vimeo, Dailymotion, MP4') ?></strong>
+            <strong class="title"><?= $block->escapeHtml(__('Videos: YouTube, Vimeo, Dailymotion, MP4')) ?></strong>
         </div>
     </div>
     <div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
 
         <p class="message message-info">
-            <?php
-            echo __('With this widget you can define videos from YouTube, Vimeo, Dailymotion or link to mp4 videos located else where. ');
-            echo __('For variable product, you are able to associate videos only with certain product variations. ');
-            echo __('Also you can, but not obligated to, define alternative video sources for shop languages. ');
-            echo __('Let us know if your are missing something. ');
-            echo __('Your ideas are greatly appreciated!');
-            ?>
+            <?= $block->escapeHtml(__('With this widget you can define videos from YouTube, Vimeo, Dailymotion or link to mp4 videos located else where. '));?>
+            <?= $block->escapeHtml(__('For variable product, you are able to associate videos only with certain product variations. '));?>
+            <?= $block->escapeHtml(__('Also you can, but not obligated to, define alternative video sources for shop languages. '));?>
+            <?= $block->escapeHtml(__('Let us know if your are missing something. '));?>
+            <?= $block->escapeHtml(__('Your ideas are greatly appreciated!'));?>
         </p>
         <br>
         <div class="hor-scroll">
             <table cellspacing="0" class="form-list">
                 <tbody>
                     <tr>
-                        <td class="label"><label><?php echo __('Existing videos'); ?></label></td>
+                        <td class="label"><label><?= $block->escapeHtml(__('Existing videos')); ?></label></td>
                         <td class="value">
                             <select id="az_id_video" name="az_id_video" style="min-width: 100px" class="form-control">
-                                <option value=""><?php echo __('Select'); ?></option>
+                                <option value=""><?= $block->escapeHtml(__('Select')); ?></option>
                             </select>
                             <div class="az_closeSelect"></div>
                             <p class="note">
-                                <?php echo __('Select a video to change the settings'); ?>
+                                <?= $block->escapeHtml(__('Select a video to change the settings')); ?>
                             </p>
                         </td>
                         <td class="scope-label"><span class="nobr"></span></td>
@@ -46,14 +44,14 @@ $associated = [];
                 <table cellspacing="0" class="form-list">
                     <tbody>
                         <tr>
-                            <td class="label"><label><?php echo __('Name'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Name')); ?></label></td>
                             <td class="value">
                                 <input type="text" id="az_video_name_edit" name="az_video_name_edit" value="" class="form-control" />
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <tr>
-                            <td class="label"><label><?php echo __('Type'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Type')); ?></label></td>
                             <td class="value">
                                 <select class="form-control" id="az_video_type_edit" name="az_video_type_edit">
                                     <option value="youtube">YouTube</option>
@@ -65,7 +63,7 @@ $associated = [];
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <tr>
-                            <td class="label"><label><?php echo __('Key / Url'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Key / Url')); ?></label></td>
                             <td class="value">
                                 <input type="text" id="az_video_uid_edit" name="az_video_uid_edit" value="" class="form-control" /> 
                             </td>
@@ -73,18 +71,18 @@ $associated = [];
                         </tr>
                         <?php if (count($az_languages)) : ?>
                         <tr>
-                            <td class="label"><label><?php echo __('Key / Url (international)'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Key / Url (international)')); ?></label></td>
                             <td class="value">
                                 <?php foreach ($az_languages as $id => $name) : ?>
                                 <div class="row">
-                                    <span style="min-width: 50px; display: inline-block;"><?php echo strtoupper($name); ?></span>
-                                    <input type="text" name="az_video_lang_edit[<?php echo $id; ?>]"
-                                        data-lang="<?php echo $id; ?>" 
+                                    <span style="min-width: 50px; display: inline-block;"><?= $block->escapeHtml(strtoupper($name)); ?></span>
+                                    <input type="text" name="az_video_lang_edit[<?= $block->escapeHtml($id); ?>]"
+                                        data-lang="<?= $block->escapeHtml($id); ?>" 
                                         value="" class="az_video_lang_edit form-control" style="margin-bottom: 5px; width: 225px;" />
                                 </div>
                                 <?php endforeach; ?>
                                 <p class="note">
-                                    <?php echo __('If you like you can define different video sources for different languages'); ?>
+                                    <?= $block->escapeHtml(__('If you like you can define different video sources for different languages')); ?>
                                 </p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
@@ -93,19 +91,19 @@ $associated = [];
 
                         <?php if (count($associated)) : ?>
                         <tr id="az_comb_video">
-                            <td class="label"><label><?php echo __('Combinations'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Combinations')); ?></label></td>
                             <td class="value">
                                 <button id="az_comb_check_all_video" style="margin-bottom: 10px;">
-                                    <?php echo __('check all'); ?>
+                                    <?= $block->escapeHtml(__('check all')); ?>
                                 </button><br>
 
                                 <?php foreach ($associated as $id => $name) : ?>
-                                <input type="checkbox" name="az_combinations_video[]" value="<?php echo $id ?>" 
-                                    class="az_settings_combinations_video">  <?php echo $name ?><br>
+                                <input type="checkbox" name="az_combinations_video[]" value="<?= $block->escapeHtml($id) ?>" 
+                                    class="az_settings_combinations_video">  <?= $block->escapeHtml($name) ?><br>
                                 <?php endforeach; ?>
                                 <p class="note">
-                                    <?php echo __('Here you can define if this video should be bind to associated products.') ?>
-                                    <?php echo __('If you do not select any this video will be shown in all associated products.') ?>
+                                    <?= $block->escapeHtml(__('Here you can define if this video should be bind to associated products.')) ?>
+                                    <?= $block->escapeHtml(__('If you do not select any this video will be shown in all associated products.')) ?>
                                 </p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
@@ -113,14 +111,14 @@ $associated = [];
                         <?php endif; ?>
 
                         <tr>
-                            <td class="label"><label><?php echo __('Settings'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Settings')); ?></label></td>
                             <td class="value">
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th><?php echo __('Name'); ?></th>
+                                            <th><?= $block->escapeHtml(__('Name')); ?></th>
                                             <th></th>
-                                            <th style="width: 220px"><?php echo __('Value'); ?></th>
+                                            <th style="width: 220px"><?= $block->escapeHtml(__('Value')); ?></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -132,13 +130,13 @@ $associated = [];
                                                 <div class="row_">
                                                     <button class="scalable add" id="az_link_add_option_video" style="margin-top: 5px;">
                                                          <span><span><span>
-                                                            <?php echo __('Add an option'); ?>
+                                                            <?= $block->escapeHtml(__('Add an option')); ?>
                                                          </span></span></span>
                                                     </button>
                                                     <p class="note">
-                                                        <?php echo __('Except the "position" option which defines the thumb position in the slider you can define query string parameters and values specific for the API of the vendor. '); ?>
-                                                        <?php echo __('To change these query string API parameters globally for all videos of this type, please see within the module configuration in "videoSettings" option. '); ?>
-                                                        <?php echo __('Typical parameters are "autoplay", "controls" and the like. '); ?>
+                                                        <?= $block->escapeHtml(__('Except the "position" option which defines the thumb position in the slider you can define query string parameters and values specific for the API of the vendor. ')); ?>
+                                                        <?= $block->escapeHtml(__('To change these query string API parameters globally for all videos of this type, please see within the module configuration in "videoSettings" option. ')); ?>
+                                                        <?= $block->escapeHtml(__('Typical parameters are "autoplay", "controls" and the like. ')); ?>
                                                     </p>
                                                 </div>
                                             </td>
@@ -152,11 +150,11 @@ $associated = [];
                                         <td><input type="text" name="az_pair_value[]" value="value_placeholder" class="az_pair_values_video form-control"></td>
                                         <td>
                                             <a class="link_textarea_option_video" href="#">
-                                                <?php echo __('Edit'); ?>
+                                                <?= $block->escapeHtml(__('Edit')); ?>
                                             </a>
                                             &ensp;&ensp;
                                             <a class="link_remove_option_video" href="#">
-                                                <?php echo __('Delete'); ?>
+                                                <?= $block->escapeHtml(__('Delete')); ?>
                                             </a>
                                         </td>
                                     </tr>
@@ -170,7 +168,7 @@ $associated = [];
                             <td class="value">
                                 <button class="scalable save az_biggerButton" name="az_submitSettings_video" 
                                     id="az_submitSettings_video" style="margin-top: 10px;">
-                                    <span><span><span><?php echo __('Save and stay'); ?></span></span></span>
+                                    <span><span><span><?= $block->escapeHtml(__('Save and stay')); ?></span></span></span>
                                 </button>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
@@ -188,30 +186,28 @@ $associated = [];
             <div style="text-align: right;">
                 <button class="az_link_add_option" id="az_link_add_video" style="width: 100%;">
                     <i class="icon-plus"></i>
-                    <span><?php echo __('Add a new video'); ?></span>
+                    <span><?= $block->escapeHtml(__('Add a new video')); ?></span>
                 </button>
 
             </div>
             <br>
             <div class="row" id="az_newFormVideo" style="display: none">
                 <p class="message message-info">
-                    <?php
-                    echo __('After adding basic information in the fields below you can open the new entry in "existing videos" dropdown above and change the data. ');
-                    echo __('Also provide language specific values and assign the video to associated products if needed. ');
-                    ?>
+                    <?= $block->escapeHtml(__('After adding basic information in the fields below you can open the new entry in "existing videos" dropdown above and change the data. '));?>
+                    <?= $block->escapeHtml(__('Also provide language specific values and assign the video to associated products if needed. '));?>
                 </p>
                 <table cellspacing="0" class="form-list" style="margin-top: 10px;">
                     <tbody>
                         <tr>
-                            <td class="label"><label><?php echo __('Name'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Name')); ?></label></td>
                             <td class="value">
                                 <input type="text" id="az_video_name_new" name="az_video_name_new" value="" class="form-control" />
-                                <p class="note"><?php echo __('Please enter any name'); ?></p>
+                                <p class="note"><?= $block->escapeHtml(__('Please enter any name')); ?></p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <tr>
-                            <td class="label"><label><?php echo __('Type'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Type')); ?></label></td>
                             <td class="value">
                                 <select class="form-control" id="az_video_type_new" name="az_video_type_new">
                                     <option value="youtube">YouTube</option>
@@ -219,15 +215,15 @@ $associated = [];
                                     <option value="dailymotion">Dailymotion</option>
                                     <option value="videojs">HTML5 / videojs</option>
                                 </select>
-                                <p class="note"><?php echo __('Please choose video type'); ?></p>
+                                <p class="note"><?= $block->escapeHtml(__('Please choose video type')); ?></p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <tr>
-                            <td class="label"><label><?php echo __('Key / Url'); ?></label></td>
+                            <td class="label"><label><?= $block->escapeHtml(__('Key / Url')); ?></label></td>
                             <td class="value">
                                 <input type="text" id="az_video_uid_new" name="az_video_uid_new" value="" class="form-control" /> 
-                                <p class="note"><?php echo __('Enter the video key or URL for mp4'); ?></p>
+                                <p class="note"><?= $block->escapeHtml(__('Enter the video key or URL for mp4')); ?></p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
@@ -235,7 +231,7 @@ $associated = [];
                             <td class="label"><label></label></td>
                             <td class="value">
                                 <button class="scalable save az_biggerButton" id="az_add_video">
-                                    <span><span><span><?php echo __('Add'); ?></span></span></span>
+                                    <span><span><span><?= $block->escapeHtml(__('Add')); ?></span></span></span>
                                 </button>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
@@ -258,10 +254,10 @@ $associated = [];
                         <thead>
                             <tr class="headings">
                                 <th class="data-grid-th fixed-width-lg"><span class="title_box"></span></th>
-                                <th class="data-grid-th"><span class="title_box"><?php echo __('Name'); ?></span></th>
-                                <th class="data-grid-th" style="width: 100px;"><span class="title_box"><?php echo __('Active'); ?></span></th>
-                                <th class="data-grid-th"><span class="title_box"><?php echo __('Type'); ?></span></th>
-                                <th class="data-grid-th"><span class="title_box"><?php echo __('Key / Link'); ?></span></th>
+                                <th class="data-grid-th"><span class="title_box"><?= $block->escapeHtml(__('Name')); ?></span></th>
+                                <th class="data-grid-th" style="width: 100px;"><span class="title_box"><?= $block->escapeHtml(__('Active')); ?></span></th>
+                                <th class="data-grid-th"><span class="title_box"><?= $block->escapeHtml(__('Type')); ?></span></th>
+                                <th class="data-grid-th"><span class="title_box"><?= $block->escapeHtml(__('Key / Link')); ?></span></th>
                                 <th class="data-grid-th last" style="width: 250px;"></th> <!-- action -->
                             </tr>
                         </thead>
@@ -272,7 +268,7 @@ $associated = [];
                     <table id="az_lineSetVideo" style="display: none;">
                         <tr id="az_video_line_id">
                             <td class="az_tbl_vid_img">
-                                <img src="<?php echo $this->getBaseUrl() ?>axzoom/default-video-thumbnail.jpg" 
+                                <img src="<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/default-video-thumbnail.jpg" 
                                     alt="img" title="img" 
                                     class="img-thumbnail" 
                                     style="max-width: 100px; cursor: pointer;">
@@ -283,9 +279,9 @@ $associated = [];
                             <td>
                                 <span class="switch prestashop-switch fixed-width-lg hide_class az_switch_status_video">
                                     <input type="radio" name="status_field" id="status_field_on" value="1" checked_on />
-                                    <label class="t" for="status_field_on"><?php echo __('Yes'); ?></label>
+                                    <label class="t" for="status_field_on"><?= $block->escapeHtml(__('Yes')); ?></label>
                                     <input type="radio" name="status_field" id="status_field_off" value="0" checked_off />
-                                    <label class="t" for="status_field_off"><?php echo __('No'); ?></label>
+                                    <label class="t" for="status_field_off"><?= $block->escapeHtml(__('No')); ?></label>
                                     <a class="slide-button btn"></a>
                                 </span>
                             </td>
@@ -293,13 +289,13 @@ $associated = [];
                             <td class="az_tbl_vid_uid" style="word-break: break-all;">video_uid</td>
                             <td>
                                 <button class="az_delete_video scalable delete" style="margin-bottom: 5px;">
-                                    <span> <?php echo __('Delete'); ?></span>
+                                    <span> <?= $block->escapeHtml(__('Delete')); ?></span>
                                 </button>
                                 <button class="az_preview_video " style="margin-bottom: 5px;">
-                                    <span> <?php echo __('Preview'); ?> </span>
+                                    <span> <?= $block->escapeHtml(__('Preview')); ?> </span>
                                 </button>
                                 <button class="az_edit_video " style="margin-bottom: 5px;">
-                                    <span> <?php echo __('Edit'); ?></span>
+                                    <span> <?= $block->escapeHtml(__('Edit')); ?></span>
                                 </button>
                             </td>
                         </tr>
@@ -336,23 +332,23 @@ $associated = [];
 *  @license        http://www.ajax-zoom.com/index.php?cid=download
 */
 
-window.thumbnail_auto = '<?php echo $this->getBaseUrl() ?>axzoom/default-video-thumbnail.jpg';
+window.thumbnail_auto = '<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/default-video-thumbnail.jpg';
 
-var az_videos = <?php echo json_encode($az_videos, true); ?>;
+var az_videos = <?= json_encode($az_videos, true); ?>;
 var az_select_videos = jQuery('#az_id_video').clone();
 var az_languages = {"en":"en","fr":"fr","de":"de"}; <?php /*echo json_encode($az_languages, true);*/ ?>;
-var az_id_product = <?php echo $productId; ?>;
-var az_token = '<?php echo $this->getFormKey(); ?>';
+var az_id_product = <?= $block->escapeHtml($productId); ?>;
+var az_token = '<?= $block->escapeHtml($block->getFormKey()); ?>';
 
-var az_lang_define_key = '<?php echo __('Please define Key / Url field'); ?>';
-var az_lang_success_change_settings = '<?php echo __('Video settings have been changed'); ?>';
-var az_lang_new_video_added = '<?php echo __('Video settings have been changed'); ?>';
-var az_lang_video_not_added = '<?php echo __('Video has not been added'); ?>';
-var az_lang_are_you_sure = '<?php echo __('Are you sure?'); ?>';
-var az_lang_video_deleted = '<?php echo __('Video has been deleted'); ?>';
-var az_lang_video_not_deleted = '<?php echo __('Video has not been deleted'); ?>';
-var az_lang_video_enabled = '<?php echo __('Video has been enabled'); ?>';
-var az_lang_video_disabled = '<?php echo __('Video has been disabled'); ?>';
+var az_lang_define_key = '<?= $block->escapeHtml(__('Please define Key / Url field')); ?>';
+var az_lang_success_change_settings = '<?= $block->escapeHtml(__('Video settings have been changed')); ?>';
+var az_lang_new_video_added = '<?= $block->escapeHtml(__('Video settings have been changed')); ?>';
+var az_lang_video_not_added = '<?= $block->escapeHtml(__('Video has not been added')); ?>';
+var az_lang_are_you_sure = '<?= $block->escapeHtml(__('Are you sure?')); ?>';
+var az_lang_video_deleted = '<?= $block->escapeHtml(__('Video has been deleted')); ?>';
+var az_lang_video_not_deleted = '<?= $block->escapeHtml(__('Video has not been deleted')); ?>';
+var az_lang_video_enabled = '<?= $block->escapeHtml(__('Video has been enabled')); ?>';
+var az_lang_video_disabled = '<?= $block->escapeHtml(__('Video has been disabled')); ?>';
 </script>
 
 <script type="text/javascript">
@@ -526,7 +522,7 @@ jQuery(function($) {
                 return;
             }
 
-            doAdminAjax360('<?php echo $this->getUrlAjax('addVideo'); ?>', { 
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('addVideo')); ?>', { 
                 "action": "addVideo",
                 "name": $('#az_video_name_new').val(),
                 "type": $('#az_video_type_new').val(),
@@ -555,7 +551,7 @@ jQuery(function($) {
 
             if (id) {
                 if (confirm(az_lang_are_you_sure)) {
-                    doAdminAjax360('<?php echo $this->getUrlAjax('deleteVideo'); ?>', {
+                    doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('deleteVideo')); ?>', {
                         "action": "deleteVideo",
                         "id_video": id,
                         "id_product": az_id_product,
@@ -581,7 +577,7 @@ jQuery(function($) {
             var status = $(this).val();
             var id = $(this).closest('tr').attr('id').replace('az_video_line_', '');
 
-            doAdminAjax360('<?php echo $this->getUrlAjax('setVideoStatus'); ?>', {
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('setVideoStatus')); ?>', {
                 "action": "setVideoStatus",
                 "id_video": id,
                 "status": status,
@@ -654,7 +650,7 @@ jQuery(function($) {
                 uid_int[_this.attr('data-lang')] = $(this).val();
             });
 
-            doAdminAjax360('<?php echo $this->getUrlAjax('saveSettingsVideo'); ?>', {
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('saveSettingsVideo')); ?>', {
                 "action": "saveSettingsVideo",
                 "id_product": az_id_product,
                 "id_video": video_id,
@@ -666,8 +662,10 @@ jQuery(function($) {
                 "uid": $('#az_video_uid_edit').val(),
                 "uid_int": JSON.stringify(uid_int),
                 "token": az_token
-            }, function (data) { 
-                var data = $.parseJSON(data);
+            }, function (data) {
+                if(jQuery.type(data) != "object") { 
+                    var data = $.parseJSON(data);
+                }
                 az_videos = data.videos;
                 az_videoSettingsSelect();
 
@@ -711,7 +709,7 @@ jQuery(function($) {
             var id = $(this).closest('tr').attr('id').replace('az_video_line_', '');
 
             $.openAjaxZoomInFancyBox( {
-                href: '<?php echo $this->getBaseUrl() ?>axzoom/preview/preview_video.php?id_video='+id, iframe: true
+                href: '<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/preview/preview_video.php?id_video='+id, iframe: true
             });
         } );
 

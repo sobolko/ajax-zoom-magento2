@@ -11,7 +11,6 @@ class SetProductStatus extends \Magento\Backend\App\Action
     protected $_resource;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Ax360 $Ax360,
@@ -43,10 +42,15 @@ class SetProductStatus extends \Magento\Backend\App\Action
             }
         }
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => 'ok',
             'confirmations' => ['The status has been updated.']
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 
     public function activateAx($productId)

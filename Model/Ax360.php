@@ -25,7 +25,7 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 
     protected function _construct()
     {
-        $this->_init('Ax\Zoom\Model\Resource\Ax360');
+        $this->_init('Ax\Zoom\Model\Resources\Ax360');
     }
 
     public function getSetsGroups($productId)
@@ -77,10 +77,12 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 
                 if ($combination_id) {
                     $combinations = json_decode($group['combinations'], true);
-                    if (!empty($combinations) && count($combinations) > 0 && !in_array($combination_id, $combinations)) {
+                    if (!empty($combinations) && count($combinations) > 0 &&
+                        !in_array($combination_id, $combinations)) {
                         continue;
                     }
-                } else { // we ignore the "360 views" which assigned to the child products (we dont show them by default)
+                // we ignore the "360 views" which assigned to the child products (we dont show them by default)
+                } else {
                     if (!in_array($group['combinations'], [''], '[]')) {
                         continue;
                     }
@@ -109,9 +111,16 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
                     }
 
                     if ($group['qty'] == 1) {
-                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "/" . $group['id_360set'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
+                        
+                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() .
+                            "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "/" .
+                            $group['id_360set'] . "'" . $settings . ", 'combinations': [" .
+                            $group['combinations'] . "] $crop_str $hotspot_str}";
+
                     } else {
-                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
+                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() .
+                            "axzoom/pic/360/" . $productId . "/" . $group['id_360'] . "'" . $settings .
+                            ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
                     }
                 }
             }
@@ -146,9 +155,19 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
                     }
 
                     if ($group['qty'] == 1) {
-                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "/" . $group['id_360set'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
+                        
+                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() .
+                            "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "/" .
+                            $group['id_360set'] . "'" . $settings . ", 'combinations': [" .
+                            $group['combinations'] . "] $crop_str $hotspot_str}";
+
                     } else {
-                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() . "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "'" . $settings . ", 'combinations': [" . $group['combinations'] . "] $crop_str $hotspot_str}";
+                        
+                        $tmp[] = "'" . $group['id_360'] . "'" . ":  {'path': '" . $this->rootFolder() .
+                            "axzoom/pic/360/" . $group['id_product'] . "/" . $group['id_360'] . "'" .
+                            $settings . ", 'combinations': [" . $group['combinations'] .
+                            "] $crop_str $hotspot_str}";
+
                     }
                 }
             }
@@ -166,7 +185,8 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
           
         $settings = (array)$this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonDecode($str);
         foreach ($settings as $key => $value) {
-            if ($value == 'false' || $value == 'true' || $value == 'null' || is_numeric($value) || substr($value, 0, 1) == '{' || substr($value, 0, 1) == '[') {
+            if ($value == 'false' || $value == 'true' || $value == 'null' || is_numeric($value) ||
+                substr($value, 0, 1) == '{' || substr($value, 0, 1) == '[') {
                 $res[] = "'$key': $value";
             } else {
                 $res[] = "'$key': '$value'";
@@ -200,7 +220,9 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
             $ext = end($tmp);
             $name = preg_replace('|\.' . $ext . '$|', '', $entry);
             $res[] = [
-                'thumb' => $Ax360set->getBaseUrl() . 'axzoom/axZm/zoomLoad.php?azImg=' . $Ax360set->rootFolder() . 'axzoom/pic/360/' . $productId . '/' . $id360 . '/' . $id360set . '/' . $entry . '&width=100&height=100&qual=90',
+                'thumb' => $Ax360set->getBaseUrl() . 'axzoom/axZm/zoomLoad.php?azImg=' . $Ax360set->rootFolder() .
+                    'axzoom/pic/360/' . $productId . '/' . $id360 . '/' . $id360set . '/' . $entry .
+                    '&width=100&height=100&qual=90',
                 'filename' => $entry,
                 'id' => $name,
                 'ext' => $ext
@@ -231,7 +253,8 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
 
     public function isProductActive($productId)
     {
-        return !Mage::getModel('axzoom/axproducts')->getCollection()->addFieldToFilter('id_product', $productId)->count();
+        return !Mage::getModel('axzoom/axproducts')->getCollection()
+            ->addFieldToFilter('id_product', $productId)->count();
     }
 
     public function getCSV($input, $delimiter = ",", $enclosure = '"', $escape = "\\")
@@ -295,7 +318,6 @@ class Ax360 extends \Magento\Framework\Model\AbstractModel
     {
         $Ax360set = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
         return $Ax360set->getBaseUrl();
-        //return $this->_storeManager->getStore()->getBaseUrl();
     }
 
     public function getBaseDir()

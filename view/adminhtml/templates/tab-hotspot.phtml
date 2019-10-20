@@ -1,26 +1,24 @@
 <?php
-$az_pictures_lst = $this->getImagesBackendHotspots($productId);
+$az_pictures_lst = $block->getImagesBackendHotspots($productId);
 ?>
 
 <div id="" class="entry-edit ax-tab">
     <div class="fieldset-wrapper">
         <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-            <strong class="title"><?php echo __('Add clickable hotspots to product pictures') ?></strong>
+            <strong class="title"><?= $block->escapeHtml(__('Add clickable hotspots to product pictures')) ?></strong>
         </div>
     </div>
     <div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
 
         <p class="message message-info">
-            <?php
-            echo __('You can add hotspots to you normal product pictures. ');
-            echo __('The image file itself will be not changed! ');
-            echo __('At front view, your users will see the hotspots at full screen or Fancybox. ');
-            echo __('For immediate visibility, activate axZmMode option in AJAX-ZOOM module settings. ');
-            echo __('New: if displayInSelector option is enabled, regular images are not shown in AJAX-ZOOM player. ');
-            echo __('However, regular images will be shown in the player, when the have hotspots configured here! ');
-            echo __('This image can be also excluded from gallery! ');
-            echo __('For configurable products, when displayInSelector is enabled, the image with hotspots must be part of configurable product and not assotiated ');
-            ?>
+            <?= $block->escapeHtml(__('You can add hotspots to you normal product pictures. '));?>
+            <?= $block->escapeHtml(__('The image file itself will be not changed! '));?>
+            <?= $block->escapeHtml(__('At front view, your users will see the hotspots at full screen or Fancybox. '));?>
+            <?= $block->escapeHtml(__('For immediate visibility, activate axZmMode option in AJAX-ZOOM module settings. '));?>
+            <?= $block->escapeHtml(__('New: if displayInSelector option is enabled, regular images are not shown in AJAX-ZOOM player. '));?>
+            <?= $block->escapeHtml(__('However, regular images will be shown in the player, when the have hotspots configured here! '));?>
+            <?= $block->escapeHtml(__('This image can be also excluded from gallery! '));?>
+            <?= $block->escapeHtml(__('For configurable products, when displayInSelector is enabled, the image with hotspots must be part of configurable product and not assotiated '));?>
         </p>
         <br>
 
@@ -29,11 +27,11 @@ $az_pictures_lst = $this->getImagesBackendHotspots($productId);
                 <thead>
                     <tr class="headings">
                         <th class="data-grid-th" style="width: 128px;"><span class="title_box"></span></th>
-                        <th class="data-grid-th" style="width: 90px"><span class="title_box"><span class="title_box"><?php echo __('Product ID'); ?></span></th>
-                        <th class="data-grid-th" style="width: 90px"><span class="title_box"><span class="title_box"><?php echo __('Media ID'); ?></span></th>
-                        <th class="data-grid-th"><span class="title_box"><span class="title_box"><?php echo __('Filename'); ?></span></th>
-                        <th class="data-grid-th"><span class="title_box"><span class="title_box"><?php echo __('Label'); ?></span></th>
-                        <th class="data-grid-th" style="width: 120px"><span class="title_box"><span class="title_box"><?php echo __('Hotspots active'); ?></span></th>
+                        <th class="data-grid-th" style="width: 90px"><span class="title_box"><span class="title_box"><?= $block->escapeHtml(__('Product ID')); ?></span></th>
+                        <th class="data-grid-th" style="width: 90px"><span class="title_box"><span class="title_box"><?= $block->escapeHtml(__('Media ID')); ?></span></th>
+                        <th class="data-grid-th"><span class="title_box"><span class="title_box"><?= $block->escapeHtml(__('Filename')); ?></span></th>
+                        <th class="data-grid-th"><span class="title_box"><span class="title_box"><?= $block->escapeHtml(__('Label')); ?></span></th>
+                        <th class="data-grid-th" style="width: 120px"><span class="title_box"><span class="title_box"><?= $block->escapeHtml(__('Hotspots active')); ?></span></th>
                         <th class="data-grid-th" style="width: 145px"></th>
                     </tr>
                 </thead>
@@ -64,15 +62,15 @@ $az_pictures_lst = $this->getImagesBackendHotspots($productId);
                         <td>
                             <span class="switch prestashop-switch fixed-width-lg hide_class az_switch_status_picture">
                                 <input type="radio" name="status_field" id="status_field_on" value="1" checked_on />
-                                <label class="t" for="status_field_on"><?php echo __('Yes'); ?></label>
+                                <label class="t" for="status_field_on"><?= $block->escapeHtml(__('Yes')); ?></label>
                                 <input type="radio" name="status_field" id="status_field_off" value="0" checked_off />
-                                <label class="t" for="status_field_off"><?php echo __('No'); ?></label>
+                                <label class="t" for="status_field_off"><?= $block->escapeHtml(__('No')); ?></label>
                                 <a class="slide-button btn"></a>
                             </span>
                         </td>
                         <td>
                             <button class="az_edit_picture_hotspots scalable" style="margin-bottom: 5px;">
-                                <span> <?php echo __('Edit hotspots'); ?></span>
+                                <span> <?= $block->escapeHtml(__('Edit hotspots')); ?></span>
                             </button>
                         </td>
                     </tr>
@@ -96,17 +94,17 @@ $az_pictures_lst = $this->getImagesBackendHotspots($productId);
 */
 
 jQuery(function($) {
-    var id_product = <?php echo $productId; ?>;
-    window.az_pictures_lst = <?php echo json_encode($az_pictures_lst); ?>;
+    var id_product = <?= $block->escapeHtml($productId); ?>;
+    window.az_pictures_lst = <?= json_encode($az_pictures_lst); ?>;
 
-    var az_lang_msg_pictures_refresh = '<?php echo __('Pictures list has been refreshed'); ?>';
-    var az_lang_hotspots_enabled = '<?php echo __('Hotspots for this image have been enabled'); ?>';
-    var az_lang_hotspots_disabled = '<?php echo __('Hotspots for this image have been disabled'); ?>';
+    var az_lang_msg_pictures_refresh = '<?= $block->escapeHtml(__('Pictures list has been refreshed')); ?>';
+    var az_lang_hotspots_enabled = '<?= $block->escapeHtml(__('Hotspots for this image have been enabled')); ?>';
+    var az_lang_hotspots_disabled = '<?= $block->escapeHtml(__('Hotspots for this image have been disabled')); ?>';
 
     window.az_refresh_pictures_list = function(msg) { 
         $('#az_picturesTableRows td').css('backgroundColor', '#f4f8fb');
 
-        doAdminAjax360('<?php echo $this->getUrlAjax('refreshPicturesList'); ?>', {
+        doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('refreshPicturesList')); ?>', {
             "action": "refreshPicturesList",
             "id_product": id_product
         }, function(data) {
@@ -175,14 +173,14 @@ jQuery(function($) {
         qstr += '&image_path=' + az_pictures_lst[id_media]['path'];
         */
 
-        var hotspotHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/hotspoteditor.php?';
+        var hotspotHref = '<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/preview/hotspoteditor.php?';
             hotspotHref += 'zoomData='+az_pictures_lst[id_media]['path'];
             hotspotHref += '&id_media='+id_media;
             hotspotHref += '&id_product='+az_pictures_lst[id_media]['id_product'];
             hotspotHref += '&image_name='+az_pictures_lst[id_media]['image_name'];
-            hotspotHref += '&url_get=<?php echo $this->getUrlAjax('GetHotspotImgJson'); ?>';
-            hotspotHref += '&url_set=<?php echo $this->getUrlAjax('SetHotspotImgJson'); ?>';
-            hotspotHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+            hotspotHref += '&url_get=<?= $block->escapeHtml($block->getUrlAjax('GetHotspotImgJson')); ?>';
+            hotspotHref += '&url_set=<?= $block->escapeHtml($block->getUrlAjax('SetHotspotImgJson')); ?>';
+            hotspotHref += '&form_key=<?= $block->escapeHtml($block->getFormKey()); ?>';
 
         $.openAjaxZoomInFancyBox( {
             href: hotspotHref,
@@ -200,7 +198,7 @@ jQuery(function($) {
         var status = $(this).val();
         var id = $(this).closest('tr').attr('id').replace('az_picture_line_', '');
 
-        doAdminAjax360('<?php echo $this->getUrlAjax('setHotspotStatus'); ?>', {
+        doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('setHotspotStatus')); ?>', {
             "action": "setHotspotStatus",
             "id_media": id,
             "status": status,

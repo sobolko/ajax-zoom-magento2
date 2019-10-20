@@ -1,16 +1,16 @@
 <?php
 
-$az_plugin_opt = $this->getPluginOptNameLabel();
-$az_plugin_prod_opt = $this->getProductPluginOpt($productId);
+$az_plugin_opt = $block->getPluginOptNameLabel();
+$az_plugin_prod_opt = $block->getProductPluginOpt($productId);
 
 
-$groups = $this->getGroups();
-$groups_360 = $this->filter360data($groups);
-$active = $this->isActive();
+$groups = $block->getGroups();
+$groups_360 = $block->filter360data($groups);
+$active = $block->isActive();
 
 // associated products
 $associated = [];
-$usedProducts = $this->getUsedProducts();
+$usedProducts = $block->getUsedProducts();
 foreach ($usedProducts as $p) {
     $data = $p->getData();
     $associated[$data['entity_id']] = $data['name'] . ' (' . $data['sku'] . ')';
@@ -36,42 +36,42 @@ foreach ($usedProducts as $p) {
 <div class="entry-edit ax-tab az_container">
     <div class="fieldset-wrapper">
         <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-            <strong class="title"><?php echo __('Enable / Disable AJAX-ZOOM for this product') ?></strong>
+            <strong class="title"><?= $block->escapeHtml(__('Enable / Disable AJAX-ZOOM for this product')) ?></strong>
         </div>
     </div>
     <div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
         <div class="hor-scroll">
-            <?php echo __('AJAX ZOOM enabled for detail view of this product') ?></label>
+            <?= $block->escapeHtml(__('AJAX ZOOM enabled for detail view of this product')) ?></label>
             <br>
             <input type="radio" name="az_active" id="az_active_on" value="1" <?php if ($active == 1) :?>checked="checked"<?php endif ?>/>
-            <label class="t" for="az_active_on"><?php echo __('Yes') ?></label>
+            <label class="t" for="az_active_on"><?= $block->escapeHtml(__('Yes')) ?></label>
             <input type="radio" name="az_active" id="az_active_off" value="0" <?php if ($active == 0) :?>checked="checked"<?php endif ?>/>
-            <label class="t" for="az_active_off"><?php echo __('No') ?></label>
+            <label class="t" for="az_active_off"><?= $block->escapeHtml(__('No')) ?></label>
         </div>
     </div>
     <div class="fieldset fieldset-wide ax-tab-content">
         <a href="javascript: void(0)" id="az_toggle_az_settings" style="text-decoration: none">
             <span class="az_arrowhead_down az_arrowhead_span"></span>
-            <?php echo __('Individual module settings for this product') ?>
+            <?= $block->escapeHtml(__('Individual module settings for this product')) ?>
         </a>
     </div>
 
             <div style="display: none;" id="az_az_settings">
 
                 <p class="message message-info">
-                    <?php echo __('Override module settings for this product only.') ?>
-                    <?php echo __('It is not needed and you do not have to set them here individually.') ?>
-                    <?php echo __('This is just for testing / experimenting and demo.') ?>
-                    <?php echo __('For reference see in module settings or visit www.ajax-zoom.com/examples/example32.php') ?>
+                    <?= $block->escapeHtml(__('Override module settings for this product only.')) ?>
+                    <?= $block->escapeHtml(__('It is not needed and you do not have to set them here individually.')) ?>
+                    <?= $block->escapeHtml(__('This is just for testing / experimenting and demo.')) ?>
+                    <?= $block->escapeHtml(__('For reference see in module settings or visit www.ajax-zoom.com/examples/example32.php')) ?>
                 </p>
 
 
                 <table style="width: 100%">
                     <thead>
                         <tr>
-                            <th><?php echo __('Name') ?></th>
+                            <th><?= $block->escapeHtml(__('Name')) ?></th>
                             <th></th>
-                            <th><?php echo __('Value') ?></th>
+                            <th><?= $block->escapeHtml(__('Value')) ?></th>
                             <th style="width: 120px;"></th>
                         </tr>
                     </thead>
@@ -82,7 +82,7 @@ foreach ($usedProducts as $p) {
                             <td colspan="4">
                                 <div class="row_">
                                     <button class="scalable add" id="az_link_add_option_module" style="margin-top: 3px;">
-                                        <span><span><span><?php echo __('Add an option') ?></span></span></span>
+                                        <span><span><span><?= $block->escapeHtml(__('Add an option')) ?></span></span></span>
                                     </button>
                                 </div>
                             </td>
@@ -100,11 +100,11 @@ foreach ($usedProducts as $p) {
                         <td style="white-space: nowrap;">
                             &nbsp;&nbsp;
                             <a class="link_textarea_option_module" href="#">
-                                <?php echo __('Edit') ?>
+                                <?= $block->escapeHtml(__('Edit')) ?>
                             </a>
                             &nbsp;&nbsp;
                             <a class="link_remove_option_module" href="#">
-                                <?php echo __('Delete') ?>
+                                <?= $block->escapeHtml(__('Delete')) ?>
                             </a>
                         </td>
                     </tr>
@@ -124,7 +124,7 @@ foreach ($usedProducts as $p) {
 <div class="entry-edit ax-tab">
     <div class="fieldset-wrapper">
         <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-            <strong class="title"><?php echo __('Settings for existing 360/3D') ?></strong>
+            <strong class="title"><?= $block->escapeHtml(__('Settings for existing 360/3D')) ?></strong>
         </div>
     </div>
 
@@ -133,33 +133,33 @@ foreach ($usedProducts as $p) {
             <table cellspacing="0" class="form-list">
                 <tbody>
                     <tr>
-                        <td class="label"><label for="meta_title"><?php echo __('360/3D View') ?></label></td>
+                        <td class="label"><label for="meta_title"><?= $block->escapeHtml(__('360/3D View')) ?></label></td>
                         <td class="value">
                             <div id="az_hidden_values">
                             <?php foreach ($groups as $group) : ?>
-                            <input type="hidden" name="settings[<?php echo $group['id_360'] ?>]" id="settings_<?php echo $group['id_360'] ?>" value="<?php echo urlencode($group['settings']) ?>">
-                            <input type="hidden" name="comb[<?php echo $group['id_360'] ?>]" id="settings_comb_<?php echo $group['id_360'] ?>" value="<?php echo urlencode($group['combinations']) ?>">
+                            <input type="hidden" name="settings[<?= $block->escapeHtml($group['id_360']) ?>]" id="settings_<?= $block->escapeHtml($group['id_360']) ?>" value="<?= urlencode($group['settings']) ?>">
+                            <input type="hidden" name="comb[<?= $block->escapeHtml($group['id_360']) ?>]" id="settings_comb_<?= $block->escapeHtml($group['id_360']) ?>" value="<?= urlencode($group['combinations']) ?>">
                             
                             <?php endforeach; ?>
                             </div>
                             <select id="id_360" name="id_360" style="min-width: 100px">
-                                <option value=""><?php echo __('Select') ?></option>
+                                <option value=""><?= $block->escapeHtml(__('Select')) ?></option>
                                 <?php foreach ($groups as $group) : ?>
-                                <option value="<?php echo $group['id_360'] ?>" data-settings="<?php echo urlencode($group['settings']) ?>" data-combinations="[<?php echo urlencode($group['combinations']) ?>]"><?php echo $group['name'] ?></option>
+                                <option value="<?= $block->escapeHtml($group['id_360']) ?>" data-settings="<?= urlencode($group['settings']) ?>" data-combinations="[<?= urlencode($group['combinations']) ?>]"><?= $block->escapeHtml($group['name']) ?></option>
                                 <?php endforeach; ?>
                             </select>                        
                         </td>
                         <td class="scope-label"><span class="nobr"></span></td>
                     </tr>
                     <tr id="pairs" style="display:none;">
-                        <td class="label"><label for="meta_title"><?php echo __('Settings') ?></label></td>
+                        <td class="label"><label for="meta_title"><?= $block->escapeHtml(__('Settings')) ?></label></td>
                         <td class="value">
                             <table>
                                 <thead>
                                     <tr>
-                                        <th><?php echo __('Name') ?></th>
+                                        <th><?= $block->escapeHtml(__('Name')) ?></th>
                                         <th></th>
-                                        <th style="width: 220px"><?php echo __('Value') ?></th>
+                                        <th style="width: 220px"><?= $block->escapeHtml(__('Value')) ?></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -170,7 +170,7 @@ foreach ($usedProducts as $p) {
                                         <td colspan="4">
                                             <div class="row_">
                                                 <button class="scalable add link_add_option">
-                                                    <span><span><span><?php echo __('Add an option') ?></span></span></span>
+                                                    <span><span><span><?= $block->escapeHtml(__('Add an option')) ?></span></span></span>
                                                 </button>
                                             </div>
                                         </td>
@@ -184,11 +184,11 @@ foreach ($usedProducts as $p) {
                                     <td><input type="text" name="value[]" value="value_placeholder" class="pair-values"></td>
                                     <td>
                                         <a class="link_textarea_option" href="#">
-                                            <?php echo __('Edit') ?>
+                                            <?= $block->escapeHtml(__('Edit')) ?>
                                         </a>
                                         &nbsp;&nbsp;
                                         <a class="link_remove_option" href="#">
-                                            <?php echo __('Delete') ?>
+                                            <?= $block->escapeHtml(__('Delete')) ?>
                                         </a>
                                     </td>
                                 </tr>
@@ -198,17 +198,17 @@ foreach ($usedProducts as $p) {
 
                     <?php if (count($associated)) : ?>
                     <tr id="comb" style="display:none;">
-                        <td class="label"><label for="meta_title"><?php echo __('Associated products') ?></label></td>
+                        <td class="label"><label for="meta_title"><?= $block->escapeHtml(__('Associated products')) ?></label></td>
                         <td class="value">
                             <button class="comb-check-all" style="margin-bottom: 10px;" value="check all" >check all</button><br>
 
                             <?php foreach ($associated as $id => $name) : ?>
-                            <input type="checkbox" name="combinations[]" value="<?php echo $id ?>" class="settings-combinations"> <?php echo $name ?><br>
+                            <input type="checkbox" name="combinations[]" value="<?= $block->escapeHtml($id) ?>" class="settings-combinations"> <?= $block->escapeHtml($name) ?><br>
                             <?php endforeach; ?>
                             
                             <div class="" style="display: block; margin-top: 10px;">
-                                <?php echo __('Same as with images you can define which 360 should be shown in conjunction with which combinations.') ?>
-                                <?php echo __('If you do not select any this 360 will be shown for all combinations.') ?>
+                                <?= $block->escapeHtml(__('Same as with images you can define which 360 should be shown in conjunction with which combinations.')) ?>
+                                <?= $block->escapeHtml(__('If you do not select any this 360 will be shown for all combinations.')) ?>
                             </div>                            
                         </td>
                     </tr>
@@ -221,15 +221,15 @@ foreach ($usedProducts as $p) {
 
 <script type="text/javascript">
 
-window.az_data_360 = <?php echo json_encode($groups_360); ?>;
-window.az_plugin_opt = <?php echo json_encode($az_plugin_opt); ?>;
-window.az_plugin_prod_opt = JSON.parse('<?php echo $az_plugin_prod_opt; ?>');
-window.az_lang_success_change_status = '<?php echo __('Status of AJAX-ZOOM being enabled for this product has been changed'); ?>';
-window.az_lang_settings_360_saved = '<?php echo __('Settings for 360 have been saved'); ?>';
-window.az_lang_module_settings_edited = '<?php echo __('Module settings for this product have been set'); ?>';
+window.az_data_360 = <?= json_encode($groups_360); ?>;
+window.az_plugin_opt = <?= json_encode($az_plugin_opt); ?>;
+window.az_plugin_prod_opt = JSON.parse('<?= $az_plugin_prod_opt; ?>');
+window.az_lang_success_change_status = '<?= $block->escapeHtml(__('Status of AJAX-ZOOM being enabled for this product has been changed')); ?>';
+window.az_lang_settings_360_saved = '<?= $block->escapeHtml(__('Settings for 360 have been saved')); ?>';
+window.az_lang_module_settings_edited = '<?= $block->escapeHtml(__('Module settings for this product have been set')); ?>';
 
 require(["jquery",
-    "<?php echo $this->getBaseUrl() ?>axzoom/jquery.editable-select.js"
+    "<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/jquery.editable-select.js"
     ], function($){
     
     // auto save
@@ -363,14 +363,18 @@ require(["jquery",
 
         $('#az_submitSettings_module').removeClass('az_save_require');
 
-        doAdminAjax360('<?php echo $this->getUrlAjax('saveProductAzSettings'); ?>', { 
+        doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('saveProductAzSettings')); ?>', { 
             "action": "saveProductAzSettings",
-            "id_product": <?php echo $productId; ?>,
+            "id_product": <?= $block->escapeHtml($productId); ?>,
             "names": names.join('|'),
             "values": values.join('|'),
             "ajax": 1
         }, function (data) { 
-            data = $.parseJSON(data);
+            if(jQuery.type(data) != "object") {
+                if(jQuery.type(data) != "object") {
+                    data = $.parseJSON(data);
+                }
+            }
             window.az_plugin_prod_opt = $.parseJSON(data.moduleSettings);
 
             $("#az_pairRows_module").empty();
@@ -389,7 +393,7 @@ require(["jquery",
     {
         var postData = deserialize($('#az_hidden_values :input').serialize());
 
-        doAdminAjax360('<?php echo $this->getUrlAjax('saveSettings'); ?>', postData, afterSaveSettings
+        doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('saveSettings')); ?>', postData, afterSaveSettings
         );
     }
 
@@ -405,7 +409,10 @@ require(["jquery",
     }
 
     function afterSaveSettings(data) { 
-        var data = $.parseJSON(data);
+
+        if(jQuery.type(data) != "object") {
+            var data = $.parseJSON(data);
+        }
 
         //$('#id_360').replaceWith(data.select);
         //$('#pairs').hide();

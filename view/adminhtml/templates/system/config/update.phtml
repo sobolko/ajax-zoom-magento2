@@ -37,7 +37,7 @@
             var dta_avail;
 
             var params = {};
-            new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+            new Ajax.Request('<?= $block->escapeHtml($block->getAjaxUrl()) ?>', {
                 parameters:     params,
                 loaderArea:     false,
                 asynchronous:   true,
@@ -63,7 +63,7 @@
                             jQuery("#az_updateTable").slideDown(300);
 
                             jQuery.ajax( {
-                                url: '<?php echo $block->getAzAvailVersionUrl() ?>',
+                                url: '<?= $block->escapeHtml($block->getAzAvailVersionUrl()) ?>',
                                 data: {'xx': 'yy'},
                                 success: function(data) {
                                     dta_avail = data;
@@ -125,7 +125,7 @@ msg_install += "</p>";
                                             jQuery("#axzoom_updateaz").addClass("disabled");
 
                                             jQuery.ajax( {
-                                                url: '<?php echo $block->getDownloadAxZmUrl() ?>',
+                                                url: '<?= $block->escapeHtml($block->getDownloadAxZmUrl()) ?>',
                                                 data: {'xx': 'yy'},
                                                 success: function(data) {
                                                     var data = jQuery.parseJSON(data);
@@ -210,10 +210,10 @@ msg_install += "</p>";
         </table>
         </div>
 
-<?php echo $block->getButtonHtml() ?>
-<p class="note"><?php echo __('Check if new AJAX-ZOOM (core files) version is available. It is located in /js/axzoom/axZm folder.') ?></p>
+<?= $block->getButtonHtml() ?>
+<p class="note"><?= $block->escapeHtml(__('Check if new AJAX-ZOOM (core files) version is available. It is located in /js/axzoom/axZm folder.')) ?></p>
 <span class="collect-indicator" id="update_span">
-    <img class="processing" hidden="hidden" alt="Updating" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
-    <img class="updated" hidden="hidden" alt="Updated" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
+    <img class="processing" hidden="hidden" alt="Updating" style="margin:0 5px" src="<?= $block->escapeHtml($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <img class="updated" hidden="hidden" alt="Updated" style="margin:-3px 5px" src="<?= $block->escapeHtml($block->getViewFileUrl('images/rule_component_apply.gif')) ?>"/>
     <span id="update_message_span"></span>
 </span>

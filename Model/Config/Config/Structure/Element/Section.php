@@ -54,9 +54,6 @@ class Section
         }
     }
 
-
-
-
     /**
      * Add dynamic region config groups for each country configured
      *
@@ -68,7 +65,6 @@ class Section
      */
     public function aroundSetData(OriginalSection $subject, callable $proceed, array $data, $scope)
     {
-
         // This method runs for every section.
         // Add a condition to check for the one to which we're
         // interested in adding groups.

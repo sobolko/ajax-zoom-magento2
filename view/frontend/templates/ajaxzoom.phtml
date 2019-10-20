@@ -1,33 +1,30 @@
 <?php
-$productId = $this->getProductId();
-$conf = $this->helper('Ax\Zoom\Helper\Data')->getConfig('axzoom_options');
+$productId = $block->getProductId();
+$conf = $block->conf();
 
-$ajaxzoom_initParam = $this->prepareInitParamFront($conf);
+$ajaxzoom_initParam = $block->prepareInitParamFront($conf);
 
-$axZmPath = $this->getBaseUrl() . 'axzoom/axZm/';
-$product = $this->getProduct();
-$imagesJson = $this->getImagesJson();
-$images360Json = $this->images360Json($productId);
-$az_gallery_position = @$conf['general_settings']['galleryPosition'];
-$images360jsonComb = $this->getImagesJsonComb();
+$axZmPath = $block->getBaseUrl() . 'axzoom/axZm/';
+$product = $block->getProduct();
+$imagesJson = $block->getImagesJson();
+$images360Json = $block->images360Json($productId);
+$az_gallery_position = empty($conf['general_settings']['galleryPosition']) ? '' : $conf['general_settings']['galleryPosition'];
+$images360jsonComb = $block->getImagesJsonComb();
 $az_img_hotspots = null;
 
-
 // !!! AZ: make it like magento1 plugin
-$az_img_hotspots = $this->getImageHotspotsProduct($productId);
+$az_img_hotspots = $block->getImageHotspotsProduct($productId);
 
-
-$ajaxzoom_displayInSelector = false; // !!! $conf['plugin_settings']['displayInSelector'];
-$ajaxzoom_displayInSelectorAppend = true; // !!! $conf['plugin_settings']['displayInSelectorAppend'];
+$ajaxzoom_displayInSelector = isset($conf['plugin_settings']['displayInSelector']) ? $conf['plugin_settings']['displayInSelector'] : false;
+$ajaxzoom_displayInSelectorAppend = isset($conf['plugin_settings']['displayInSelectorAppend']) ? $conf['plugin_settings']['displayInSelectorAppend'] : false;
 $ajaxzoom_containerId = 'axZm_mouseOverWithGalleryContainer';
 if (!isset($conf['plugin_settings']['displayInAzOpt'])) {
     $conf['plugin_settings']['displayInAzOpt'] = '{}';
 }
 
-$videosJson = $this->videosJson($productId);
+$videosJson = $block->videosJson($productId);
 
 ?>
-
 <style type="text/css">
     /* AZ: magento2 default theme menuover fix */
     .axZm_mouseOverImg {
@@ -35,8 +32,8 @@ $videosJson = $this->videosJson($productId);
     }
 </style>
 
-<div class="axZm_mouseOverWithGalleryContainer" id="<?php echo $ajaxzoom_containerId;?>" 
-    style="<?php echo $ajaxzoom_displayInSelector ? 'display: none' : ''; ?>">
+<div class="axZm_mouseOverWithGalleryContainer" id="<?= $block->escapeHtml($ajaxzoom_containerId); ?>" 
+    style="<?= $block->escapeHtml($ajaxzoom_displayInSelector ? 'display: none' : ''); ?>">
 
     <!-- Parent container for offset to the left or right -->
     <div class="axZm_mouseOverZoomContainerWrap">
@@ -45,12 +42,12 @@ $videosJson = $this->videosJson($productId);
         <div class="axZm_mouseOverTitleParentAbove"></div>
 
         <!-- Container for mouse over image -->
-        <div id="<?php echo $conf['general_settings']['divID']; ?>" class="axZm_mouseOverZoomContainer">
+        <div id="<?= $block->escapeHtml($conf['general_settings']['divID']); ?>" class="axZm_mouseOverZoomContainer">
 
             <!-- Optional CSS aspect ratio and message to preserve layout before JS is triggered -->
             <div class="axZm_mouseOverAspectRatio">
                 <div>
-                    <span><?php echo __('Image loading...'); ?></span>
+                    <span><?= $block->escapeHtml(__('Image loading...')); ?></span>
                 </div>
             </div>
 
@@ -58,7 +55,7 @@ $videosJson = $this->videosJson($productId);
     </div>
 
     <!-- gallery with thumbs (will be filled with thumbs by javascript) -->
-    <div id="<?php echo $conf['general_settings']['galleryDivID']; ?>" class="axZm_mouseOverGallery"></div>
+    <div id="<?= $block->escapeHtml($conf['general_settings']['galleryDivID']); ?>" class="axZm_mouseOverGallery"></div>
 
 </div>
 
@@ -77,25 +74,21 @@ if ($this->product_has_video_html5 === true && $conf['video_settings']['videoHtm
 */
 ?>
 
-
 <!-- AJAX-ZOOM js block -->
 <script type="text/javascript">
-var axBaseUrl = '<?php echo $this->getBaseUrl(); ?>';
+var axBaseUrl = '<?= $block->escapeHtml($block->getBaseUrl()); ?>';
 var spConfig = {};
 require(["jquery", "jquery/ui"], function() {
 
-    var images360jsonComb = jQuery.parseJSON('<?php echo json_encode($images360jsonComb); ?>');
+    var images360jsonComb = jQuery.parseJSON('<?= $block->escapeJsQuote(json_encode($images360jsonComb)); ?>');
 
     var proceedMageAjaxZoom = function() {
 
+        require(["<?= $block->escapeJsQuote(implode('","', $block->_loadJS())) ?>"], function($) {
 
-        require(["<?php echo implode('","', $this->_loadJS())?>"], function($) {
-
-            var AXZMPATH = '<?php echo $axZmPath; ?>';
-            var IMAGES_JSON = <?php echo $imagesJson ?>;
-            var IMAGES_360_JSON = <?php echo $images360Json?>;
-
-            
+            var AXZMPATH = '<?= $block->escapeHtml($axZmPath); ?>';
+            var IMAGES_JSON = <?= $block->escapeJsQuote($imagesJson) ?>;
+            var IMAGES_360_JSON = <?= $images360Json?>;
 
             window.initAxzoom = function() {
                 if (!jQuery.axZm_psh) {
@@ -105,31 +98,26 @@ require(["jquery", "jquery/ui"], function() {
                 // Default plain images
                 jQuery.axZm_psh.IMAGES_JSON = IMAGES_JSON;
                 
-
                 // Default 360
                 jQuery.axZm_psh.IMAGES_360_JSON = IMAGES_360_JSON;
-                jQuery.axZm_psh.VIDEOS_JSON = <?php echo $videosJson; ?>;
-                jQuery.axZm_psh.IMAGES_HOTSPOTS = <?php echo json_encode($az_img_hotspots, JSON_FORCE_OBJECT); ?>;
+                jQuery.axZm_psh.VIDEOS_JSON = <?= $block->escapeJsQuote($videosJson); ?>;
+                jQuery.axZm_psh.IMAGES_HOTSPOTS = <?= $block->escapeJsQuote(json_encode($az_img_hotspots, JSON_FORCE_OBJECT)); ?>;
 
-                jQuery.axZm_psh.axZmPath = '<?php echo $axZmPath; ?>';
-                jQuery.axZm_psh.shopLang = '<?php echo substr($this->_store->getLocale(), 0, 2); ?>';
-                jQuery.axZm_psh.initParam = <?php echo  $ajaxzoom_initParam; ?>;
-
-
+                jQuery.axZm_psh.axZmPath = '<?= $block->escapeHtml($axZmPath); ?>';
+                jQuery.axZm_psh.shopLang = '<?= $block->escapeHtml(substr($block->_store->getLocale(), 0, 2)); ?>';
+                jQuery.axZm_psh.initParam = <?= $ajaxzoom_initParam; ?>;
 
                 jQuery.axZm_psh.divID = jQuery.axZm_psh.initParam.divID;
                 jQuery.axZm_psh.galleryDivID = jQuery.axZm_psh.initParam.galleryDivID;
-                jQuery.axZm_psh.displayInSelector = '<?php echo $ajaxzoom_displayInSelector; ?>';
-                jQuery.axZm_psh.displayInSelectorAppend = <?php echo $ajaxzoom_displayInSelectorAppend ? 'true' : 'false'; ?>;
-                jQuery.axZm_psh.containerId = '<?php echo $ajaxzoom_containerId; ?>';
-                jQuery.axZm_psh.headSelector = '<?php echo __('360° / Video'); ?>';
-                jQuery.axZm_psh.displayInAzOpt = <?php echo $conf['plugin_settings']['displayInAzOpt']; ?>;
+                jQuery.axZm_psh.displayInSelector = '<?= $block->escapeHtml($ajaxzoom_displayInSelector); ?>';
+                jQuery.axZm_psh.displayInSelectorAppend = <?= $block->escapeHtml($ajaxzoom_displayInSelectorAppend ? 'true' : 'false'); ?>;
+                jQuery.axZm_psh.containerId = '<?= $block->escapeHtml($ajaxzoom_containerId); ?>';
+                jQuery.axZm_psh.headSelector = '<?= $block->escapeHtml(__('360° / Video')); ?>';
+                jQuery.axZm_psh.displayInAzOpt = <?= $block->escapeHtml($conf['plugin_settings']['displayInAzOpt']); ?>;
 
                 // Colors / attributes
                 jQuery.axZm_psh.axAssociated = {};
                 window.preRenderAxzoom();
-
-
             };
 
             window.triggerAxzoom = function() {
@@ -143,9 +131,6 @@ require(["jquery", "jquery/ui"], function() {
             }
 
             window.triggerAxzoom();
-
-
-
 
             $('.gallery-placeholder').css({'position': 'absolute', 'top': '-5000px'});
         });
@@ -162,8 +147,6 @@ require(["jquery", "jquery/ui"], function() {
 
     doubleCheckJqueryCore();
 
-
-
     // handle swatch click (update images if needed)
     jQuery(document).on('click', '.swatch-option', function() {
         var IMAGES_JSON = {};
@@ -172,14 +155,12 @@ require(["jquery", "jquery/ui"], function() {
 
         var product_id = mageSwatchRenderer.getProduct();
 
-
         if(!product_id) {
             return;
         }
 
-
+        console.log(product_id, images360jsonComb);
         var encoded  = images360jsonComb[product_id];
-
 
         var images = mageSwatchRenderer.options.jsonConfig.images[product_id];
         jQuery.each(images, function (idx, image) {
@@ -194,13 +175,8 @@ require(["jquery", "jquery/ui"], function() {
 
         setTimeout(function () {
             jQuery.axZm_psh.resetAxZoom();
-        }, 500);
-
-        
-        
+        }, 500);  
     });
-
-
 });
 
 </script>

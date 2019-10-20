@@ -5,7 +5,7 @@
 <div id="product-images360" class="entry-edit" style="display:none">
     <div class="fieldset-wrapper">
         <div class="fieldset-wrapper-title admin__fieldset-wrapper-title">
-            <strong class="title"><?php echo __('Images') ?></strong>
+            <strong class="title"><?= $block->escapeHtml(__('Images')) ?></strong>
         </div>
     </div>
     <div class="fieldset fieldset-wide" id="group_fields9">
@@ -15,8 +15,8 @@
             <div class="row">
                 <div class="form-group">
                     <label class="control-label col-lg-3 file_upload_label">
-                        <span class="label-tooltip" data-toggle="tooltip" title="<?php echo __('Format: JPG, GIF, PNG. Filesize: %s MB max', $maxImageSize) ?>">
-                            <?php echo __('Add a new image to this image set') ?>
+                        <span class="label-tooltip" data-toggle="tooltip" title="<?= $block->escapeHtml(__('Format: JPG, GIF, PNG. Filesize: %s MB max', $maxImageSize)) ?>">
+                            <?= $block->escapeHtml(__('Add a new image to this image set')) ?>
                         </span>
                     </label>
                     <div class="col-lg-9">
@@ -28,8 +28,8 @@
                 <table class="data border data-grid" id="imageTable360">
                     <thead>
                         <tr class="headings">
-                            <th class="data-grid-th"><?php echo __('Image') ?></th>
-                            <th class="data-grid-th"><?php echo __('Actions') ?></th>
+                            <th class="data-grid-th"><?= $block->escapeHtml(__('Image')) ?></th>
+                            <th class="data-grid-th"><?= $block->escapeHtml(__('Actions')) ?></th>
                         </tr>
                     </thead>
                     <tbody id="imageList360">
@@ -39,17 +39,17 @@
             <table id="lineType360" style="display:none;">
                 <tr id="image_id">
                     <td>
-                        <img src="<?php echo $this->rootFolder() ?>axzoom/image_path.gif" alt="legend" title="legend" class="img-thumbnail" />
+                        <img src="<?= $block->escapeHtml($block->rootFolder()) ?>axzoom/image_path.gif" alt="legend" title="legend" class="img-thumbnail" />
                     </td>
                     <td style="width:75px;">
                         <a type="button" class="delete_product_image360 scalable delete" href="">
-                            <?php echo __('Delete this image') ?>
+                            <?= $block->escapeHtml(__('Delete this image')) ?>
                         </a>
                     </td>
                 </tr>
             </table>
             <div class="panel-footer">
-                <button class="btn_cancel"><?php echo __('Cancel') ?></button>
+                <button class="btn_cancel"><?= $block->escapeHtml(__('Cancel')) ?></button>
             </div>
         </div>
     </div>
@@ -70,13 +70,15 @@
 
     require([
         "jquery", 
-        "<?php echo $this->getBaseUrl() ?>axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js", 
-        "<?php echo $this->getBaseUrl() ?>axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js"
+        "<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js", 
+        "<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js"
         ], function($){
         
         function afterDeleteProductImage360(data)
         {
-            data = $.parseJSON(data);
+            if(jQuery.type(data) != "object") {
+                data = $.parseJSON(data);
+            }
             if (data)
             {
                 id = data.content.id;
@@ -101,12 +103,12 @@
             id = $(this).parent().parent().attr('id');
             var id_360set = $('#id_360set').val();
             var ext = $(this).parent().parent().find('img').attr('src').split('.').pop();
-            if (confirm("<?php echo __('Are you sure?') ?>"))
-            doAdminAjax360('<?php echo $this->getUrlAjax('deleteProductImage360'); ?>', {
+            if (confirm("<?= $block->escapeHtml(__('Are you sure?')) ?>"))
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('deleteProductImage360')); ?>', {
                     "id_image":id,
                     'id_360set': id_360set,
                     "ext":ext,
-                    "id_product" : <?php echo $productId ?>
+                    "id_product" : <?= $block->escapeHtml($productId) ?>
                     }, afterDeleteProductImage360
             );
         });

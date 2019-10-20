@@ -30,7 +30,11 @@ class GetAzAvailVersion extends \Magento\Backend\App\Action
             ],
         ];
 
-        $output_az = file_get_contents('http://www.ajax-zoom.com/getlatestversion.php', false, stream_context_create($arrContextOptions));
+        $output_az = file_get_contents(
+            'http://www.ajax-zoom.com/getlatestversion.php',
+            false,
+            stream_context_create($arrContextOptions)
+        );
 
         if ($output_az != false) {
             $return_arr = json_decode($output_az, true);
@@ -40,6 +44,9 @@ class GetAzAvailVersion extends \Magento\Backend\App\Action
             ];
         }
         
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode($return_arr));
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

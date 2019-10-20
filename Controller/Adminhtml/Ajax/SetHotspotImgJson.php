@@ -8,7 +8,6 @@ class SetHotspotImgJson extends \Magento\Backend\App\Action
     protected $Axhotspot;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Axhotspot $Axhotspot
@@ -46,11 +45,15 @@ class SetHotspotImgJson extends \Magento\Backend\App\Action
       
         }
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => 1 // !!!
-            ]));
-    }
+            ];
 
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
+    }
 
     public function hasImgHotspots($id_media)
     {

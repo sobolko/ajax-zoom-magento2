@@ -5,7 +5,7 @@ class Axvideo extends \Magento\Framework\Model\AbstractModel
 {
     protected function _construct()
     {
-        $this->_init('Ax\Zoom\Model\Resource\Axvideo');
+        $this->_init('Ax\Zoom\Model\Resources\Axvideo');
     }
 
     public function getVideos($productId)

@@ -26,10 +26,15 @@ class DeleteVideo extends \Magento\Backend\App\Action
 
         $this->Axvideo->setId($id_video)->delete();
         
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'id_video' => $id_video,
             'removed' => ($this->Axvideo->load($id_video)->getName() ? 0 : 1),
             'confirmations' => ['The video was successfully removed.']
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

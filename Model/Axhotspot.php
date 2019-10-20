@@ -3,7 +3,6 @@ namespace Ax\Zoom\Model;
 
 class Axhotspot extends \Magento\Framework\Model\AbstractModel
 {
-
     protected $_objectManager;
     protected $_storeManager;
 
@@ -23,10 +22,9 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
     }
 
-
     protected function _construct()
     {
-        $this->_init('Ax\Zoom\Model\Resource\Axhotspot');
+        $this->_init('Ax\Zoom\Model\Resources\Axhotspot');
     }
 
     public function getFrontendHotspots($productId)
@@ -47,7 +45,6 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
 
         return $return;
     }
-
 
     public function getImagesBackendHotspots($id_product, $sub = false)
     {
@@ -112,7 +109,6 @@ class Axhotspot extends \Magento\Framework\Model\AbstractModel
             }
             */
         
-
         return $az_pictures_lst;
     }
 

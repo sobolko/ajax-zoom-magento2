@@ -8,7 +8,6 @@ class SetHotspotJson extends \Magento\Backend\App\Action
     protected $Ax360;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Ax360 $Ax360
@@ -28,8 +27,13 @@ class SetHotspotJson extends \Magento\Backend\App\Action
 
         $this->Ax360->load($id_360)->addData(['hotspot' => addslashes($json)])->save();
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => 1 // !!!
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

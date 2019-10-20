@@ -29,11 +29,16 @@ class GetImages extends \Magento\Backend\App\Action
         $id360set =  $get->getParam('id_360set');
         $images = $this->Ax360->get360Images($productId, $id360set);
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => 'ok',
             'id_product' => $productId,
             'id_360set' => $id360set,
             'images' => $images
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

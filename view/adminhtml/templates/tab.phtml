@@ -1,6 +1,6 @@
 <?php
-$productId = $this->getProductId();
-$ax = $this->getAxModel();
+$productId = $block->getProductId();
+$ax = $block->getAxModel();
 ?>
 
 <script type="text/javascript">
@@ -14,8 +14,8 @@ jQuery(function ($) {
         e.preventDefault();
         var az_active = $(this).val();
 
-        doAdminAjax360('<?php echo $this->getUrlAjax('setProductStatus'); ?>', {
-                "id_product" : <?php echo $productId ?>,
+        doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('setProductStatus')); ?>', {
+                "id_product" : <?= $block->escapeHtml($productId) ?>,
                 "az_active" : az_active}, afterUpdateProductStatus
         );
         
@@ -23,7 +23,9 @@ jQuery(function ($) {
 
 
     function afterUpdateProductStatus(data) { 
-        var data = $.parseJSON(data);
+        if(jQuery.type(data) != "object") {
+            var data = $.parseJSON(data);
+        }
 
         az_showSuccessMessage(data.confirmations);
     }     

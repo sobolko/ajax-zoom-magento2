@@ -8,7 +8,6 @@ class GetHotspotJson extends \Magento\Backend\App\Action
     protected $Ax360;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Ax360 $Ax360

@@ -13,7 +13,7 @@
 
             if(result) {
                 var params = {};
-                new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+                new Ajax.Request('<?= $block->escapeHtml($block->getAjaxUrl()) ?>', {
                     parameters:     params,
                     loaderArea:     false,
                     asynchronous:   true,
@@ -51,10 +51,10 @@
     });
 </script>
 
-<?php echo $block->getButtonHtml() ?>
-<p class="note"><?php echo __('No data will be replaced or removed! It will only create new tables in case they are not present. Should be performed after AJAX-ZOOM module update in case new tables are not created by the update script instantly.') ?></p>
+<?= $block->getButtonHtml() ?>
+<p class="note"><?= $block->escapeHtml(__('No data will be replaced or removed! It will only create new tables in case they are not present. Should be performed after AJAX-ZOOM module update in case new tables are not created by the update script instantly.')) ?></p>
 <span class="collect-indicator" id="reset_span">
-    <img class="processing" hidden="hidden" alt="Collecting" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
-    <img class="collected" hidden="hidden" alt="Collected" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
+    <img class="processing" hidden="hidden" alt="Collecting" style="margin:0 5px" src="<?= $block->escapeHtml($block->getViewFileUrl('images/process_spinner.gif')) ?>"/>
+    <img class="collected" hidden="hidden" alt="Collected" style="margin:-3px 5px" src="<?= $block->escapeHtml($block->getViewFileUrl('images/rule_component_apply.gif')) ?>"/>
     <span id="reset_message_span"></span>
 </span>

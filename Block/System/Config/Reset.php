@@ -13,17 +13,6 @@ class Reset extends Field
     protected $_template = 'Ax_Zoom::system/config/reset.phtml';
 
     /**
-     * @param Context $context
-     * @param array $data
-     */
-    public function __construct(
-        Context $context,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-    }
-
-    /**
      * Remove scope label
      *
      * @param  AbstractElement $element
@@ -64,7 +53,7 @@ class Reset extends Field
     public function getButtonHtml()
     {
         $button = $this->getLayout()->createBlock(
-            'Magento\Backend\Block\Widget\Button'
+            \Magento\Backend\Block\Widget\Button::class
         )->setData(
             [
                 'id' => 'reset_button',

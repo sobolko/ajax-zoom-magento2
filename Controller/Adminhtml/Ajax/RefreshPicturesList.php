@@ -8,7 +8,6 @@ class RefreshPicturesList extends \Magento\Backend\App\Action
     protected $Axhotspot;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Axhotspot $Axhotspot
@@ -24,9 +23,11 @@ class RefreshPicturesList extends \Magento\Backend\App\Action
         $get = $this->getRequest();
         $id_product = (int)$get->getParam('id_product');
         
+        $return_arr = $this->Axhotspot->getImagesBackendHotspots($id_product);
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode(
-            $this->Axhotspot->getImagesBackendHotspots($id_product)
-        ));
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

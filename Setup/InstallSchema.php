@@ -19,6 +19,17 @@ class InstallSchema implements InstallSchemaInterface
         $installer->startSetup();
         $db_prefix = ''; // !!!
 
+        // !!! below get table prefix: NOT TESTET YET
+        /*
+        use Magento\Framework\App\ObjectManager;
+        ObjectManager::getInstance()->get(CountryWithWebsitesSource::class);
+
+        $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
+        $obj = $bootstrap->getObjectManager();
+        $deploymentConfig = $obj->get('Magento\Framework\App\DeploymentConfig');
+        var_dump($deploymentConfig->get('db/table_prefix'));
+        */
+
         $installer->run("CREATE TABLE IF NOT EXISTS `ajaxzoom360` (
             `id_360` int(11) NOT NULL AUTO_INCREMENT,  
             `id_product` int(11) NOT NULL,  `name` varchar(255) NOT NULL,  
@@ -76,9 +87,7 @@ class InstallSchema implements InstallSchemaInterface
             ENGINE=InnoDB 
             DEFAULT CHARSET=utf8;");
 
-
         $installer->endSetup();
-
 
         $this->createFolders();
         $this->downloadAxZm();
@@ -102,7 +111,11 @@ class InstallSchema implements InstallSchemaInterface
 
         // download axZm if not exists
         if (!file_exists(BP . '/pub/axzoom/axZm') && ini_get('allow_url_fopen')) {
-            $remoteFileContents = file_get_contents('http://www.ajax-zoom.com/download.php?ver=latest&magento2=1', false, stream_context_create($arrContextOptions));
+            $remoteFileContents = file_get_contents(
+                'http://www.ajax-zoom.com/download.php?ver=latest&magento2=1',
+                false,
+                stream_context_create($arrContextOptions)
+            );
             $localFilePath = BP . '/pub/axzoom/pic/tmp/jquery.ajaxZoom_ver_latest.zip';
 
             file_put_contents($localFilePath, $remoteFileContents);

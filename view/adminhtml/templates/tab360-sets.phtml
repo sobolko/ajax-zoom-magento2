@@ -1,7 +1,7 @@
 <?php
-$setsGroups = $this->getGroups();
-$sets       = $this->getSets();
-$files      = $this->getArcList();
+$setsGroups = $block->getGroups();
+$sets       = $block->getSets();
+$files      = $block->getArcList();
 ?>
 
 <style type="text/css">
@@ -33,13 +33,13 @@ $files      = $this->getArcList();
 <div id="product-images360sets" class="entry-edit ax-tab">
     <div class="fieldset-wrapper">
         <div class="fieldset-wrapper-title admin__fieldset-wrapper-title ax-tab-title">
-            <strong class="title"><?php echo __('360/3D Views') ?></strong>
+            <strong class="title"><?= $block->escapeHtml(__('360/3D Views')) ?></strong>
         </div>
     </div>
     <div class="fieldset fieldset-wide ax-tab-content" id="group_fields9">
         <div class="hor-scroll">
             <div>
-                <a class="link_add" href="#"> <i class="icon-plus"></i> <?php echo __('Add a new 360/3D view') ?></a>
+                <a class="link_add" href="#"> <i class="icon-plus"></i> <?= $block->escapeHtml(__('Add a new 360/3D view')) ?></a>
             </div>
             
 
@@ -47,61 +47,61 @@ $files      = $this->getArcList();
                 <table cellspacing="0" class="form-list">
                     <tbody>
                         <tr>
-                            <td class="label"><label for="set_name"><?php echo __('Create a new') ?></label></td>
+                            <td class="label"><label for="set_name"><?= $block->escapeHtml(__('Create a new')) ?></label></td>
                             <td class="value">
                                 <input type="text" id="set_name" name="set_name" value="" />
-                                <p class="note"><?php echo __('Please enter any name') ?></p>
+                                <p class="note"><?= $block->escapeHtml(__('Please enter any name')) ?></p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <?php if ($setsGroups) : ?>
                         <tr>
-                            <td colspan="3"><b><?php echo __('OR') ?></b></td>
+                            <td colspan="3"><b><?= $block->escapeHtml(__('OR')) ?></b></td>
                         </tr>
                         <tr>
-                            <td class="label"><label for="existing"><?php echo __('Add to existing 3D as next row') ?></label></td>
+                            <td class="label"><label for="existing"><?= $block->escapeHtml(__('Add to existing 3D as next row')) ?></label></td>
                             <td class="value">
                                 <select name="existing" id="existing">
-                                    <option value="" style="min-width: 100px"><?php echo __('Select') ?></option>
+                                    <option value="" style="min-width: 100px"><?= $block->escapeHtml(__('Select')) ?></option>
                                     <?php foreach ($setsGroups as $group) : ?>
-                                    <option value="<?php echo $group['id_360'] ?>"><?php echo $group['name'] ?></option>
+                                    <option value="<?= $block->escapeHtml($group['id_360']) ?>"><?= $block->escapeHtml($group['name']) ?></option>
                                     <?php endforeach ?>
                                 </select>
-                                <p class="note"><?php echo __('You should not select anything here unless you want to create 3D (not 360) which contains more than one row!') ?></p>
+                                <p class="note"><?= $block->escapeHtml(__('You should not select anything here unless you want to create 3D (not 360) which contains more than one row!')) ?></p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <?php endif; ?>
                         
                         <tr>
-                            <td class="label"><label for="zip"><?php echo __('Add images from ZIP archive') ?></label></td>
+                            <td class="label"><label for="zip"><?= $block->escapeHtml(__('Add images from ZIP archive')) ?></label></td>
                             <td class="value">
                                 <input type="checkbox" id="zip" name="zip" value="1" />
-                                <p class="note"><?php echo __('This is the most easy and quick way of adding 360 views to your product! Upload over FTP your 360\'s zipped (each images set in one zip file) to /pub/ajaxzoom/zip/ directory. After you did so these zip files will instantly appear in the select field below. All you have to do then is select one of the zip files and press \'add\' button. Images from the selected zip file will be instantly imported.') ?></p>
+                                <p class="note"><?= $block->escapeHtml(__('This is the most easy and quick way of adding 360 views to your product! Upload over FTP your 360\'s zipped (each images set in one zip file) to /pub/ajaxzoom/zip/ directory. After you did so these zip files will instantly appear in the select field below. All you have to do then is select one of the zip files and press \'add\' button. Images from the selected zip file will be instantly imported.')) ?></p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <tr class="field-arcfile" style="display:none;">
-                            <td class="label"><label for="arcfile"><?php echo __('Select ZIP archive or folder') ?></label></td>
+                            <td class="label"><label for="arcfile"><?= $block->escapeHtml(__('Select ZIP archive or folder')) ?></label></td>
                             <td class="value">
                                 <?php if (isset($files) && count($files) > 0) : ?>
                                 <select name="arcfile" id="arcfile">
-                                    <option value=""><?php echo __('Select') ?></option>
+                                    <option value=""><?= $block->escapeHtml(__('Select')) ?></option>
                                     <?php foreach ($files as $file) : ?>
-                                    <option value="<?php echo $file ?>"><?php echo $file ?></option>
+                                    <option value="<?= $block->escapeHtml($file) ?>"><?= $block->escapeHtml($file) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <?php else : ?>
-                                <p><b><?php echo __('There are no files found in the "pub/axzoom/zip" folder') ?></b></p>
+                                <p><b><?= $block->escapeHtml(__('There are no files found in the "pub/axzoom/zip" folder')) ?></b></p>
                                 <?php endif; ?>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
                         <tr class="field-arcfile" style="display:none;">
-                            <td class="label"><label for="zip"><?php echo __('Delete Zip/Dir after import') ?></label></td>
+                            <td class="label"><label for="zip"><?= $block->escapeHtml(__('Delete Zip/Dir after import')) ?></label></td>
                             <td class="value">
                                 <input type="checkbox" id="delete" name="delete" value="1" />
-                                <p class="note"><?php echo __('') ?></p>
+                                <p class="note"></p>
                             </td>
                             <td class="scope-label"><span class="nobr"></span></td>
                         </tr>
@@ -110,7 +110,7 @@ $files      = $this->getArcList();
                             <td></td>
                             <td>
                                 <button type="button" class="scalable save save_set" >
-                                    <span><span><span><?php echo __('Add') ?></span></span></span>
+                                    <span><span><span><?= $block->escapeHtml(__('Add')) ?></span></span></span>
                                 </button>
                             </td>
                             <td></td>
@@ -125,10 +125,10 @@ $files      = $this->getArcList();
                     <table class="data border data-grid" id="imageTableSets" >
                         <thead>
                             <tr class="headings">
-                                <th class="data-grid-th"><?php echo __('Cover Image') ?></th>
-                                <th class="data-grid-th"><?php echo __('Name') ?></th>
-                                <th class="data-grid-th"><?php echo __('Active') ?></th>
-                                <th class="data-grid-th last" style="width:240px;"><?php echo __('Actions') ?></th>
+                                <th class="data-grid-th"><?= $block->escapeHtml(__('Cover Image')) ?></th>
+                                <th class="data-grid-th"><?= $block->escapeHtml(__('Name')) ?></th>
+                                <th class="data-grid-th"><?= $block->escapeHtml(__('Active')) ?></th>
+                                <th class="data-grid-th last" style="width:240px;"><?= $block->escapeHtml(__('Actions')) ?></th>
                             </tr>
                         </thead>
                         <tbody id="imageTableSetsRows">
@@ -138,23 +138,23 @@ $files      = $this->getArcList();
 
                 <table id="lineSet" style="display:none;">
                     <tr id="set_id" data-group="group_id">
-                        <td><img src="<?php echo $this->rootFolder() ?>axzoom/image_path.gif" alt="legend" title="legend" class="img-thumbnail" /></td>
+                        <td><img src="<?= $block->escapeHtml($block->rootFolder()) ?>axzoom/image_path.gif" alt="legend" title="legend" class="img-thumbnail" /></td>
                         <td>legend</td>
                         <td>
                             <span class="switch prestashop-switch fixed-width-lg hide_class switch-status">
                                 <input type="radio" name="status_field" id="status_field_on" value="1" checked_on />
-                                <label class="t" for="status_field_on"><?php echo __('Yes') ?></label>
+                                <label class="t" for="status_field_on"><?= $block->escapeHtml(__('Yes')) ?></label>
                                 <input type="radio" name="status_field" id="status_field_off" value="0" checked_off />
-                                <label class="t" for="status_field_off"><?php echo __('No') ?></label>
+                                <label class="t" for="status_field_off"><?= $block->escapeHtml(__('No')) ?></label>
                                 <a class="slide-button btn"></a>
                             </span>
                         </td>
                         <td class="col-action">
-                            <a class="delete_set scalable delete" href=""><?php echo __('Delete') ?></a>
-                            <a class="images_set scalable" href=""><?php echo __('Images') ?></a>
-                            <a class="scalable preview_set hide_class" href=""><?php echo __('Preview') ?></a>
-                            <a class="az_hotspot_set scalable hide_class" href=""><?php echo __('Hotspots'); ?></a>
-                            <a class="az_crop_set scalable hide_class" href=""><?php echo __('360° Product Tour'); ?></a>
+                            <a class="delete_set scalable delete" href=""><?= $block->escapeHtml(__('Delete')) ?></a>
+                            <a class="images_set scalable" href=""><?= $block->escapeHtml(__('Images')) ?></a>
+                            <a class="scalable preview_set hide_class" href=""><?= $block->escapeHtml(__('Preview')) ?></a>
+                            <a class="az_hotspot_set scalable hide_class" href=""><?= $block->escapeHtml(__('Hotspots')); ?></a>
+                            <a class="az_crop_set scalable hide_class" href=""><?= $block->escapeHtml(__('360° Product Tour')); ?></a>
                         </td>
                     </tr>
                 </table>
@@ -170,11 +170,11 @@ $files      = $this->getArcList();
 
 
 <script>
-    var id_product = '<?php echo $productId ?>';
+    var id_product = '<?= $block->escapeHtml($productId) ?>';
     require([
         "jquery", 
-        "<?php echo $this->getBaseUrl() ?>axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js", 
-        "<?php echo $this->getBaseUrl() ?>axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js"
+        "<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js", 
+        "<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js"
         ], function($){
         
         function setLine(id, path, position, legend, status, group_id)
@@ -204,12 +204,17 @@ $files      = $this->getArcList();
         }
 
         function afterUpdateStatus(data) {
-            data = $.parseJSON(data);
+            
+            if(jQuery.type(data) != "object") {
+                var data = $.parseJSON(data);
+            }
             showSuccessMessage(data.confirmations);
         }
 
         function afterDeleteSet(data) {
-            var data = $.parseJSON(data);
+            if(jQuery.type(data) != "object") {
+                var data = $.parseJSON(data);
+            }
             $('tr#' + data.id_360set).remove();
             showSuccessMessage(data.confirmations);
 
@@ -221,7 +226,10 @@ $files      = $this->getArcList();
         }
 
         function afterAddSet(data) {
-            var data = $.parseJSON(data);
+
+            if(jQuery.type(data) != "object") {
+                var data = $.parseJSON(data);
+            }
 
             if(data.sets.length > 0) {
                 for (var i = 0; i < data.sets.length; i++) {
@@ -253,7 +261,9 @@ $files      = $this->getArcList();
         }
 
         function afterGetImages(data) {
-            var data = $.parseJSON(data);
+            if(jQuery.type(data) != "object") {
+                var data = $.parseJSON(data);
+            }
             
             for (var i = 0; i < data.images.length; i++) {
                 imageLine360(data.images[i]['id'], data.images[i]['thumb'], '', "", "", "");
@@ -289,8 +299,8 @@ $files      = $this->getArcList();
             var status = $(this).val();
             var group_id = $(this).parent().parent().parent().data('group');
 
-            doAdminAjax360('<?php echo $this->getUrlAjax('set360Status'); ?>', {
-                    "id_product" : <?php echo $productId ?>,
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('set360Status')); ?>', {
+                    "id_product" : <?= $block->escapeHtml($productId) ?>,
                     "id_360" : group_id,
                     "status" : status}, afterUpdateStatus
             );
@@ -303,7 +313,7 @@ $files      = $this->getArcList();
             var id360 = $(this).parent().parent().data('group');
             var id360set = $(this).parent().parent().attr('id');
 
-            $.openAjaxZoomInFancyBox({href: '<?php echo $this->getBaseUrl() ?>axzoom/preview/preview.php?3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360+'&group='+id360+'&id='+id360set, iframe: true});
+            $.openAjaxZoomInFancyBox({href: '<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/preview/preview.php?3dDir=<?= $block->escapeHtml($block->rootFolder()) ?>axzoom/pic/360/' + id_product + '/' + id360+'&group='+id360+'&id='+id360set, iframe: true});
         });
 
         $('body').on('click', '.images_set', function(e) { 
@@ -316,8 +326,8 @@ $files      = $this->getArcList();
 
             var id = $(this).parent().parent().attr('id');
 
-            doAdminAjax360('<?php echo $this->getUrlAjax('getImages'); ?>', {
-                    "id_product" : <?php echo $productId ?>,
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('getImages')); ?>', {
+                    "id_product" : <?= $block->escapeHtml($productId) ?>,
                     "id_360set" : id}, afterGetImages
             );
             
@@ -333,16 +343,16 @@ $files      = $this->getArcList();
             var id360set = $(this).parent().parent().attr('id');
             var qty = $('tr[data-group=' + id360 + ']').length;
 
-            var cropHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/cropeditor.php?';
-                cropHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
+            var cropHref = '<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/preview/cropeditor.php?';
+                cropHref += '3dDir=<?= $block->escapeHtml($block->rootFolder()) ?>axzoom/pic/360/' + id_product + '/' + id360;
                 if (qty < 2) {
                     cropHref += '/' + id360set;
                 }
                 cropHref += '&group='+id360+'&id='+id360set;
-                cropHref += '&url_get=<?php echo $this->getUrlAjax('GetCropJson'); ?>';
-                cropHref += '&url_set=<?php echo $this->getUrlAjax('SetCropJson'); ?>';
-                cropHref += '&form_key=<?php echo $this->getFormKey(); ?>';
-                cropHref += '&hs_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
+                cropHref += '&url_get=<?= $block->escapeHtml($block->getUrlAjax('GetCropJson')); ?>';
+                cropHref += '&url_set=<?= $block->escapeHtml($block->getUrlAjax('SetCropJson')); ?>';
+                cropHref += '&form_key=<?= $block->escapeHtml($block->getFormKey()); ?>';
+                cropHref += '&hs_get=<?= $block->escapeHtml($block->getUrlAjax('GetHotspotJson')); ?>';
 
             $.openAjaxZoomInFancyBox({href: cropHref, iframe: true, scrolling: 1});
         });
@@ -354,15 +364,15 @@ $files      = $this->getArcList();
             var id360set = $(this).closest('tr').attr('id');
             var qty = $('tr[data-group=' + id360 + ']').length;
 
-            var hotspotHref = '<?php echo $this->getBaseUrl() ?>axzoom/preview/hotspoteditor.php?';
-                hotspotHref += '3dDir=<?php echo $this->rootFolder() ?>axzoom/pic/360/' + id_product + '/' + id360;
+            var hotspotHref = '<?= $block->escapeHtml($block->getBaseUrl()) ?>axzoom/preview/hotspoteditor.php?';
+                hotspotHref += '3dDir=<?= $block->escapeHtml($block->rootFolder()) ?>axzoom/pic/360/' + id_product + '/' + id360;
                 if (qty < 2) {
                     hotspotHref += '/' + id360set;
                 }
                 hotspotHref += '&group='+id360+'&id='+id360set;
-                hotspotHref += '&url_get=<?php echo $this->getUrlAjax('GetHotspotJson'); ?>';
-                hotspotHref += '&url_set=<?php echo $this->getUrlAjax('SetHotspotJson'); ?>';
-                hotspotHref += '&form_key=<?php echo $this->getFormKey(); ?>';
+                hotspotHref += '&url_get=<?= $block->escapeHtml($block->getUrlAjax('GetHotspotJson')); ?>';
+                hotspotHref += '&url_set=<?= $block->escapeHtml($block->getUrlAjax('SetHotspotJson')); ?>';
+                hotspotHref += '&form_key=<?= $block->escapeHtml($block->getFormKey()); ?>';
 
             $.openAjaxZoomInFancyBox({href: hotspotHref, iframe: true, scrolling: 1});
         });
@@ -371,12 +381,12 @@ $files      = $this->getArcList();
         $('.save_set').click(function (e) {
             e.preventDefault();    
             
-            doAdminAjax360('<?php echo $this->getUrlAjax('addSet'); ?>', {
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('addSet')); ?>', {
                     "name":$('#set_name').val(),
                     "existing":$('#existing').val(),
                     "zip":$('#zip').is(':checked'),
                     "arcfile":$('#arcfile').val(),
-                    "id_product" : <?php echo $productId ?>}, afterAddSet
+                    "id_product" : <?= $block->escapeHtml($productId) ?>}, afterAddSet
             );
         });
 
@@ -389,15 +399,15 @@ $files      = $this->getArcList();
             $('#imageList360').html('');
 
             var id = $(this).parent().parent().attr('id');
-            if (confirm("<?php echo __('Are you sure?') ?>"))
-            doAdminAjax360('<?php echo $this->getUrlAjax('deleteSet'); ?>', {
+            if (confirm("<?= $block->escapeHtml(__('Are you sure?')) ?>"))
+            doAdminAjax360('<?= $block->escapeHtml($block->getUrlAjax('deleteSet')); ?>', {
                     "id_360set":id,
-                    "id_product" : <?php echo $productId ?>}, afterDeleteSet
+                    "id_product" : <?= $block->escapeHtml($productId) ?>}, afterDeleteSet
             );
         });
 
         <?php foreach ($sets as $set) : ?>
-            setLine("<?php echo $set['id_360set'] ?>", "<?php echo $set['path'] ?>", "", "<?php echo $set['name'] ?>", "<?php echo $set['status'] ?>", "<?php echo $set['id_360'] ?>");
+            setLine("<?= $block->escapeHtml($set['id_360set']) ?>", "<?= $block->escapeHtml($set['path']) ?>", "", "<?= $block->escapeHtml($set['name']) ?>", "<?= $block->escapeHtml($set['status']) ?>", "<?= $block->escapeHtml($set['id_360']) ?>");
         <?php endforeach; ?>
     });
 </script>

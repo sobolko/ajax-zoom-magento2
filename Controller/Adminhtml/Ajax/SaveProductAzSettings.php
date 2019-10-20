@@ -3,34 +3,31 @@ namespace Ax\Zoom\Controller\Adminhtml\Ajax;
 
 class SaveProductAzSettings extends \Magento\Backend\App\Action
 {
-	protected $messageManager;
-	protected $_objectManager;
-	protected $Ax360;
-	protected $Ax360set;
-	protected $Axproducts;
-	protected $_resource;
-	
-	public function __construct(
-		
-		\Magento\Backend\App\Action\Context $context,
-		\Magento\Framework\ObjectManagerInterface $objectManager,
-		\Ax\Zoom\Model\Ax360 $Ax360,
-		\Ax\Zoom\Model\Ax360set $Ax360set,
-		\Ax\Zoom\Model\Axproducts $Axproducts,
-		\Magento\Framework\App\ResourceConnection $resource
-	)
-	{
-		$this->messageManager = $context->getMessageManager();
-		$this->_objectManager = $objectManager;
-		$this->Ax360 = $Ax360;
-		$this->Ax360set = $Ax360set;
-		$this->Axproducts = $Axproducts;
-		$this->_resource = $resource;
-		parent::__construct($context);
-	}
+    protected $messageManager;
+    protected $_objectManager;
+    protected $Ax360;
+    protected $Ax360set;
+    protected $Axproducts;
+    protected $_resource;
+    
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Ax\Zoom\Model\Ax360 $Ax360,
+        \Ax\Zoom\Model\Ax360set $Ax360set,
+        \Ax\Zoom\Model\Axproducts $Axproducts,
+        \Magento\Framework\App\ResourceConnection $resource
+    ) {
+        $this->messageManager = $context->getMessageManager();
+        $this->_objectManager = $objectManager;
+        $this->Ax360 = $Ax360;
+        $this->Ax360set = $Ax360set;
+        $this->Axproducts = $Axproducts;
+        $this->_resource = $resource;
+        parent::__construct($context);
+    }
 
-
-		/*
+        /*
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
         $db_prefix = (string)Mage::getConfig()->getTablePrefix();
         $request = Mage::app()->getRequest();
@@ -50,13 +47,13 @@ class SaveProductAzSettings extends \Magento\Backend\App\Action
             }
         }
 
-        $db->query('DELETE FROM `'.$db_prefix.'ajaxzoomproductsettings` 
+        $db->query('DELETE FROM `'.$db_prefix.'ajaxzoomproductsettings`
             WHERE id_product = '.(int)$id_product);
 
         if (!empty($settings)) {
             $settings = $this->prepareProductSettingsBeforeSave($settings, true);
-            $n = $db->query('INSERT INTO `'.$db_prefix.'ajaxzoomproductsettings` 
-                SET psettings = \''.$settings.'\', 
+            $n = $db->query('INSERT INTO `'.$db_prefix.'ajaxzoomproductsettings`
+                SET psettings = \''.$settings.'\',
                 id_product = '.(int)$id_product);
         }
 
@@ -65,17 +62,15 @@ class SaveProductAzSettings extends \Magento\Backend\App\Action
         ));
         */
 
-
-	public function execute()
-	{		
+    public function execute()
+    {
         $get = $this->getRequest();
         $id_product = (int)$get->getParam('id_product');
         
-
         $names = explode('|', $get->getParam('names'));
         $values = explode('|', $get->getParam('values'));
         $count_names = count($names);
-        $settings = array();
+        $settings = [];
 
         for ($i = 0; $i < $count_names; $i++) {
             $key = $names[$i];
@@ -85,10 +80,9 @@ class SaveProductAzSettings extends \Magento\Backend\App\Action
             }
         }
 
-        $resource = $this->_objectManager->get('Magento\Framework\App\ResourceConnection');
+        $resource = $this->_objectManager->get(\Magento\Framework\App\ResourceConnection::class);
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('ajaxzoomproductsettings'); //gives table name with prefix
-
 
         $connection->query('DELETE FROM '.$tableName.' 
             WHERE id_product = '.(int)$id_product);
@@ -100,23 +94,26 @@ class SaveProductAzSettings extends \Magento\Backend\App\Action
                 id_product = '.(int)$id_product);
         }
 
-
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode(array(
+        $return_arr = [
             'status' => 'ok',
             'moduleSettings' => $this->getProductPluginOpt($id_product),
-            'confirmations' => array('The settings has been updated.')
-            )));
-	}
+            'confirmations' => ['The settings has been updated.']
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
+    }
 
     public function getProductPluginOpt($id_product = 0)
     {
-        $resource = $this->_objectManager->get('Magento\Framework\App\ResourceConnection');
+        $resource = $this->_objectManager->get(\Magento\Framework\App\ResourceConnection::class);
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('ajaxzoomproductsettings');
 
-
-        $conf = $connection->fetchAll('SELECT * FROM '.$tableName.' 
-            WHERE id_product = '.(int)$id_product
+        $conf = $connection->fetchAll(
+            'SELECT * FROM '.$tableName.' WHERE id_product = '.(int)$id_product
         );
 
         if (isset($conf[0]['psettings'])) {
@@ -128,13 +125,12 @@ class SaveProductAzSettings extends \Magento\Backend\App\Action
 
     public function prepareProductSettingsBeforeSave($str, $as_obj = false)
     {
-        require_once dirname(dirname(dirname(dirname(__FILE__)))).'/AzMouseoverSettings.php';
-        require dirname(dirname(dirname(dirname(__FILE__)))).'/AzMouseoverConfig.php';
+        require $this->Ax360set->moduleDir().'/AzMouseoverConfig.php';
         $mouseover_settings = new \Ax\Zoom\AzMouseoverSettings($az_mouseover_config_magento);
         $cfg = $mouseover_settings->getConfig();
 
-        $opt_arr = array();
-        $res = array();
+        $opt_arr = [];
+        $res = [];
 
         if (is_array($str)) {
             $settings = $str;
@@ -153,7 +149,7 @@ class SaveProductAzSettings extends \Magento\Backend\App\Action
                 continue;
             }
 
-            $value = str_replace(array("\r", "\n", "\t"), '', $value);
+            $value = str_replace(["\r", "\n", "\t"], '', $value);
             $value = str_replace('\\', '', $value);
             $value = str_replace('\'', '&#39;', $value);
             $key = $cfg[$key]['category'].'/'.$key;
@@ -179,7 +175,6 @@ class SaveProductAzSettings extends \Magento\Backend\App\Action
             return implode(',', $res);
         }
     }
-
 
     public function isOctal($x)
     {

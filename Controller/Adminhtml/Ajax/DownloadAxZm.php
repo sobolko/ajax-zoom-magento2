@@ -1,20 +1,25 @@
 <?php
 namespace Ax\Zoom\Controller\Adminhtml\Ajax;
 
+use Zend\Http\Client\Adapter\Socket;
+
 class DownloadAxZm extends \Magento\Backend\App\Action
 {
     protected $messageManager;
     protected $_objectManager;
     protected $Ax360set;
+    protected $driverFile;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Ax\Zoom\Model\Ax360set $Ax360set
+        \Ax\Zoom\Model\Ax360set $Ax360set,
+        \Magento\Framework\Filesystem\Driver\File $driverFile
     ) {
         $this->messageManager = $context->getMessageManager();
         $this->_objectManager = $objectManager;
         $this->Ax360set = $Ax360set;
+        $this->driverFile = $driverFile;
         parent::__construct($context);
     }
 
@@ -37,11 +42,11 @@ class DownloadAxZm extends \Magento\Backend\App\Action
         }
 
         if ($update) {
-            if (!is_dir($backups_dir)) {
-                @mkdir($backups_dir);
+            if (!$this->driverFile->isDirectory($backups_dir)) {
+                $this->driverFile->createDirectory($backups_dir);
             }
 
-            if (!is_writable($backups_dir)) {
+            if (!$this->driverFile->isWritable($backups_dir)) {
                 $return_arr = [
                     'error' => $backups_dir.' is not writable by PHP'
                 ];
@@ -49,37 +54,40 @@ class DownloadAxZm extends \Magento\Backend\App\Action
         }
 
         // download axZm if not exists
-        if (($update || !file_exists($dir.'axZm')) && is_writable($dir.'pic/tmp/')) {
+        if (($update || !$this->driverFile->isExists($dir.'axZm')) && $this->driverFile->isWritable($dir.'pic/tmp/')) {
             $latest_ver = 'http://www.ajax-zoom.com/download.php?ver=latest&module=magento';
             if ($update) {
                 $latest_ver .= '&update=1';
             }
 
-            $remoteFileContents = file_get_contents($latest_ver, false, stream_context_create($arrContextOptions));
+            // to avoid using the function stream_context_create($arrContextOptions)
+            $socket = new Socket();
+            $socket->setStreamContext($arrContextOptions);
+
+            $remoteFileContents = $this->driverFile->fileGetContents($latest_ver, false, $socket->context);
 
             if ($remoteFileContents != false) {
                 $localFilePath = $dir.'pic/tmp/jquery.ajaxZoom_ver_latest.zip';
-                if (file_exists($localFilePath)) {
-                    @unlink($localFilePath);
+                if ($this->driverFile->isExists($localFilePath)) {
+                    $this->driverFile->deleteFile($localFilePath);
                 }
 
                 $target_bck_dir = '';
 
-                file_put_contents($localFilePath, $remoteFileContents);
+                $this->driverFile->filePutContents($localFilePath, $remoteFileContents);
 
-                
                 $zip = new \ZipArchive();
                 $zip->open($localFilePath);
                 $zip->extractTo($dir.'pic/tmp/');
                 $zip->close();
 
-                if ($update && file_exists($dir.'axZm')) {
+                if ($update && $this->driverFile->isExists($dir.'axZm')) {
                     $target_bck_dir = $backups_dir.'/axZm_'.(microtime(true)*10000);
-                    @rename($dir.'axZm', $target_bck_dir);
+                    $this->driverFile->rename($dir.'axZm', $target_bck_dir);
                 }
 
-                rename($dir.'pic/tmp/axZm', $dir.'axZm');
-                unlink($localFilePath);
+                $this->driverFile->rename($dir.'pic/tmp/axZm', $dir.'axZm');
+                $this->driverFile->deleteFile($localFilePath);
 
                 if ($update) {
                     $return_arr = [
@@ -91,6 +99,9 @@ class DownloadAxZm extends \Magento\Backend\App\Action
             }
         }
         
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode($return_arr));
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

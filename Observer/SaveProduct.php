@@ -34,6 +34,7 @@ class SaveProduct implements \Magento\Framework\Event\ObserverInterface
             $this->save360($observer);
         } catch (\Exception $e) {
             //$this->_helper->debug((string)$e, array());
+            $a = 1;
         }
     }
 
@@ -45,7 +46,6 @@ class SaveProduct implements \Magento\Framework\Event\ObserverInterface
         $postData = $this->request->getPost();
         //$post = $this->request->getParams();
 
-        
         /*
         // remove images from Ax cache if image checked as remove
         $images = Mage::helper('core')->jsonDecode($postData['product']['media_gallery']['images']);

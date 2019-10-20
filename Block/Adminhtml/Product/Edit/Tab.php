@@ -13,6 +13,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     protected $_coreRegistry;
     protected $_template = 'tab.phtml';
     protected $_scopeConfig;
+    protected $driverFile;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
@@ -24,9 +25,11 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Framework\Filesystem\Driver\File $driverFile,
         array $data = []
     ) {
         $this->_objectManager = $objectManager;
+        $this->driverFile = $driverFile;
         parent::__construct($context, $data);
         $this->_configurableType = $configurableType;
         $this->_coreRegistry = $coreRegistry;
@@ -90,8 +93,11 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     public function isActive()
     {
         $productId = $this->getProductId();
-        $model = $this->_objectManager->create('Ax\Zoom\Model\Axproducts');
+
+        $model = $this->_objectManager->create(\Ax\Zoom\Model\Axproducts::class);
+
         $active = $model->getCollection()->addFieldToFilter('id_product', $productId)->count() > 0 ? 0 : 1;
+
         return $active;
     }
 
@@ -122,7 +128,6 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     {
         $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
         
-
         return $model->getBaseDir();
     }
 
@@ -136,14 +141,14 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         $baseDir = $this->getBaseDir();
         $files = [];
         
-        if ($handle = opendir($baseDir . '/axzoom/zip/')) {
-            
-            while (false !== ($entry = readdir($handle))) {
-                if ($entry != '.' && $entry != '..' && (strtolower(substr($entry, -3)) == 'zip' || is_dir($baseDir . '/axzoom/zip/' . $entry))) {
-                    array_push($files, $entry);
-                }
+        $path = $baseDir . '/axzoom/zip/';
+        $items = $this->driverFile->readDirectory($path);
+        foreach ($items as $item) {
+            $entry = str_replace($path, '', $item);
+            if ($entry != '.' && $entry != '..' && (strtolower(substr($entry, -3)) == 'zip' ||
+                $this->driverFile->isDirectory($path . $entry))) {
+                array_push($files, $entry);
             }
-            closedir($handle);
         }
           
         return $files;
@@ -156,7 +161,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
     public function getFormKey()
     {
-        $formKey = $this->_objectManager->get('Magento\Framework\Data\Form\FormKey');
+        $formKey = $this->_objectManager->get(\Magento\Framework\Data\Form\FormKey::class);
         return $formKey->getFormKey();
     }
 
@@ -164,27 +169,29 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
     {
         $productId = $this->getProductId();
 
-        $model = $this->_objectManager->create('Ax\Zoom\Model\Axvideo');
+        $model = $this->_objectManager->create(\Ax\Zoom\Model\Axvideo::class);
         
         return $model->getVideos($productId);
     }
-
 
     public function getStoreLanguages()
     {
         $langugaes_array = ['en' => 'en'];
 
-        $storeManager = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface');
+        $storeManager = $this->_objectManager->get(\Magento\Store\Model\StoreManagerInterface::class);
         $stores = $storeManager->getStores($withDefault = false);
         foreach ($stores as $store) {
             $data = $store->getData();
-            $storelang =  $this->_scopeConfig->getValue('general/locale/code', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $data['store_id']);
+            $storelang = $this->_scopeConfig->getValue(
+                'general/locale/code',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $data['store_id']
+            );
             $langugaes_array[substr($storelang, 0, 2)] = substr($storelang, 0, 2);
         }
 
         return $langugaes_array;
     }
-
 
     public function getImagesBackendHotspots($id_product, $sub = false)
     {
@@ -192,7 +199,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         $az_pictures_lst = [];
         $az_az_load = $this->getBaseUrl() . 'axzoom/axZm/zoomLoad.php?azImg=';
         
-        $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($id_product);
+        $product = $this->_objectManager->create(\Magento\Catalog\Model\Product::class)->load($id_product);
         $images = $product->getMediaGalleryImages();
         foreach ($images as $image) {
             $data = $image->getData();
@@ -211,8 +218,7 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
             }
         }
 
-
-        /*
+        /* !!!
         $product = Mage::getModel('catalog/product')->load($id_product);
 
         $az_images_collection = $this->getMediaGalleryImagesAll($id_product);
@@ -277,11 +283,11 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         return $az_pictures_lst;
     }
 
-
     public function getPluginOptNameLabel($flip = false)
     {
-        require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/AzMouseoverSettings.php';
-        require dirname(dirname(dirname(dirname(dirname(__FILE__))))).'/AzMouseoverConfig.php';
+        $model = $this->_objectManager->create('Ax\Zoom\Model\Ax360set');
+        //require_once $model->moduleDir().'/AzMouseoverSettings.php';
+        require $model->moduleDir().'/AzMouseoverConfig.php';
         $mouseover_settings = new \Ax\Zoom\AzMouseoverSettings($az_mouseover_config_magento);
 
         $excl_arr = [
@@ -332,10 +338,9 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
 
     public function getProductPluginOpt($id_product = 0)
     {
-        $resource = $this->_objectManager->get('Magento\Framework\App\ResourceConnection');
+        $resource = $this->_objectManager->get(\Magento\Framework\App\ResourceConnection::class);
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('ajaxzoomproductsettings'); //gives table name with prefix
-
 
         $conf = $connection->fetchAll('SELECT * FROM '.$tableName.' 
             WHERE id_product = '.(int)$id_product);
@@ -345,5 +350,22 @@ class Tab extends \Magento\Backend\Block\Widget\Tab
         } else {
             return '{}';
         }
+    }
+
+    public function returnBytes($val)
+    {
+        $val = trim($val);
+        $last = strtolower($val[strlen($val)-1]);
+        $val = (int)$val;
+
+        switch ($last) {
+            case 'g':
+                $val *= 1024;
+            case 'm':
+                $val *= 1024;
+            case 'k':
+                $val *= 1024;
+        }
+        return $val;
     }
 }

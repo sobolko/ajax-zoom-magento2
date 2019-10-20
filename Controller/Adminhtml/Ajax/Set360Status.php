@@ -9,7 +9,6 @@ class Set360Status extends \Magento\Backend\App\Action
     protected $Ax360set;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Ax360 $Ax360,
@@ -31,9 +30,14 @@ class Set360Status extends \Magento\Backend\App\Action
 
         $this->Ax360->load($id360)->addData(['status' => $status])->setId($id360)->save();
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => 'ok',
             'confirmations' => ['The status has been updated.' . $status . '-' . $id360]
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

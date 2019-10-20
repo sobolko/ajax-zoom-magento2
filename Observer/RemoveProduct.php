@@ -9,11 +9,8 @@ class RemoveProduct implements \Magento\Framework\Event\ObserverInterface
             $object = $observer->getEvent()->getDataObject();
             $productId = $object->getId();
             
-            // do something
-            error_log("delete product event 2\n", 3, '_log.txt');
-            
         } catch (\Exception $e) {
-            //$this->_helper->debug((string)$e, array());
+            $productId = $object->getId();
         }
     }
 }

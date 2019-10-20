@@ -27,18 +27,19 @@ class ActionGetNumberImages extends \Magento\Backend\App\Action
     {
         $get = $this->getRequest();
         
-        $resource = $this->_objectManager->get('Magento\Framework\App\ResourceConnection');
+        $resource = $this->_objectManager->get(\Magento\Framework\App\ResourceConnection::class);
         $connection = $resource->getConnection();
         $tableName = $resource->getTableName('catalog_product_entity_media_gallery'); //gives table name with prefix
         $q = $connection->fetchAll('SELECT count(DISTINCT value) as numImg FROM `'.$tableName.'`');
         $dst = $this->Ax360set->getBaseDir() . '/axzoom/pic/360/';
         $img360 = count($this->rSearch($dst, '/\.(jpeg|jpg|png|gif|bmp|tif|tiff)/i'))/2;
 
-        
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData([
             'images2d' => $q[0]['numImg'],
             'images360' => $img360
-            ]));
+            ]);
+        return $jsonResult;
     }
 
     public function rSearch($folder, $pattern)
@@ -49,7 +50,7 @@ class ActionGetNumberImages extends \Magento\Backend\App\Action
         $fileList = [];
 
         foreach ($files as $file) {
-            $fileList = array_merge($fileList, $file);
+            $fileList[] = $file;
         }
 
         return $fileList;

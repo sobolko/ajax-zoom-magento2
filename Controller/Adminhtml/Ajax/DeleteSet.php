@@ -7,17 +7,20 @@ class DeleteSet extends \Magento\Backend\App\Action
     protected $_objectManager;
     protected $Ax360;
     protected $Ax360set;
+    protected $driverFile;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Ax360 $Ax360,
-        \Ax\Zoom\Model\Ax360set $Ax360set
+        \Ax\Zoom\Model\Ax360set $Ax360set,
+        \Magento\Framework\Filesystem\Driver\File $driverFile
     ) {
         $this->messageManager = $context->getMessageManager();
         $this->_objectManager = $objectManager;
         $this->Ax360 = $Ax360;
         $this->Ax360set = $Ax360set;
+        $this->driverFile = $driverFile;
         parent::__construct($context);
     }
 
@@ -45,33 +48,38 @@ class DeleteSet extends \Magento\Backend\App\Action
         $path = $this->Ax360set->getBaseDir() . '/axzoom/pic/360/' . $productId . '/' . $id360 . '/' . $id360set;
         $this->deleteDirectory($path);
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'id_360set' => $id360set,
             'id_360' => $id360,
             'path' => $path,
             'removed' => (!$this->Ax360->load($id360)->getData() ? 1 : 0),
             'confirmations' => ['The 360 image set was successfully removed.']
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 
     public function deleteDirectory($dirname, $delete_self = true)
     {
         $dirname = rtrim($dirname, '/') . '/';
-        if (file_exists($dirname)) {
-            if ($files = scandir($dirname)) {
+        if ($this->driverFile->isExists($dirname)) {
+            if ($files = $this->driverFile->readDirectory($dirname)) {
                 foreach ($files as $file) {
                     if ($file != '.' && $file != '..' && $file != '.svn') {
-                        if (is_dir($dirname.$file)) {
-                            $this->deleteDirectory($dirname.$file, true);
-                        } elseif (file_exists($dirname.$file)) {
-                            @chmod($dirname.$file, 0777); // NT ?
-                            unlink($dirname.$file);
+                        if ($this->driverFile->isDirectory($file)) {
+                            $this->deleteDirectory($file, true);
+                        } elseif ($this->driverFile->isExists($file)) {
+                            $this->driverFile->changePermissions($file, 0777); // NT ?
+                            $this->driverFile->deleteFile($file);
                         }
                     }
                 }
-                if ($delete_self && file_exists($dirname)) {
-                    if (!rmdir($dirname)) {
-                        @chmod($dirname, 0777); // NT ?
+                if ($delete_self && $this->driverFile->isExists($dirname)) {
+                    if (!$this->driverFile->deleteDirectory($dirname)) {
+                        $this->driverFile->changePermissions($dirname, 0777); // NT ?
                         return false;
                     }
                 }

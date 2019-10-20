@@ -46,7 +46,7 @@ class AddVideo extends \Magento\Backend\App\Action
             $r[$video['id_video']] = $video;
         }
                
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => '1',
             'name' => $name,
             'uid' => $uid,
@@ -55,6 +55,11 @@ class AddVideo extends \Magento\Backend\App\Action
             'id_product' => $id_product,
             'videos' => $r,
             'confirmations' => ['New video entry was added.']
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

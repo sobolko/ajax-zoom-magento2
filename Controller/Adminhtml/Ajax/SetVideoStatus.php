@@ -8,7 +8,6 @@ class SetVideoStatus extends \Magento\Backend\App\Action
     protected $Axvideo;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Axvideo $Axvideo
@@ -28,9 +27,14 @@ class SetVideoStatus extends \Magento\Backend\App\Action
 
         $this->Axvideo->load($id_video)->addData(['status' => $status])->setId($id_video)->save();
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => $status,
             'confirmations' => ['The status has been updated.']
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

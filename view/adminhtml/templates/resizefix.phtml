@@ -1,45 +1,43 @@
 <script type="text/javascript">
 /*require([
-	'jquery',
-	'jquery/fileUploader/load-image',
-	'jquery/fileUploader/canvas-to-blob',
-	'jquery/fileUploader/jquery.fileupload',
-	'jquery/fileUploader/jquery.fileupload-fp'], function($) {$(function() {
+    'jquery',
+    'jquery/fileUploader/load-image',
+    'jquery/fileUploader/canvas-to-blob',
+    'jquery/fileUploader/jquery.fileupload',
+    'jquery/fileUploader/jquery.fileupload-fp'], function($) {$(function() {
 
-		console.log('blueimpFP resize replaced 1');
+        console.log('blueimpFP resize replaced 1');
 
-		if (jQuery.blueimpFP && jQuery.blueimpFP.fileupload){
-			console.log('blueimpFP resize replaced 2');
-			jQuery.widget('blueimpFP.fileupload', jQuery.blueimpFP.fileupload, {
-				processActions: {
-					resize: function(data, options){
-						console.log('blueimpFP resize replaced 3');
-						return data;
-					}
-				}
-			});
-		}
+        if (jQuery.blueimpFP && jQuery.blueimpFP.fileupload){
+            console.log('blueimpFP resize replaced 2');
+            jQuery.widget('blueimpFP.fileupload', jQuery.blueimpFP.fileupload, {
+                processActions: {
+                    resize: function(data, options){
+                        console.log('blueimpFP resize replaced 3');
+                        return data;
+                    }
+                }
+            });
+        }
 
 });});*/
 
 require(["jquery", "mage/mage"],function($) {
-	var az_resize_fix = function(){
-		console.log('checking for jQuery.blueimpFP');
-		if (jQuery.blueimpFP && jQuery.blueimpFP.fileupload){
-			console.log('blueimpFP resize replaced 2');
-			jQuery.widget('blueimpFP.fileupload', jQuery.blueimpFP.fileupload, {
-				processActions: {
-					resize: function(data, options){
-						console.log('blueimpFP resize replaced 3');
-						return data;
-					}
-				}
-			});
-		} else {
-			setTimeout(az_resize_fix, 1000);
-		}
-	};
-	az_resize_fix();
+    var az_resize_fix = function(){
+        if (jQuery.blueimpFP && jQuery.blueimpFP.fileupload){
+            jQuery.widget('blueimpFP.fileupload', jQuery.blueimpFP.fileupload, {
+                processActions: {
+                    resize: function(data, options){
+                        return data;
+                    }
+                }
+            });
+        } else {
+            setTimeout(az_resize_fix, 1000);
+        }
+    };
+    az_resize_fix();
 });
 
 </script>
+<?php /* php code */ ?>

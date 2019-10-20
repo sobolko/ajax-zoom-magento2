@@ -7,17 +7,20 @@ class AddSet extends \Magento\Backend\App\Action
     protected $_objectManager;
     protected $Ax360;
     protected $Ax360set;
+    protected $driverFile;
     
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Ax360 $Ax360,
-        \Ax\Zoom\Model\Ax360set $Ax360set
+        \Ax\Zoom\Model\Ax360set $Ax360set,
+        \Magento\Framework\Filesystem\Driver\File $driverFile
     ) {
         $this->messageManager = $context->getMessageManager();
         $this->_objectManager = $objectManager;
         $this->Ax360 = $Ax360;
         $this->Ax360set = $Ax360set;
+        $this->driverFile = $driverFile;
         parent::__construct($context);
     }
 
@@ -39,7 +42,9 @@ class AddSet extends \Magento\Backend\App\Action
             $id360 = $existing;
             $name = $this->Ax360->load($id360)->getName();
         } else {
-            $newSettings = $settings = '{"position":"first","spinReverse":"true","spinBounce":"false","spinDemoRounds":"3","spinDemoTime":"4500"}';
+            $settings = '{"position":"first","spinReverse":"true"';
+            $settings .= ',"spinBounce":"false","spinDemoRounds":"3","spinDemoTime":"4500"}';
+            $newSettings = $settings;
             $data = [
             'id_product' => $productId,
             'name' => $name,
@@ -57,7 +62,7 @@ class AddSet extends \Magento\Backend\App\Action
             $sets = $this->addImagesArc($arcfile, $productId, $id360, $id360set, $delete);
         }
                 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => $status,
             'name' => $name,
             'path' => $this->Ax360set->getBaseUrl() . 'axzoom/no_image-100x100.jpg',
@@ -69,35 +74,42 @@ class AddSet extends \Magento\Backend\App\Action
             'new_id' => $newId,
             'new_name' => $newName,
             'new_settings' => urlencode($newSettings)
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+        
+        return $jsonResult;
     }
 
     public function addImagesArc($arcfile, $productId, $id360, $id360set, $delete = '')
     {
-        set_time_limit(0);
+        //set_time_limit(0);
 
         $baseDir = $this->Ax360set->getBaseDir();
         $baseUrlJs = $this->Ax360set->getBaseUrl();
         $path = $baseDir . '/axzoom/zip/' . $arcfile;
-        $dst = is_dir($path) ? $path : $this->extractArc($path);
+        $dst = $this->driverFile->isDirectory($path) ? $path : $this->extractArc($path);
         
-        if (!$dst || !is_dir($dst) || !strstr($dst, '/axzoom/')) {
+        if (!$dst || !$this->driverFile->isDirectory($dst) || !strstr($dst, '/axzoom/')) {
             return false;
         }
         
-        @chmod($dst, 0777);
+        $this->driverFile->changePermissions($dst, 0777);
         $data = $this->getFolderData($dst);
         $name = $this->Ax360->load($id360)->getName();
 
         $sets = [[
                 'name' => $name,
-                'path' => $baseUrlJs . 'axzoom/axZm/zoomLoad.php?qq=1&azImg360=' . $this->Ax360set->rootFolder() . 'axzoom/pic/360/' . $productId . '/' . $id360 . '/' . $id360set . '&width=100&height=100&thumbMode=contain',
+                'path' => $baseUrlJs . 'axzoom/axZm/zoomLoad.php?qq=1&azImg360='
+                    . $this->Ax360set->rootFolder() . 'axzoom/pic/360/' . $productId
+                    . '/' . $id360 . '/' . $id360set . '&width=100&height=100&thumbMode=contain',
                 'id_360set' => $id360set,
                 'id_360' => $id360,
                 'status' => '1'
                 ]];
 
-        $move = is_dir($path) ? false : true;
+        $move = $this->driverFile->isDirectory($path) ? false : true;
 
         if (count($data['folders']) == 0) { // files (360)
             $this->copyImages($productId, $id360, $id360set, $dst, $move);
@@ -105,30 +117,34 @@ class AddSet extends \Magento\Backend\App\Action
             $this->copyImages($productId, $id360, $id360set, $dst . '/' . $data['folders'][0], $move);
         } else { // 3d
             $this->copyImages($productId, $id360, $id360set, $dst . '/' . $data['folders'][0], $move);
-            for ($i=1; $i < count($data['folders']); $i++) {
+
+            foreach ($data['folders'] as $folder) {
                 $id360set = $this->Ax360set->setData(['id_360' => $id360, 'sort_order' => 0])->save()->getId();
-                $this->copyImages($productId, $id360, $id360set, $dst . '/' . $data['folders'][$i], $move);
+                $this->copyImages($productId, $id360, $id360set, $dst . '/' . $folder, $move);
 
                 $sets[] = [
                     'name' => $name,
-                    'path' => $baseUrlJs . 'axzoom/axZm/zoomLoad.php?qq=1&azImg360=' . $this->Ax360set->rootFolder() . 'axzoom/pic/360/' . $productId . '/' . $id360 . '/' . $id360set . '&width=100&height=100&thumbMode=contain',
+                    'path' => $baseUrlJs . 'axzoom/axZm/zoomLoad.php?qq=1&azImg360=' .
+                        $this->Ax360set->rootFolder() . 'axzoom/pic/360/' . $productId .
+                        '/' . $id360 . '/' . $id360set . '&width=100&height=100&thumbMode=contain',
                     'id_360set' => $id360set,
                     'id_360' => $id360
                     ];
             }
+
         }
         
         // delete temp directory which was created when zip extracted
-        if (!is_dir($path)) {
+        if (!$this->driverFile->isDirectory($path)) {
             $this->deleteDirectory($dst);
         }
 
         // delete the sourece file (zip/dir) if checkbox is checked
         if ($delete == 'true') {
-            if (is_dir($path)) {
+            if ($this->driverFile->isDirectory($path)) {
                 $this->deleteDirectory($dst);
             } else {
-                @unlink($path);
+                $this->driverFile->deleteFile($path);
             }
         }
         return $sets;
@@ -138,7 +154,7 @@ class AddSet extends \Magento\Backend\App\Action
     {
         $folder = uniqid(getmypid());
         $path = $this->Ax360set->getBaseDir().'/axzoom/pic/tmp/'.$folder;
-        mkdir($path, 0777);
+        $this->driverFile->createDirectory($path, 0777);
                 
         $zip = new \ZipArchive();
         $res = $zip->open($file);
@@ -155,19 +171,20 @@ class AddSet extends \Magento\Backend\App\Action
     {
         $files = [];
         $folders = [];
-        if ($handle = opendir($path)) {
-            while (false !== ($entry = readdir($handle))) {
-                if ($entry != '.' && $entry != '..' && $entry != '.htaccess' && $entry != '__MACOSX') {
-                    if (is_dir($path . '/' . $entry)) {
-                        array_push($folders, $entry);
-                    } else {
-                        array_push($files, $entry);
-                    }
+
+        $items = $this->driverFile->readDirectory($path);
+        foreach ($items as $item) {
+            $entry = str_replace($path . '/', '', $item);
+
+            if ($entry != '.' && $entry != '..' && $entry != '.htaccess' && $entry != '__MACOSX') {
+                if ($this->driverFile->isDirectory($item)) {
+                    array_push($folders, $entry);
+                } else {
+                    array_push($files, $entry);
                 }
             }
-            closedir($handle);
         }
-        
+
         sort($folders);
         sort($files);
 
@@ -189,11 +206,11 @@ class AddSet extends \Magento\Backend\App\Action
             $dst = $folder . '/' . $name;
 
             if ($move) {
-                if (@!rename($path.'/'.$file, $dst)) {
-                    copy($path.'/'.$file, $dst);
+                if (!$this->driverFile->rename($path.'/'.$file, $dst)) {
+                    $this->driverFile->copy($path.'/'.$file, $dst);
                 }
             } else {
-                copy($path.'/'.$file, $dst);
+                $this->driverFile->copy($path.'/'.$file, $dst);
             }
         }
     }
@@ -201,13 +218,12 @@ class AddSet extends \Magento\Backend\App\Action
     public function getFilesFromFolder($path)
     {
         $files = [];
-        if ($handle = opendir($path)) {
-            while (false !== ($entry = readdir($handle))) {
-                if ($entry != '.' && $entry != '..' && $entry != '.htaccess' && $entry != '__MACOSX') {
-                    $files[] = $entry;
-                }
+        $items = $this->driverFile->readDirectory($path);
+        foreach ($items as $item) {
+            $entry = str_replace($path . '/', '', $item);
+            if ($entry != '.' && $entry != '..' && $entry != '.htaccess' && $entry != '__MACOSX') {
+                $files[] = $entry;
             }
-            closedir($handle);
         }
         
         return $files;
@@ -221,26 +237,26 @@ class AddSet extends \Magento\Backend\App\Action
         $id360 = $tmp['id_360'];
         
         $imgPath = $this->Ax360set->getBaseDir() . '/axzoom/pic/360/';
-        @chmod(rtrim($imgPath, '/'), 0777);
+        $this->driverFile->changePermissions(rtrim($imgPath, '/'), 0777);
 
-        if (!file_exists($imgPath . '.htaccess')) {
-            file_put_contents($imgPath . '.htaccess', 'deny from all');
+        if (!$this->driverFile->isExists($imgPath . '.htaccess')) {
+            $this->driverFile->filePutContents($imgPath . '.htaccess', 'deny from all');
         }
 
-        if (!file_exists($imgPath . $productId)) {
-            mkdir($imgPath . $productId, 0777);
+        if (!$this->driverFile->isExists($imgPath . $productId)) {
+            $this->driverFile->createDirectory($imgPath . $productId, 0777);
         }
 
-        if (!file_exists($imgPath . $productId . '/' . $id360)) {
-            mkdir($imgPath . $productId . '/' . $id360, 0777);
+        if (!$this->driverFile->isExists($imgPath . $productId . '/' . $id360)) {
+            $this->driverFile->createDirectory($imgPath . $productId . '/' . $id360, 0777);
         }
 
         $folder = $imgPath . $productId . '/' . $id360 . '/' . $id360set;
 
-        if (!file_exists($folder)) {
-            mkdir($folder, 0777);
+        if (!$this->driverFile->isExists($folder)) {
+            $this->driverFile->createDirectory($folder, 0777);
         } else {
-            chmod($folder, 0777);
+            $this->driverFile->changePermissions($folder, 0777);
         }
 
         return $folder;
@@ -260,21 +276,24 @@ class AddSet extends \Magento\Backend\App\Action
             return false;
         }
         
-        if (file_exists($dirname)) {
-            if ($files = scandir($dirname)) {
-                foreach ($files as $file) {
+        if ($this->driverFile->isExists($dirname)) {
+            if ($items = $this->driverFile->readDirectory($dirname)) {
+                foreach ($items as $item) {
+
+                    $file = str_replace($dirname . '/', '', $item);
+
                     if ($file != '.' && $file != '..' && $file != '.svn') {
-                        if (is_dir($dirname.$file)) {
+                        if ($this->driverFile->isDirectory($dirname.$file)) {
                             $this->deleteDirectory($dirname.$file, true);
-                        } elseif (file_exists($dirname.$file)) {
-                            @chmod($dirname.$file, 0777); // NT ?
-                            unlink($dirname.$file);
+                        } elseif ($this->driverFile->isExists($dirname.$file)) {
+                            $this->driverFile->changePermissions($dirname.$file, 0777); // NT ?
+                            $this->driverFile->deleteFile($dirname.$file);
                         }
                     }
                 }
-                if ($delete_self && file_exists($dirname)) {
-                    if (!rmdir($dirname)) {
-                        @chmod($dirname, 0777); // NT ?
+                if ($delete_self && $this->driverFile->isExists($dirname)) {
+                    if (!$this->driverFile->deleteDirectory($dirname)) {
+                        $this->driverFile->changePermissions($dirname, 0777); // NT ?
                         return false;
                     }
                 }

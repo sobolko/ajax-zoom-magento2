@@ -25,7 +25,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
     protected $localeResolver;
     public $product_has_video_html5 = false;
 
-
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Catalog\Block\Product\Context $context2,
@@ -54,9 +53,7 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         $this->_coreRegistry = $registry;
         $this->_store = $store;
 
-
         $this->localeResolver = $localeResolver;
-
 
         parent::__construct(
             $context,
@@ -69,6 +66,14 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         if ($this->isProductActive($productId) && $this->isOnlyProductActive($productId)) {
             $this->setTemplate('ajaxzoom.phtml');
         }
+    }
+
+    public function conf()
+    {
+        return $this->_scopeConfig->getValue(
+            'axzoom_options',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
     }
 
     public function isProductActive($productId)
@@ -115,30 +120,26 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         $this->_addCss('axzoom/axZm/axZm.css');
         $this->_addCss('axzoom/axZm/axZmCustom.css');
             
-
         if ($conf['general_settings']['galleryAxZmThumbSlider'] == 'true') {
             $this->_addCss('axzoom/axZm/extensions/axZmThumbSlider/skins/default/jquery.axZm.thumbSlider.css');
         }
 
-        
         $this->_addCss('axzoom/axZm/extensions/jquery.axZm.expButton.css');
 
         $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoom.5.css');
         //$this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/mods/jquery.axZm.mouseOverZoomMagento.4.css');
 
-
-        if ($conf['general_settings']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' || $conf['general_settings']['ajaxZoomOpenMode'] == 'fancybox') {
+        if ($conf['general_settings']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' ||
+            $conf['general_settings']['ajaxZoomOpenMode'] == 'fancybox') {
             $this->_addCss('axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.css');
         } elseif ($conf['general_settings']['ajaxZoomOpenMode'] == 'colorbox') {
             $this->_addCss('axzoom/axZm/plugins/demo/colorbox/example2/colorbox.css');
         }
 
-
         if ($conf['plugin_settings']['pngModeCssFix'] == 'true') {
             $this->_addCss('axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoomPng.5.css');
         }
 
-        
         $this->_addCss('axzoom/axzoom.css');
     }
 
@@ -164,17 +165,14 @@ class AxProduct extends \Magento\Framework\View\Element\Template
             array_push($scripts, $baseUrl . "axzoom/axZm/plugins/spin/spin.min.js");
         }
 
-        
-        
         array_push($scripts, $baseUrl . "axzoom/axZm/extensions/jquery.axZm.expButton.js");
         array_push($scripts, $baseUrl . "axzoom/axZm/extensions/jquery.axZm.imageCropLoad.js");
         
-
-
         array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoom.5.js");
         array_push($scripts, $baseUrl . "axzoom/axZm/extensions/axZmMouseOverZoom/jquery.axZm.mouseOverZoomInit.5.js");
 
-        if ($conf['general_settings']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' || $conf['general_settings']['ajaxZoomOpenMode'] == 'fancybox') {
+        if ($conf['general_settings']['ajaxZoomOpenMode'] == 'fancyboxFullscreen' ||
+            $conf['general_settings']['ajaxZoomOpenMode'] == 'fancybox') {
             array_push($scripts, $baseUrl . "axzoom/axZm/plugins/demo/jquery.fancybox/jquery.fancybox-1.3.4.pack.js");
             array_push($scripts, $baseUrl . "axzoom/axZm/extensions/jquery.axZm.openAjaxZoomInFancyBox.js");
         } elseif ($conf['general_settings']['ajaxZoomOpenMode'] == 'colorbox') {
@@ -182,7 +180,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         }
         
         array_push($scripts, $baseUrl . "axzoom/axZm/plugins/JSON/jquery.json-2.3.min.js");
-        
         
         array_push($scripts, $baseUrl . "axzoom/axzoom.js");
 
@@ -204,7 +201,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         return $this->Ax360set->getBaseUrl();
         //return $this->_storeManager->getStore()->getBaseUrl();
     }
-
 
     public function getProductId()
     {
@@ -265,7 +261,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 
         return $images;
     }
-
 
     public function getGalleryImagesArray()
     {
@@ -331,7 +326,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         return '{' . implode(',', $tmp) . '}';
     }
 
-
     public function getImagesJsonComb()
     {
         $product = $this->getProduct();
@@ -365,7 +359,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
                 $str = json_encode($a1 + $a2);
             }
 
-            
             $images360json = str_replace("'", '"', $str);
             $for_js[$child['entity_id']] = urlencode($images360json);
         }
@@ -387,7 +380,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
 
     public function prepareInitParamFront($conf = [])
     {
-        require_once dirname(dirname(__FILE__)).'/AzMouseoverSettings.php';
         require dirname(dirname(__FILE__)).'/AzMouseoverConfig.php';
         $mouseover_settings = new \Ax\Zoom\AzMouseoverSettings($az_mouseover_config_magento);
 
@@ -410,19 +402,21 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         );
     }
 
-
     public function __($str)
     {
         return __($str);
     }
-
 
     public function videoParseUrl($url)
     {
         $video = false;
 
         // youtube
-        if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $url, $match)) {
+        if (preg_match(
+            '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
+            $url,
+            $match
+        )) {
             $video = [
                 'key' => $match[1],
                 'settings' => [],
@@ -453,7 +447,6 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         $ret = [];
         $i = 0;
 
-
         // Magento Native videos
         $items = $this->getGalleryImagesArray();
         
@@ -466,17 +459,14 @@ class AxProduct extends \Magento\Framework\View\Element\Template
             }
         }
 
-
         // Ajax Zoom videos
         $r = [];
         $videos = $this->Axvideo->getVideos($id_product);
         foreach ($videos as $video) {
             $r[$video['id_video']] = $video;
         }
-
-            
+ 
         $lang = $this->getLang();
-
 
         foreach ($videos as $k => $v) {
             $i++;
@@ -496,7 +486,8 @@ class AxProduct extends \Magento\Framework\View\Element\Template
             $ret[$i] = [
                 'key' => $uid,
                 'settings' => (array)json_decode($videos[$k]['settings']),
-                'combinations' => (!$videos[$k]['combinations'] || $videos[$k]['combinations'] == '[]') ? [] : explode(',', $videos[$k]['combinations']),
+                'combinations' => (!$videos[$k]['combinations'] ||
+                    $videos[$k]['combinations'] == '[]') ? [] : explode(',', $videos[$k]['combinations']),
                 'type' => $videos[$k]['type']
             ];
         }
@@ -508,13 +499,10 @@ class AxProduct extends \Magento\Framework\View\Element\Template
         return $ret;
     }
 
-
-
     public function getImageHotspotsProduct($id_product)
     {
         return $this->Axhotspot->getFrontendHotspots($id_product);
     }
-
 
     // !!!
     public function getImagesBackendHotspots($id_product, $sub = false)

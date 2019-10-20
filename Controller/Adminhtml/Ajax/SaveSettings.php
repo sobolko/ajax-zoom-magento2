@@ -11,7 +11,6 @@ class SaveSettings extends \Magento\Backend\App\Action
     protected $_resource;
     
     public function __construct(
-
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Ax\Zoom\Model\Ax360 $Ax360,
@@ -38,14 +37,19 @@ class SaveSettings extends \Magento\Backend\App\Action
             foreach ($settings as $id_360 => $string) {
                 $this->Ax360->load($id_360)->addData([
                 'settings' => urldecode($string),
-                'combinations' => @urldecode($comb[$id_360])
+                'combinations' => isset($comb[$id_360]) ? urldecode($comb[$id_360]) : ''
                 ])->setId($id_360)->save();
             }
         }
 
-        die($this->_objectManager->create('Magento\Framework\Json\Helper\Data')->jsonEncode([
+        $return_arr = [
             'status' => 'ok',
             'confirmations' => ['The settings has been updated.']
-            ]));
+            ];
+
+        $jsonResult = $this->_objectManager->create(\Magento\Framework\Controller\Result\JsonFactory::class)->create();
+        $jsonResult->setData($return_arr);
+
+        return $jsonResult;
     }
 }

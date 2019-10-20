@@ -8,7 +8,10 @@ class Resizefix extends \Magento\Backend\Block\Template
     {
         parent::__construct($context, $data);
         
-        if ($this->_scopeConfig->getValue('axzoom_options/magento/magentoNoScale', \Magento\Store\Model\ScopeInterface::SCOPE_STORE) == 'true') {
+        if ($this->_scopeConfig->getValue(
+            'axzoom_options/magento/magentoNoScale',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        ) == 'true') {
             $this->setTemplate('resizefix.phtml');
         }
     }
