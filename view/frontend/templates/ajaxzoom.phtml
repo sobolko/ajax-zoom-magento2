@@ -148,7 +148,7 @@ require(["jquery", "jquery/ui"], function() {
     doubleCheckJqueryCore();
 
     // handle swatch click (update images if needed)
-    jQuery(document).on('click', '.swatch-option', function() {
+    jQuery(document).on('click', '.swatch-option, .swatch-select', function() {
         var IMAGES_JSON = {};
         
         var mageSwatchRenderer = jQuery('.swatch-opt').data('mageSwatchRenderer') || jQuery('.swatch-opt').data('amasty_confSwatchRenderer');
