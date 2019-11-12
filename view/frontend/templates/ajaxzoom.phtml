@@ -147,8 +147,8 @@ require(["jquery", "jquery/ui"], function() {
 
     doubleCheckJqueryCore();
 
-    // handle swatch click (update images if needed)
-    jQuery(document).on('click', '.swatch-option, .swatch-select', function() {
+
+    function reloadImages() {
         var IMAGES_JSON = {};
         
         var mageSwatchRenderer = jQuery('.swatch-opt').data('mageSwatchRenderer') || jQuery('.swatch-opt').data('amasty_confSwatchRenderer');
@@ -159,7 +159,6 @@ require(["jquery", "jquery/ui"], function() {
             return;
         }
 
-        console.log(product_id, images360jsonComb);
         var encoded  = images360jsonComb[product_id];
 
         var images = mageSwatchRenderer.options.jsonConfig.images[product_id];
@@ -175,8 +174,22 @@ require(["jquery", "jquery/ui"], function() {
 
         setTimeout(function () {
             jQuery.axZm_psh.resetAxZoom();
-        }, 500);  
+        }, 500);          
+    }
+
+
+    // handle swatch click (update images if needed)
+    jQuery(document).on('click', '.swatch-option', function() {
+        reloadImages();
     });
+
+    jQuery(document).on('change', '.swatch-select', function() {
+        reloadImages();
+    });
+
+    jQuery(document).on('change', '.super-attribute-select', function() {
+        reloadImages();
+    });    
 });
 
 </script>
