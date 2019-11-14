@@ -95,6 +95,8 @@ class InstallSchema implements InstallSchemaInterface
 
     private function createFolders()
     {
+        $this->io->checkAndCreateFolder(BP . '/pub/axzoom/zip', 0777);
+
         foreach (['360', 'cache', 'zoomgallery', 'zoommap', 'zoomthumb', 'zoomtiles_80', 'tmp'] as $folder) {
             $this->io->checkAndCreateFolder(BP . '/pub/axzoom/pic/' . $folder, 0777);
         }
@@ -125,7 +127,7 @@ class InstallSchema implements InstallSchemaInterface
             $zip->extractTo(BP . '/pub/axzoom/pic/tmp/');
             $zip->close();
             
-            rename(BP . '/pub/axzoom/pic/tmp/axZm', BP . '/axzoom/axZm');
+            rename(BP . '/pub/axzoom/pic/tmp/axZm', BP . '/pub/axzoom/axZm');
         }
     }
 }
