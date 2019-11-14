@@ -353,11 +353,16 @@ class AxProduct extends \Magento\Framework\View\Element\Template
             // merge with its own "360 views"
             $str2 = $this->Ax360->images360Json($child['entity_id']);
 
-            if ($child['entity_id'] == 53) {
-                $a1 = json_decode(str_replace("'", '"', $str), true);
-                $a2 = json_decode(str_replace("'", '"', $str2), true);
+            // add option like WooCommerce
+            $a1 = json_decode(str_replace("'", '"', $str), true);
+            $a2 = json_decode(str_replace("'", '"', $str2), true);
+            //
+            if($str2 != '{}') {
+                $str = $str2;
+            } else {
                 $str = json_encode($a1 + $a2);
             }
+
 
             $images360json = str_replace("'", '"', $str);
             $for_js[$child['entity_id']] = urlencode($images360json);
