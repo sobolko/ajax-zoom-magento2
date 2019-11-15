@@ -80,7 +80,8 @@ class Ax360set extends \Magento\Framework\Model\AbstractModel
 
     public function getBaseDir()
     {
-        return BP . substr($this->rootFolder(), 0, -1);
+        return BP . '/pub';
+        //return BP . substr($this->rootFolder(), 0, -1);
     }
 
     public function moduleDir($type = '')
