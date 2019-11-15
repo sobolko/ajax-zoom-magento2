@@ -1,0 +1,63 @@
+/**
+*  Module: jQuery AJAX-ZOOM for Magento, /js/axzoom/axzoom.css
+*  Copyright: Copyright (c) 2010-2018 Vadim Jacobi
+*  License Agreement: http://www.ajax-zoom.com/index.php?cid=download
+*  Version: 1.4.2
+*  Date: 2018-05-28
+*  Review: 2018-05-28
+*  URL: http://www.ajax-zoom.com
+*  Documentation: http://www.ajax-zoom.com/index.php?cid=modules&module=magento
+*
+*  @author    AJAX-ZOOM <support@ajax-zoom.com>
+*  @copyright 2010-2018 AJAX-ZOOM, Vadim Jacobi
+*  @license   http://www.ajax-zoom.com/index.php?cid=download
+*/
+
+/* Overwrite some css from /axZm/axZm.css */
+.zFsO {
+    background-color: #FFFFFF;
+}
+
+.zFsOResOverlay {
+    background-color: #FFFFFF;
+}
+
+.axZm_spinPreloaderBar {
+    background-color: #0191ff;
+    background-image: url('axZm/icons/spin_preloader_blue_10x10.png');
+}
+
+.axZm_spinPreloaderHolder {
+    background-image: url('axZm/icons/tr_black_50.png');
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+@media screen and (max-width: 770px) {
+    .axZm_mouseOverZoomContainerWrap {
+        border-width: 0;
+    }
+}
+
+#nav {
+    z-index: 1001;
+    position: relative;
+}
+
+#fancybox-wrap {
+    z-index: 2147483646 !important;
+}
+
+body>#zFsO {
+    z-index: 2147483646 !important;
+}
+
+#axzoom_head {
+    display: block;
+    margin-top: 15px;
+}
+
+.tab-content .axZm_mouseOverZoomContainerWrap {
+    border-width: 0;
+}

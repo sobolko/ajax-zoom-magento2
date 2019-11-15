@@ -6,6 +6,7 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Filesystem\Io\File;
+use Magento\Framework\Filesystem\Driver\File as FileDriver;
  
 class InstallSchema implements InstallSchemaInterface
 {
@@ -14,6 +15,7 @@ class InstallSchema implements InstallSchemaInterface
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $this->io = new File();
+        $this->fileDriver = new FileDriver();
 
         $installer = $setup;
         $installer->startSetup();
@@ -93,8 +95,30 @@ class InstallSchema implements InstallSchemaInterface
         $this->downloadAxZm();
     }
 
+
+    private function copyR($source, $dest)
+    {
+        mkdir($dest, 0755);
+        foreach (
+         $iterator = new \RecursiveIteratorIterator(
+          new \RecursiveDirectoryIterator($source, \RecursiveDirectoryIterator::SKIP_DOTS),
+          \RecursiveIteratorIterator::SELF_FIRST) as $item
+        ) {
+          if ($item->isDir()) {
+            mkdir($dest . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+          } else {
+            copy($item, $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathName());
+          }
+        }
+    }
+
     private function createFolders()
     {
+        $path = dirname(dirname(__FILE__));
+        
+        $this->copyR($path . '/axzoom', BP . '/pub/axzoom');
+
+
         $this->io->checkAndCreateFolder(BP . '/pub/axzoom/zip', 0777);
 
         foreach (['360', 'cache', 'zoomgallery', 'zoommap', 'zoomthumb', 'zoomtiles_80', 'tmp'] as $folder) {
